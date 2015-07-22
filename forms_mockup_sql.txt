@@ -1,0 +1,1056 @@
+Diagnostic Study
+	forms_cbc			(CBC)
+		id_form_cbc
+		id_clinic
+		visit_date
+		time_start
+		id_user
+		hemoglobin
+		hematocrit
+		rbc
+		wbc
+		platelet
+		mcv
+		mch
+		mchc
+		rdw
+		eosinophils
+		basophils
+		neutrophils
+		lymphocytes
+		monocytes
+	forms_cbc_form		(CBC Form)
+		id_form_cbc_form
+		document_no
+		specimen_no
+		hemoglobin
+		hematocrit
+		red blood cell count
+		white blood cell count
+		neutrophils
+		lymphocytes
+		eosinophils
+		monocytes
+		platelet
+		mcv
+		mch
+		mchc
+		id_user (Pathologist)
+		medical_technologist
+	forms_cx			(Chest X-ray)
+		document_no
+		specimen_no
+		examination
+		history
+		comparison
+		technique
+		findings
+		impression
+		radiologist
+	forms_oftu			(Ob First Trimester Ultrasound)
+		clinic
+		visit_date
+		start_time
+		doctor
+		ob_score
+		lmp
+		aog
+		edc
+		gs
+		cr
+		ys
+		comments
+		fhr
+		aua
+		cervix
+		adnexae
+		others
+		impression
+		remarks
+	forms_lu			([LABMERGE] Urinalysis)
+		document_no
+		specimen_no
+		color
+		transparency
+		glucose
+		bile
+		ketone
+		specific_gravity
+		ph_(reaction)
+		protein
+		urobilinogen
+		nitrites
+		blood
+		leukocytes
+		red_blood_cells
+		white_blood_cells
+		epithelial_cells
+		casts
+		bacteria
+		pathologist
+		medical_technologist
+Letters
+	forms_cmof			(Certificate of Medical Fitness)
+		To
+		date_examined
+		Diagnosis
+		# of Rest day
+		Upon re-examination and follow-up, the patient is now
+			In good mental and physical health and is free from any physical defects.
+			Cleared to return to work, performing his/her usual duties and hours of work [on: date]
+			Cleared to return to work, but limitation or modification should be considered: [on: date]
+				No Heavy Lifting
+				No Strenuous Bending/Twisting
+				No Prolonged Walking/Standing/Sitting
+				Limitation in Operating Equipments
+				Others
+			Unable to work this time due to: [specify]
+	forms_mc1			(Medical Certificate 1)
+		date assessed
+		start time
+		patient's title
+		purpose
+		health status
+		physical or mental defects
+		defects or conditions (json)
+		fitness status
+		restrictions
+	forms_mc2			(Medical Certificate 2)
+		date assessed
+		start time
+		to title
+		purpose
+		date inclusive
+			on [date]
+			range [start date - end date]
+		impression/diagnosis
+		comments
+	forms_mc3			(Medical Certificate 3)
+		date
+		start time
+		to
+		institution
+		diagnosis
+		recommended rest
+		recommendation
+	forms_tyl			(Thank You Letter)
+		date
+		start time
+		to
+		specialty
+		clinic name
+		clinic address
+		clinic contact no.
+		diagnosis
+		recommendation
+Consultation Notes
+	forms_gsf1			(Gen SOAP Follow Up)
+		soap_img
+		Subjective
+		Plan
+		{unknown appointment list}
+	forms_ph			(Patient History)
+		What is your main complaint?
+		On the scale below, please circle the severity of your main complaint [1-10]
+		On the scale below, please cirlce the percentage of time you experience our main complaint [0 - 10 - 20 ... 100]
+		How long have you been experiencing your main complaint?
+		{unknown appointment list}
+	forms_wa			(Wound Assessment)
+		Date Examined
+		Start Time
+		End Time
+		Patient Class
+		Vital Signs (JSON)
+			Temp
+			BP
+			BP_By
+			RR
+			HR
+			Date/Time
+		Functional Assessment (possible answers: Independent | Dependent | Assisted) (JSON maybe)
+			Eating
+			Grooming
+			Bathing
+			Dressing Upper Body
+			Dressing Lower Body
+			Toileting
+			Bowel Mx
+			Bladder Mx
+			Bed/Chair/WC transfer
+			Toilet Transfer
+			Tub/Shower Transfer
+			Walk/Wheelchair
+			Stairs
+			Comprehension
+			Expression
+			Social Interaction
+			Problem Solving
+			Memory
+		Lower Extremity Pulses (possible answers: no pulse [0] | weak [+1] | normal [+2] | bonding [+3])
+			Femoral [Left, Right]
+			Popliteal [Left, Right]
+			Post tibialis [Left, Right]
+			Dorsalis pedis [Left, Right]
+		For DM FOOT
+			ABPI [Left, Right]
+			Monofilament [Left, Right]
+		Other Information Relevant to Wound Healing
+		Body Diagram (image) [Dynamic]
+		Assessor
+		Physician
+		{unknown appointment list}
+	forms_wa_add 		(depends on (Wound Assessment) Add Wound)
+		Wound No
+		Date of Onset of Wound
+		Wound Type and Classification
+			Pressure Ulcer
+			Vascular Ulcer
+			Diabetic Foot
+			Others, pls. [text: specify]
+		Wound Photo (Dynamic)
+		Wound Size
+			Length
+			Width
+		Wound Depth (cm)
+		Undermining (cm) + Location
+		Tunnelling (cm) + Location
+		Wound Bed
+		Others, pls. specify
+		Wound Edges
+		Wound Exudate Amount
+		# of dressing change/24hrs
+		Wound Exudate Colour
+		Wound Exudate Consistency
+		Wound Exudate Odour
+		Periwound Skin Appearance
+		Others
+		Wound Pain/10 + Frequency
+		Is Infection Suspected?
+		Wound GS/CS Taken?
+		Diagnostics
+		Therapeutics
+		Remarks/Notes
+	forms_dc			([Derma] Consult)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Reason for Visit / Chief Complaint
+		History of Present Illness
+		Objective
+			Vital Signs (Dynamic)
+				Temp
+				BP
+				BP_by
+				RR
+				HR
+				Date/Time
+			Height
+			Weight
+			BMI
+		Physical Examination
+		Skin
+		photo (dynamic)
+		Laboratory Results
+			text
+			photo (dynamic)
+		Assessment (dynamic)
+			Clinical Diagnosis 
+		Management Plan (dynamic)
+			Orders/Procedures/Labs
+		Remarks
+		Medications/Prescriptions (Dynamic)
+			Generic name
+			Brand name
+			Preparation
+			#
+			Mode
+			Qty per take
+			Form
+			Frequency
+			Remarks
+			Duration [start date - end date]
+		Patient Instructions
+		Next Follow up on [date]
+		Billing
+			Amount
+			Remarks
+		{unknown appointment list}
+	forms_df			([Derma] Follow-Up)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Vital Signs (Dynamic)
+			Temp	BP/BP_By	RR	HR	Date/Time
+		Reason for Visit 
+			Follow-up for
+			Remarks
+			Assessment/Diagnosis
+			Procedures
+		Management Plan (Dynamic)
+			Orders/Procedures/Labs
+			Remarks
+		Medications/Prescriptions (Dynamic)
+			Generic name,	Brand name,	Preparation,	#	
+			Mode,	Qty per take,	Form,	Frequency,
+			Remarks,	Duration [start - end]
+		Next Follow up on [date]
+		Billing
+			Amount
+			Remarks
+		{unknown appointment list}
+	forms_ec1			([ENT] Consult 1)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Chief Complaint
+		History of Present Illness
+		Review of Symptoms [check boxes]
+			Cough
+			Mass
+			Ulcer
+			Dizziness
+			Headache
+			Fever
+			Aural fullness
+			Otalgia
+			Itching
+			Hearing loss
+			Aural Discharge
+			Tinnitus
+			Throat pain
+			Dysphagia
+			Odynophagia
+			Hoarseness
+			Dyspnea
+			Hematemesis
+			Nasal Obstruction
+			Nasal discharge
+			Post-nasal discharge
+			Sneezing
+			Epistaxis
+			Hyposmia/Anosmia
+		Vital Signs (Dynamic) [THIS VITAL SIGNS MUST HAVE ITS OWN TABLE]
+		Otorhinolaryngological Examination 
+			Head and Neck [check boxes]
+					No abnormal findings
+					Evidentt facial asymmetry
+					Cervical lymphadenopathy
+					Anterior neck masses
+					Tracheal deviation
+					Gross nasoaural deformity
+			    Comments
+		    Ear [check boxes]
+			    	No abnormal findings
+					Intact TM
+					Retraction, hyperemia
+					Cone of light
+					Active Discharge
+					Erythema of ear canal
+					Impacted cerumen
+					No abnormal findings
+					Intact TM
+					Retraction, hyperemia
+					Cone of light
+					Active Discharge
+					Erythema of ear canal
+					Impacted cerumen
+				Comments
+			Nose
+					No abnormal findings
+					Septal Deviation
+					Congestion
+					Erythema
+					Discharge
+					Post-nasal drip
+					Intact turbinates
+					Mass
+				Comments
+			Oral Cavity and Larynx
+					No abnormal findings
+					Lip or mucosal ulcers
+					Tonsillo-pharyngeal congestion
+					Post-nasal drip
+					Infralingual masses
+					Mucosal Hyperemia
+					No abnormal findings
+					Good vocal cord ability
+					Masses
+					Ederma
+				Comments
+		Other Relevant Physical Examination Findings
+		Other Relevant Laboratory/Diagnostic Results
+			message
+			images (dynamic)
+		Assessment (dynamic)
+			Orders/Procedures/Labs
+			Remarks
+		Medications/Prescriptions (dynamic)
+			Generic name	Brand name	Preparation	#	
+			Sig	Duration
+		Patient Instructions
+		Next Follow up on [date]
+		Billing
+			Amount
+			remarks
+		{unknown appointment list}
+	forms_ec2			([ENT] Consult 2)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Chief Complaint
+		History of Present Illness
+		Review of Symptoms 
+			Cough
+			Mass
+			Ulcer
+			Dizziness
+			Headache
+			Fever
+			Aural fullness
+			Otalgia
+			Itching
+			Hearing loss
+			Aural Discharge
+			Tinnitus
+			Throat pain
+			Dysphagia
+			Odynophagia
+			Hoarseness
+			Dyspnea
+			Hematemesis
+			Nasal Obstruction
+			Nasal discharge
+			Post-nasal discharge
+			Sneezing
+			Epistaxis
+			Hyposmia/Anosmia
+		Vital Signs [DYNAMIC]
+		Otorhinolaryngological Examination 
+			Head and Neck
+				No abnormal findings
+				Comments
+			Ear
+				No abnormal findings
+				Comments
+			Nose
+				No abnormal findings
+				Comments
+			Oral Cavity and Larynx
+				No abnormal findings
+				Comments
+			Other Relevant Physical Examination Findings
+			Other Relevant Laboratory/Diagnostic Results
+				text
+				images [dynamic]
+		Assessment [dynamic]
+			Clinical Diagnosis
+		Management Plan
+			Orders/Procedures/Labs [dynamic]
+			remarks
+		Medications/Prescriptions [dynamic]
+			Generic name	Brand name	Preparation	#
+			Sig	Duration
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+		{Unknown Appointment List}
+	forms_gsf2			([Gen] SOAP Follow-up)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Vital Signs
+		Height	Weight	BMI
+		Management Plan
+			Orders/Procedures/Labs	
+			remarks
+		Medications/Prescriptions
+			Generic name	Brand name	Preparation	#
+			Sig	Duration
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+			{unknown Appointment List}
+	forms_gsn			([Gen] SOAP Note)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Vital Signs
+		Height	Weight	BMI
+		Chief Complaint
+		Subjective
+		Objective
+			message
+			images
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+			Remarks
+		Medications/Prescriptions *
+			Generic name	Brand name	Preparation	#, Sig
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+			{unknown Appointment List}
+	forms_gswnt			([Gen] SOAP w/ Notes Template)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Vital Signs
+			Temp	BP	RR	HR	Date/Time
+		Height	Weight	BMI
+		Chief Complaint
+		Subjective
+		Objective
+		images
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+			Remarks
+		Medications/Prescriptions	*
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+		{unknown Appointment List}
+	forms_oggc			([Ob/Gyn] Gynecology Consult)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Vital Signs *
+		Chief Complaint
+		History of Present Illness
+		Gynecologic ROS [check boxes]
+			Pelvic Pain
+			Vaginal Pain
+			Abnormal Vaginal Bleeding
+			Abnormal Vaginal Discharge
+			Abnormal Vaginal Lesion
+			Urinary Symptoms
+			Itching/Burning/Irritation
+			Pain with Intercourse
+			Other [specify]
+		Menstrual History
+			Menstrual Cycle 
+				Menarche (age onset)	Frequency	Interval	Duration (no. of days)	Flow	Pain/Cramps with Period
+		Gynecologic History 
+			Last PAP Smear
+			PAP Smear Result	Details
+			Previous Abnormal PAP Smear	Details
+			Mammogram Result	Details
+				Previous Gynecologic Diseases
+			Last Birth Control Method Used	Date
+		Objective
+			Measurements
+				Height	Weight	BMI
+		Physical Examination
+		images
+		Gynecologic Examination 
+			Breasts
+				Right
+				Left
+			Pelvic
+				External genitalia
+				BUS
+				Vagina
+				Cervix
+				Uterus
+				Adnexae
+					Right
+					Left
+			Rectal
+		Laboratory Results
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+		Remarks
+		Medications/Prescriptions *
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+		{unknown appointment list}
+	forms_ogpc			([Ob/Gyn] Prenatal Consult)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Pregnancy History
+			Number of Pregnancies 
+				Total	Full Term	Premature	Abortions (Induced)	Abortions (Spontaneous)	Ectopic	Multiple Births	Living
+			Past Pregnancies *
+				Date	Duration (in weeks)	Delivery Type	Hours in Labour	Sex	Birth Weight	Anesthesia	Comments / Complications
+		Menstrual History
+			Menstrual Cycle 
+				Menarche (age onset)	Frequency	Interval	Duration (no. of days)	Flow	Pain/Cramps with Period
+		Gynecologic History 
+			Last PAP Smear
+			PAP Smear Result	Details
+			Previous Abnormal PAP Smear	Details
+				Last Mammogram
+			Mammogram Result	Details
+				Previous Gynecologic Diseases
+			Last Birth Control Method Used	Date
+		Objective
+			Vital Signs
+				Temp	BP	RR	HR	Date/Time
+			Measurements
+				Height	Weight	BMI
+		Physical Examination
+		Estimated Delivery Date (EDD)
+			LMP				Date	Weeks	EDD
+			Initial Exam 	Date	Weeks	EDD
+			Ultrasound		Date	Weeks	EDD
+		Fetal Measurements 
+			Fundal Height (cm)
+			Fetal HR
+		Laboratory Results
+		images
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+		Medications/Prescriptions *
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+		{unknown appointment list}
+	forms_ogpf			([Ob/Gyn] Prenatal Flowsheet)
+		Clinic
+		Visit Date
+		Start Time
+		Doctor
+		Estimated Delivery Date (EDD)
+			LMP				Date	Weeks	EDD
+			Initial Exam 	Date	Weeks	EDD
+			Ultrasound		Date	Weeks	EDD
+		Prenatal Visit *
+			Date	Weeks	Wt	HR	BP	Edema	Protein/ Glucose	Fetal Movement	Fundal Height	Fetal Position	Fetal HR
+	forms_oc1			([Ophtha] Consult 1)
+		Clinic
+		Visit DateStart TimeEnd Time
+		Doctor
+		Chief Complaint
+		History of Present Illness
+		Ocular ROS 
+			Flashes
+			Halos
+			Redness
+			Scratchiness
+			Floaters
+			Glare
+			Double Vision
+			FBS
+			Blurred Vision
+			Tearing
+			Pain
+			Discharge
+		Past Ocular History
+		Vital Signs *
+			Temp	BP	RR	HR	Date/Time
+		Opthalmologic Examination
+			Vision 
+				[Cum Correctore | Sine Correctore]
+				Near		OD	OS	OU
+					ADD:	OD	OS	OU
+				Wearing		OD	OS	OU
+					ADD:	OD	OS	OU
+				Refract		OD	OS	OU
+					ADD:	OD	OS	OU
+					VA:		OD	OS	OU
+			Pupils 
+				Light Reaction	OD	OS
+				Accomodation	OD	OS
+				APD				OD	OS
+			Motility
+				Deviation		OD	OS
+				EOM				OD	OS
+		Tension (in mmHg) 
+			[Applanation | Tonopen | Pneumotonometry]
+								OD	OS
+			After Dilation		OD	OS
+		External Exam 
+			OD	OS
+		Slit Lamp Exam 
+			OD OS [IMAGE PAINT]
+		Anterior Chamber 
+			Depth	OD	OS
+			Flare 	OD	OS
+			Cell	OD	OS
+		Iris 
+			OD	OS
+		Lens 
+			OD	OS
+		Fundus
+			OD OS [IMAGE PAINT]
+		Discs 
+			OD	OS
+		Vessels 
+			OD	OS
+		Macula 
+			OD	OS
+		Periphery 
+			OD	OS
+		Vitreous 
+			OD	OS
+		Assessment 
+			Clinical Diagnosis*
+		Management Plan
+			Orders/Procedures/Labs*
+			Remarks
+		Medications/Prescriptions*
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+		{Unknown Appointment List}
+	forms_oc2			([Ophtha] Consult 2)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		group1 
+			OD	sc	ph	cc	Spectacles
+			OS	sc	ph	cc	Spectacles
+		New Refraction	VA
+		Eyelids	
+			PA				OD	OS
+			MRD				OD	OS
+			LPS				OD	OS
+			Lagoph			OD	OS
+			Lid Crease		OD	OS
+		Lacrimal
+		Site Lamp [images]
+			OD + eye 
+			OS + eye
+		EOM
+		Fundus
+		IOP
+			OD: 
+			OS: 
+		Impression
+		Management Plan
+			Orders/Procedures/Labs	*
+			Remarks
+		Medications/Prescriptions *
+		Next Follow up on
+		Notes
+		Billing
+			Amount
+			Remarks
+	forms_oc3			([Ophtha] Consult 3)
+		SAME AS forms_oc1???
+		SAME AS forms_oc1???
+	forms_pedia_c		([Pedia] Consult)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Chief Complaint
+		History of Present Illness
+		Nutrition 
+			Caloric Intake
+			Vitamin Supplementation
+			Sleep Pattern
+		Developmental Milestones [checkboxes]
+			SOCIAL / EMOTIONAL	
+				Can briefly calm himself (bring hands to mouth and suck on hand)
+				Begins to smile at people
+				Tries to look at parent
+			LANGUAGE / COMMUNICATION	
+				Coos, makes gurgling sounds
+				Turns head toward sounds
+			COGNITIVE	
+				Pays attention to faces
+				Begns to follow things with eyes and recognize people at a distance
+				Begins to act bored (cries, fussy) if activity doesn't change
+			MOVEMENT / PHYSICAL DEVELOPMENT	
+				Can hold head up and begins to push up when lying on tummy
+				Makes smoother movements with arms and legs
+		Objectives
+			Vital Signs*
+			Measurements
+			Length	Weight	BMI	Circumference of Head (cm)
+						
+			Physical Examination
+		Immunization	Dose	Date	Doctor	
+			*
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+			Remarks
+
+		Medications/Prescriptions*
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+	forms_pulmo_c		([Pulmo] Consult)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Chief Complaint
+		History of Present Illness
+		Review of Systems [check boxes]
+			Fatigue
+			Malaise
+			Fever/Chills
+			Weight Change
+			Vision Changes
+			Eye Pain
+			Eye Redness
+			Cataract
+			Hoarseness
+			Nose Bleeds
+			Sinus Problems
+			Hearing Changes
+			Cough
+			Wheezing
+			Pleghm
+			Shortness of Breath
+			Chest Pain
+			Edema
+			Palpitations
+			PND/Orthopnea
+			Abdominal Pain
+			Stool Changes
+			Heartburn
+			Nausea/Vomiting
+			Dysuria
+			Frequency
+			Hernia
+			Menstrual Problems
+			Joint Pain
+			Joint Swelling
+			Fracture
+			Recent Trauma
+			Rash
+			Pruritus
+			Nail Changes
+			Hair Changes
+			Polyuria
+			Polydipsia
+			Heat Intolerance
+			Cold Intolerance
+			Bleeding
+			Bruising
+			Clotting
+			Anticoagulant Use
+			Weakness
+			Seizures
+			Headaches
+			Tremors
+			Depression
+			Hallucinations
+			Delirium
+			Dementia
+		Vital Signs *
+		PEFR	SO2
+		Physical 
+			(Select All)
+				Well-developed, Well-nourished
+				In no apparent distress
+				Other [specify]
+				Normocephalic
+				Other [specify]
+			(Select All)
+				PERRL
+				EOMI
+				No scleral icterus
+				Normal conjunctivae
+				Normal fundi
+				Vision grossly intact
+				Other [specify]
+			(Select All)
+				Clear auditory canals
+				Clear tympanic membranes
+				No scleral icterus
+				Hearing grossly intact
+				Normal nasal mucosa without obstruction
+				Throat without exudates/lesions
+				Supple neck
+				No neck masses
+				No thyromegaly
+				No bruits
+				Other [specify]
+		Respiratory 
+			Normal
+			Increase A-P diameter
+			Barrel-shaped chest
+			Pectus excavatum
+			Pectus carinatum
+			Kyphosis
+			Scoliosis
+			Accessory muscle use
+			Intercostal retractions
+			Chest expansion asymmetry
+			Normal
+			Bradypnea
+			Tachypnea
+			Hyperventilation
+			Sighing
+			Air trapping
+			Cheyne-Strokes
+			Biot
+			Kussmaul
+			Ataxic
+			Normal
+			Tracheal deviation
+			Tenderness
+			Chest expansion asymmetry
+			Crepitus
+			Decreased fremitus
+			Increased fremitus
+			Normal breath sounds
+			Bronchial breathing
+			Decrease breath sounds
+			Absent/attenuated breath sounds
+			Fine crackles
+			Course crackles
+			Rhonchi
+			Stridor
+			Wheezes
+			Mediastinal crunch
+			Plueral rub
+			Normal
+			Hyperresonance
+			Dullness
+			Other [specify !checkbox]
+		(Select All)
+			Nondisplaced PMI
+			Normal S1, S2
+			Regular rate and rhythm
+			No thrills
+			No murmurs, gallops, or rubs
+			No JVD
+			No peripheral edema
+			Normal Pulses
+			Other [specify]
+		(Select All)
+			Soft, nontender
+			Normoactive bowel sounds
+			No masses or hepatosplenomegaly
+			No hernias
+			Other [specify]
+		(Select All)
+			Normal scrotum
+			Normal penis
+			No tenderness, masses or discharge
+			Normal digital rectal exam of prostate
+			Other [specify]
+		(Select All)
+			Normal external genitalia and vagina
+			Normal cervix
+			Normal uterus
+			Normal adnexa/parametria
+			Other [specify]
+		(Select All)
+			No adnexal nodes
+			No nodules
+			No tenderness
+			No discharge
+			Other [specify]
+		(Select All)
+			Normal gait
+			No clubbing or cyanosis
+			No edema
+			Normal symmetry, ROM, strength and tone
+			Other [specify]
+		(Select All)
+			Normal color and texture
+			No rashes, ulcers, lesions
+			Other [specify]
+		(Select All)
+			No cervical adenopathy
+			No supraclavicular adenopathy
+			No axillary adenopathy
+			No inguinal adenopathy
+			Other [specify]
+		(Select All)
+			Cranial nerves intact
+			Normal deep tendon reflexes
+			Normal sensation
+			Normal motor strength
+			Other [specify]
+		(Select All)
+			Alert, oriented to person, place, and time
+			Intact memory
+			Normal judgement/insight
+			Normal mood/affect
+			Other [specify]
+		Other Relevant Laboratory/Diagnostic Results
+			text
+			images
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+			Remarks
+		Medications/Prescriptions*
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+	forms_sc			([Surgery] Consult)
+		Clinic
+		Visit Date
+		Start Time
+		End Time
+		Doctor
+		Chief Complaint
+		History of Present Illness
+		Past Surgical History
+		REVIEW OF SYSTEMS
+		Laboratory Results
+		images
+		Assessment
+			Clinical Diagnosis	*
+		Management Plan
+			Orders/Procedures/Labs	*
+			Remarks
+		Medications/Prescriptions *
+		Patient Instructions
+		Next Follow up on
+		Billing
+			Amount
+			Remarks
+
+============ FOR NURSES NOTES ============
+forms_atn			([Aesthetics] Therapist's Notes)
+forms_gnv			([Gen] Nurse Visit)
+forms_pwnn			([Preventive Wellness] Nurse's Notes)
