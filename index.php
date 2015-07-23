@@ -18,18 +18,6 @@ switch (ENVIRONMENT) {
 define('DS',              DIRECTORY_SEPARATOR);
 define('DIR_SYSTEM',      'system');
 define('DIR_APPS',        'applications');
-
-// switch ($_SERVER['HTTP_HOST']) {
-//     case 'admin.medcurial.skubbs.com':
-//         define('DIR_APP', 'admin');
-//     break;
-//     case 'cms.medcurial.skubbs.com':
-//         define('DIR_APP', 'cms');
-//     break;
-//     default:
-//         define('DIR_APP', 'www');
-//     break;
-// }
 define('DIR_APP', 'cms');
 
 
