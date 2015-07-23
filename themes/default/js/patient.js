@@ -1,14 +1,52 @@
+function ajaxPatientGet(form, id_result, id_loading) {
+    id_result = (typeof id_result !== 'undefined') ? id_result : 'patient_informations';
+    id_loading = (typeof id_loading !== 'undefined') ? id_loading : 'patient_loading';
+    $('#' + id_loading).show();
+    $.ajax({
+        url: base_url + 'ajax/patient/' + form + '/' + $('#id_patient').text(), 
+        dataType: 'json', 
+        success: function(r) {
+            $('#' + id_result).html(r.html);
+            $('#' + id_loading).hide();
+            // console.log(form);
+            if (id_result == 'patient_informations' && form == 'notes') {
+                ajaxPatientGet('consultation', 'patient_notes');
+            };
+            return false;
+        }, 
+        complete: function(xhr, textStatus) {
+            if (xhr.status != 200) {
+                $('#' + id_result).html('<div class="text-center alert alert-danger"><h4>ERROR ' + xhr.status + '</h4>' + xhr.statusText + '</div>');
+                $('#' + id_loading).hide();
+            };
+            
+            return false;
+        }
+    });
+}
+
 $(function() {
+    ajaxPatientGet('medical_history');
+    $(document).on('click', 'a[id^="patient-ajax-"]', function() {
+        form = $(this).attr('id').replace(/^patient-ajax-/, '');
+        form = form.replace(/-/, '_');
+        ajaxPatientGet(form);
+        return false;
+    });
+
+    $(document).on('click', 'a[id^="patient-notes-ajax-"]', function() {
+        form = $(this).attr('id').replace(/^patient-notes-ajax-/, '');
+        form = form.replace(/-/, '_');
+        ajaxPatientGet(form, 'patient_notes', 'notes_loading');
+        return false;
+    });
+
     $('#patient_add-birth_date').datepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
         todayHighlight: true, 
         toggleActive: true
     });
-
-//     $(document).ready(function() {
-//     $('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-tabs'});
-// });
 
     $('#patient_add-contact').click(function() {
     	var ctypes = ['Mobile', 'Home Phone', 'Home Fax', 'Work', 'Work Fax', 'Other'];
@@ -39,5 +77,7 @@ $(function() {
     $(document).on('click', '.remove-identification', function() {
 	    $(this).parent().parent().parent().remove();
 	});
+
+    
 });
 

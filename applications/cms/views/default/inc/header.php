@@ -7,6 +7,7 @@
         <meta name="description" content="<?php echo $description ?>">
         <meta name="keywords" content="<?php echo $keywords ?>">
         <meta name="author" content="<?php echo $author ?>">
+        <script type="text/javascript"> window.base_url = <?php echo json_encode(base_url()); ?>; </script>
     <?php echo $HOOK_HEADER ?>
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

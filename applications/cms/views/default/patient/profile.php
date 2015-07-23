@@ -1,63 +1,33 @@
 <?php include_once $inc_header; ?>
+<div id="id_patient" style="display:none"><?php echo $patient->id_patient ?></div>
 <div class="content-wrapper">
     <section class="content">
-    	<div class="well">
+        <div class="well">
             <div class="row">
-                <div class="patient-image col-md-1">
-                    <img src="https://cms.medcurial.com/images/profile_default.png">
-                </div>
-                <div class="patient-details col-md-11">
-                    <div class="pull-right text-right">asasas</div>
-                    <div><strong><?php echo $pinfo->last_name . ', ' . $pinfo->first_name . ' ' . $pinfo->middle_name ?></strong></div>
-                    <div><?php echo $pinfo->gender ?> / <?php echo $pinfo->birth_date ?></div>
-                    <div>Member Since: <?php echo $member_since ?></div>
+                <div class="patient-image col-md-12">
+                    <div class="pull-right text-right"><a href="<?php echo base_url() ?>patient/edit/<?php echo $patient->id_patient ?>">EDIT</a></div>
+                    <img src="https://cms.medcurial.com/images/profile_default.png" style="display:inline-block; vertical-align:top;margin-right:5px">
+                    <div style="display:inline-block">
+                        <strong><?php echo $patient->last_name . ', ' . $patient->first_name . ' ' . $patient->middle_name ?></strong><br>
+                        <?php echo $patient->gender ?> / <?php echo $patient->birth_date ?><br>
+                        Member Since: <?php echo $member_since ?><br>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="box">
-            <div class="box-header with-border">
-                <ul class="nav pull-right">
-                  <li class="dropdown pull-right">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      <i class="fa fa-gear"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <h3 class="box-title">Notes</h3>
-            </div>
-            <div class="box-body no-padding">
-                <div class="nav-tabs-custom">
+        <div class="box box-primary no-margin">
+            <div class="box-header"><h3 class="box-title">Patient Informations</h3></div>
+            <div class="box-body no-padding no-margin">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_1" data-toggle="tab">Tab 1</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                  <!-- <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li> -->
+                    <li class="active"><a href="#" id="patient-ajax-medical-history" data-toggle="tab">Medical History</a></li>
+                    <li><a href="#" id="patient-ajax-notes" data-toggle="tab">Notes</a></li>
+                    <li><a href="#" id="patient-ajax-medications" data-toggle="tab">Medications</a></li>
                 </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1">
-                   a
-                  </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-              </div>
             </div>
+        </div>
+        <div class="box no-border no-margin">
+            <div id="patient_informations"></div>
+            <div class="overlay" id="patient_loading"><i class="fa fa-refresh fa-spin"></i></div>
         </div>
     </section>
 </div>

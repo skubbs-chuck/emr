@@ -42,17 +42,17 @@ class Patient extends Base_Controller {
 		// 	Other
 			
 		$id_patient = (int) $id_patient;
-		$this->data['pinfo'] = array();
+		$this->data['patient'] = array();
 
         $this->load->model('model_user');
-        $this->data['pinfo'] = $this->model_patient->getPatientById($id_patient);
-        if (!$this->data['pinfo']) {
+        $this->data['patient'] = $this->model_patient->getPatientById($id_patient);
+        if (!$this->data['patient']) {
         	$this->setFlashAlert('Patient does not exist', 'error');
         	redirect('patient/management');
         }
 
-        $this->data['pinfo']->birth_date = $this->formatDate($this->data['pinfo']->birth_date);
-        $this->data['member_since'] = $this->formatDate($this->data['pinfo']->creation_date);
+        $this->data['patient']->birth_date = $this->formatDate($this->data['patient']->birth_date);
+        $this->data['member_since'] = $this->formatDate($this->data['patient']->creation_date);
         $this->_homeAssets();
         $this->display();
 	}
