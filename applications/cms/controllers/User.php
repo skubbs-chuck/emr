@@ -49,7 +49,7 @@ class User extends Base_Controller {
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required|min_length[5]');
 		$this->form_validation->set_rules('specialty', 'Specialization', 'trim|required');
 		if ($this->form_validation->run()) {
-			$post_data = $this->_post(array('username', 'password', 'email', 'first_name', 'last_name', 'specialty'));
+			$post_data = $this->_post('username', 'password', 'email', 'first_name', 'last_name', 'specialty');
 			$id_user = $this->model_user->addUser($post_data);
 			if ($id_user) {
 				$this->setFlashAlert($post_data['username'] . ' has been sucessfully added.', 'success');

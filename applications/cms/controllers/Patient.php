@@ -68,7 +68,6 @@ class Patient extends Base_Controller {
 		$this->form_validation->set_rules('gender', 'Gender', 'required');
 		$this->form_validation->set_rules('account_type', 'Account Type', 'required');
 		if ($this->form_validation->run()) {
-			// $post_data = $this->_post(array('name', ''));
 			$post_data = $this->input->post(NULL);
 			// $post_data = $_POST;
 			$post_data['first_name'] = ucwords($post_data['first_name']);

@@ -31,7 +31,7 @@ class Clinic extends Base_Controller {
 		$this->form_validation->set_rules('hour_start', 'Hour Start', 'trim|required');
 		$this->form_validation->set_rules('hour_end', 'Hour End', 'trim|required|callback_check_hour', array('check_hour' => 'Hour Start must be less than Hour End'));
 		if ($this->form_validation->run()) {
-			$post_data = $this->_post(array('name', 'hour_start', 'hour_end', 'street', 'city', 'province', 'country', 'zip_code', 'contact_number', 'website'));
+			$post_data = $this->_post('name', 'hour_start', 'hour_end', 'street', 'city', 'province', 'country', 'zip_code', 'contact_number', 'website');
 			$post_data['name'] = ucwords($post_data['name']);
 			$post_data['hour_start'] = $this->model_clinic->getHourByKey($post_data['hour_start']);
 			$post_data['hour_end'] = $this->model_clinic->getHourByKey($post_data['hour_end']);
@@ -78,7 +78,7 @@ class Clinic extends Base_Controller {
 		$this->form_validation->set_rules('hour_start', 'Hour Start', 'trim|required');
 		$this->form_validation->set_rules('hour_end', 'Hour End', 'trim|required|callback_check_hour', array('check_hour' => 'Hour Start must be less than Hour End'));
 		if ($this->form_validation->run()) {
-			$post_data = $this->_post(array('name', 'hour_start', 'hour_end', 'street', 'city', 'province', 'country', 'zip_code', 'contact_number', 'website'));
+			$post_data = $this->_post('name', 'hour_start', 'hour_end', 'street', 'city', 'province', 'country', 'zip_code', 'contact_number', 'website');
 			$post_data['name'] = ucwords($post_data['name']);
 			$post_data['hour_start'] = $this->model_clinic->getHourByKey($post_data['hour_start']);
 			$post_data['hour_end'] = $this->model_clinic->getHourByKey($post_data['hour_end']);

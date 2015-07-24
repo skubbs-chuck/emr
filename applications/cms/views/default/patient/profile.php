@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="patient-image col-md-12">
                     <div class="pull-right text-right"><a href="<?php echo base_url() ?>patient/edit/<?php echo $patient->id_patient ?>">EDIT</a></div>
-                    <img src="https://cms.medcurial.com/images/profile_default.png" style="display:inline-block; vertical-align:top;margin-right:5px">
+                    <img src="<?php echo $tpl_url; ?>img/user2-160x160.jpg" width="78px" class="img-circle" style="border:2px solid #fff; display:inline-block; vertical-align:top;margin-right:5px">
                     <div style="display:inline-block">
                         <strong><?php echo $patient->last_name . ', ' . $patient->first_name . ' ' . $patient->middle_name ?></strong><br>
                         <?php echo $patient->gender ?> / <?php echo $patient->birth_date ?><br>

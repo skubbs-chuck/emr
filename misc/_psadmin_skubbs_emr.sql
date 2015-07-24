@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.25a, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.16, for Win32 (x86)
 --
 -- Host: localhost    Database: psadmin_skubbs_emr
 -- ------------------------------------------------------
--- Server version	5.5.25a
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1305,6 +1305,38 @@ LOCK TABLES `management_plans` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `medical_history`
+--
+
+DROP TABLE IF EXISTS `medical_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medical_history` (
+  `id_medical_history` int(11) NOT NULL AUTO_INCREMENT,
+  `id_patient` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `blood_type` varchar(5) NOT NULL,
+  `immunization` text NOT NULL,
+  `phas` longtext NOT NULL,
+  `personal_social` text NOT NULL,
+  `family` longtext NOT NULL,
+  `other` text NOT NULL,
+  `creation_date` datetime NOT NULL,
+  PRIMARY KEY (`id_medical_history`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medical_history`
+--
+
+LOCK TABLES `medical_history` WRITE;
+/*!40000 ALTER TABLE `medical_history` DISABLE KEYS */;
+INSERT INTO `medical_history` VALUES (1,2,1,'O+','Immunization here dude','[[\"date year here 1\",\"some details\"],[\"date year here 2\",\"details here 2\"]]','past personal and social history','[[\"relative name 1\",\"relative desease details 1\"],[\"relative name 2\",\"relative desease details 2\"]]','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','0000-00-00 00:00:00'),(2,3,1,'A+','awd','[[\"awd\",\"awd\"]]','','[[\"a\",\"\"],[\"\",\"asq\"]]','wdafag','0000-00-00 00:00:00');
+/*!40000 ALTER TABLE `medical_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `modules`
 --
 
@@ -1501,7 +1533,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1);
+INSERT INTO `sessions` VALUES ('851344a22523533640546e60c5575e07a702bd86',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1634,4 +1666,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-23  0:26:35
+-- Dump completed on 2015-07-24 18:38:58

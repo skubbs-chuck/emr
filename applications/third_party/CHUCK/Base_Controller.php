@@ -24,7 +24,8 @@ class Base_Controller Extends MY_Controller {
         $this->_mainAssets();
     }
 
-    protected function _post($arr = array(), $xss_clean = FALSE) {
+    protected function _post() {
+        $arr = func_get_args();
     	if ($arr) {
     		$result = array();
     		foreach ($arr as $key) {

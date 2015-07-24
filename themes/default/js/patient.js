@@ -41,14 +41,14 @@ $(function() {
         return false;
     });
 
-    $('#patient_add-birth_date').datepicker({
+    $('#patient-add-birth_date').datepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
         todayHighlight: true, 
         toggleActive: true
     });
 
-    $('#patient_add-contact').click(function() {
+    $('#patient-add-contact').click(function() {
     	var ctypes = ['Mobile', 'Home Phone', 'Home Fax', 'Work', 'Work Fax', 'Other'];
     	var contact_type_options = '';
     	for (var i = 0; i < ctypes.length; i++) 
@@ -63,7 +63,7 @@ $(function() {
 	    $(this).parent().parent().parent().remove();
 	});
 
-	$('#patient_add-identification').click(function() {
+	$('#patient-add-identification').click(function() {
     	var itypes = ['Driver License', 'SSS', 'Senior Citizen', 'Passport', 'Company ID', 'HealthCare Pin', 'Employee No.'];
     	var identification_type_options = '';
     	for (var i = 0; i < itypes.length; i++) 
