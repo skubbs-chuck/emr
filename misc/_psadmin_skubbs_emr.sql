@@ -974,33 +974,6 @@ LOCK TABLES `form_pediac` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `form_ph`
---
-
-DROP TABLE IF EXISTS `form_ph`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `form_ph` (
-  `id_form_ph` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `id_patient` int(11) NOT NULL,
-  `id_clinic` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `creation_date` datetime NOT NULL,
-  PRIMARY KEY (`id_form_ph`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `form_ph`
---
-
-LOCK TABLES `form_ph` WRITE;
-/*!40000 ALTER TABLE `form_ph` DISABLE KEYS */;
-INSERT INTO `form_ph` VALUES (1,2,1,1,'2015-06-03 00:00:00'),(2,2,1,1,'2015-06-01 00:00:00');
-/*!40000 ALTER TABLE `form_ph` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `form_pulmoc`
 --
 
@@ -1178,7 +1151,7 @@ CREATE TABLE `forms` (
 
 LOCK TABLES `forms` WRITE;
 /*!40000 ALTER TABLE `forms` DISABLE KEYS */;
-INSERT INTO `forms` VALUES (1,0,4,'CBC','form_cbc'),(2,0,4,'CBC Form','form_cbcf'),(3,0,2,'Certificate of Medical Fitness','form_cmof'),(4,0,4,'Chest X-ray','form_cx'),(5,0,1,'Gen SOAP Follow Up','form_gsf1'),(6,0,2,'Medical Certificate 1','form_mc1'),(7,0,2,'Medical Certificate 2','form_mc2'),(8,0,2,'Medical Certificate 3','form_mc3'),(9,0,4,'Ob First Trimester Ultrasound','form_oftu'),(10,0,1,'Patient History','form_ph'),(11,0,2,'Thank You Letter','form_tyl'),(12,0,1,'Wound Assessment','form_wa'),(13,3,1,'[Derma] Consult','form_dc'),(14,3,1,'[Derma] Follow-Up','form_df'),(15,0,1,'[ENT] Consult 1','form_ec1'),(16,0,1,'[ENT] Consult 2','form_ec2'),(17,0,1,'[Gen] SOAP Follow-up','form_gsf2'),(18,0,1,'[Gen] SOAP Note','form_gsn'),(19,0,1,'[Gen] SOAP w/ Notes Template','form_gswnt'),(20,0,4,'[LABMERGE] Urinalysis','form_lu'),(21,0,1,'[Ob/Gyn] Gynecology Consult','form_oggc'),(22,0,1,'[Ob/Gyn] Prenatal Consult','form_ogpc'),(23,0,1,'[Ob/Gyn] Prenatal Flowsheet','form_ogpf'),(24,6,1,'[Ophtha] Consult 1','form_oc1'),(25,6,1,'[Ophtha] Consult 2','form_oc2'),(26,6,1,'[Ophtha] Consult 3','form_oc3'),(27,0,1,'[Pedia] Consult','form_pediac'),(28,0,1,'[Pulmo] Consult','form_pulmoc'),(29,0,1,'[Surgery] Consult','form_sc'),(30,0,7,'[Aesthetics] Therapist\'s Notes','form_atn'),(31,0,7,'[Gen] Nurse Visit','form_gnv'),(32,0,7,'[Preventive Wellness] Nurse\'s Notes','form_pwnn');
+INSERT INTO `forms` VALUES (1,0,4,'CBC','form_cbc'),(2,0,4,'CBC Form','form_cbcf'),(3,0,2,'Certificate of Medical Fitness','form_cmof'),(4,0,4,'Chest X-ray','form_cx'),(5,0,1,'Gen SOAP Follow Up','form_gsf1'),(6,0,2,'Medical Certificate 1','form_mc1'),(7,0,2,'Medical Certificate 2','form_mc2'),(8,0,2,'Medical Certificate 3','form_mc3'),(9,0,4,'Ob First Trimester Ultrasound','form_oftu'),(11,0,2,'Thank You Letter','form_tyl'),(12,0,1,'Wound Assessment','form_wa'),(13,3,1,'[Derma] Consult','form_dc'),(14,3,1,'[Derma] Follow-Up','form_df'),(15,0,1,'[ENT] Consult 1','form_ec1'),(16,0,1,'[ENT] Consult 2','form_ec2'),(17,0,1,'[Gen] SOAP Follow-up','form_gsf2'),(18,0,1,'[Gen] SOAP Note','form_gsn'),(19,0,1,'[Gen] SOAP w/ Notes Template','form_gswnt'),(20,0,4,'[LABMERGE] Urinalysis','form_lu'),(21,0,1,'[Ob/Gyn] Gynecology Consult','form_oggc'),(22,0,1,'[Ob/Gyn] Prenatal Consult','form_ogpc'),(23,0,1,'[Ob/Gyn] Prenatal Flowsheet','form_ogpf'),(24,6,1,'[Ophtha] Consult 1','form_oc1'),(25,6,1,'[Ophtha] Consult 2','form_oc2'),(26,6,1,'[Ophtha] Consult 3','form_oc3'),(27,0,1,'[Pedia] Consult','form_pediac'),(28,0,1,'[Pulmo] Consult','form_pulmoc'),(29,0,1,'[Surgery] Consult','form_sc'),(30,0,7,'[Aesthetics] Therapist\'s Notes','form_atn'),(31,0,7,'[Gen] Nurse Visit','form_gnv'),(32,0,7,'[Preventive Wellness] Nurse\'s Notes','form_pwnn');
 /*!40000 ALTER TABLE `forms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1541,7 +1514,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1);
+INSERT INTO `sessions` VALUES ('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1674,4 +1647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-27 17:26:29
+-- Dump completed on 2015-07-28 18:01:17
