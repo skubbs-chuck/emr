@@ -1,16 +1,16 @@
-function ajaxPatientGet(form, id_result, id_loading) {
+function ajaxPatient(form, id_result, id_loading, id_form, what2do) {
     id_result = (typeof id_result !== 'undefined') ? id_result : 'patient_informations';
     id_loading = (typeof id_loading !== 'undefined') ? id_loading : 'patient_loading';
+    what2do = (typeof what2do !== 'undefined') ? what2do : '';
     $('#' + id_loading).show();
     $.ajax({
-        url: base_url + 'ajax/patient/' + form + '/' + $('#id_patient').text(), 
+        url: base_url + 'ajax/patient/' + form + '/' + $('#id_patient').text() + '/' + id_form + '?' + what2do, 
         dataType: 'json', 
         success: function(r) {
             $('#' + id_result).html(r.html);
             $('#' + id_loading).hide();
-            // console.log(form);
             if (id_result == 'patient_informations' && form == 'notes') {
-                ajaxPatientGet('consultation', 'patient_notes');
+                ajaxPatient('consultation', 'patient_notes');
             };
             return false;
         }, 
@@ -26,18 +26,18 @@ function ajaxPatientGet(form, id_result, id_loading) {
 }
 
 $(function() {
-    ajaxPatientGet('medical_history');
+    ajaxPatient('medical_history');
     $(document).on('click', 'a[id^="patient-ajax-"]', function() {
         form = $(this).attr('id').replace(/^patient-ajax-/, '');
         form = form.replace(/-/, '_');
-        ajaxPatientGet(form);
+        ajaxPatient(form);
         return false;
     });
 
     $(document).on('click', 'a[id^="patient-notes-ajax-"]', function() {
         form = $(this).attr('id').replace(/^patient-notes-ajax-/, '');
         form = form.replace(/-/, '_');
-        ajaxPatientGet(form, 'patient_notes', 'notes_loading');
+        ajaxPatient(form, 'patient_notes', 'notes_loading');
         return false;
     });
 

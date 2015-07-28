@@ -9,6 +9,12 @@
   display: none;
 }
 
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
 /* custom inclusion of right, left and below tabs */
 /*
 .tabs-below > .nav-tabs,

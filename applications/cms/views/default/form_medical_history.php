@@ -148,7 +148,7 @@ $(function() {
 		$('#mh-results .mh-input').hide();
 		$('#mh-results .mh-output').show();
 		$('#mh-results .mh-edit').show();
-		ajaxPatientGet('medical_history');
+		ajaxPatient('medical_history');
 		return false
 	});
 	$(document).on('click', '#mh-results .mh-save', function() {

@@ -209,7 +209,7 @@ CREATE TABLE `form_cbc` (
   `monocytes` varchar(255) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_cbc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,6 +218,7 @@ CREATE TABLE `form_cbc` (
 
 LOCK TABLES `form_cbc` WRITE;
 /*!40000 ALTER TABLE `form_cbc` DISABLE KEYS */;
+INSERT INTO `form_cbc` VALUES (1,2,1,1,'2015-07-27','00:00:00','1','1','1','1','1','1','1','1','1','1','1','1','1','1','2015-07-27 00:00:00');
 /*!40000 ALTER TABLE `form_cbc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,7 +365,7 @@ CREATE TABLE `form_dc` (
   `follow_up` date NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_dc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -373,6 +374,7 @@ CREATE TABLE `form_dc` (
 
 LOCK TABLES `form_dc` WRITE;
 /*!40000 ALTER TABLE `form_dc` DISABLE KEYS */;
+INSERT INTO `form_dc` VALUES (1,2,1,1,'1','1','1','1','1','2015-07-27','00:00:00','00:00:00','1','1','1','1','1','1','1','1','2015-07-29','2015-07-27 00:00:00'),(2,2,1,1,'1','1','4','3','5','2015-07-13','00:00:00','00:00:00','','5','','','','','','','0000-00-00','2015-07-01 00:00:00');
 /*!40000 ALTER TABLE `form_dc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -562,9 +564,12 @@ CREATE TABLE `form_gsf1` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `soap_img` text NOT NULL,
+  `subjective` text NOT NULL,
+  `plan` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_gsf1`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -573,6 +578,7 @@ CREATE TABLE `form_gsf1` (
 
 LOCK TABLES `form_gsf1` WRITE;
 /*!40000 ALTER TABLE `form_gsf1` DISABLE KEYS */;
+INSERT INTO `form_gsf1` VALUES (1,2,1,1,'1','1','1','0000-00-00 00:00:00'),(2,2,1,1,'2','2','2','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `form_gsf1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -772,7 +778,7 @@ CREATE TABLE `form_oc1` (
   `id_user` int(11) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_oc1`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -781,6 +787,7 @@ CREATE TABLE `form_oc1` (
 
 LOCK TABLES `form_oc1` WRITE;
 /*!40000 ALTER TABLE `form_oc1` DISABLE KEYS */;
+INSERT INTO `form_oc1` VALUES (1,2,1,1,'2015-07-01 00:00:00');
 /*!40000 ALTER TABLE `form_oc1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -980,7 +987,7 @@ CREATE TABLE `form_ph` (
   `id_user` int(11) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_ph`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -989,6 +996,7 @@ CREATE TABLE `form_ph` (
 
 LOCK TABLES `form_ph` WRITE;
 /*!40000 ALTER TABLE `form_ph` DISABLE KEYS */;
+INSERT INTO `form_ph` VALUES (1,2,1,1,'2015-06-03 00:00:00'),(2,2,1,1,'2015-06-01 00:00:00');
 /*!40000 ALTER TABLE `form_ph` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1332,7 +1340,7 @@ CREATE TABLE `medical_history` (
 
 LOCK TABLES `medical_history` WRITE;
 /*!40000 ALTER TABLE `medical_history` DISABLE KEYS */;
-INSERT INTO `medical_history` VALUES (1,2,1,'O+','Immunization here dude','[[\"date year here 1\",\"some details\"],[\"date year here 2\",\"details here 2\"]]','past personal and social history','[[\"relative name 1\",\"relative desease details 1\"],[\"relative name 2\",\"relative desease details 2\"]]','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','0000-00-00 00:00:00'),(2,3,1,'A+','awd','[[\"awd\",\"awd\"]]','','[[\"a\",\"\"],[\"\",\"asq\"]]','wdafag','0000-00-00 00:00:00');
+INSERT INTO `medical_history` VALUES (1,2,1,'O+','Immunization here dude','[[\"date year here 1\",\"some details\"],[\"date year here 2\",\"details here 2\"],[\"1wq\",\"1\"],[\"\",\"1\"],[\"2\",\"\"]]','past personal and social history','[[\"relative name 1\",\"relative desease details 1\"]]','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','0000-00-00 00:00:00'),(2,3,1,'A+','awd','[[\"awd\",\"awd\"]]','','[[\"a\",\"\"],[\"\",\"asq\"]]','wdafag','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `medical_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1533,7 +1541,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('851344a22523533640546e60c5575e07a702bd86',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1);
+INSERT INTO `sessions` VALUES ('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1666,4 +1674,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-24 18:38:58
+-- Dump completed on 2015-07-27 17:26:29
