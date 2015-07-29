@@ -7,18 +7,11 @@
 	    		<?php endif ?>
 	    	</li>
 	    	<li class="item">
-				<?php if ($gsf1['create_new_form']): ?>
-					<div class="btn-group pull-right">
-						<button class="btn btn-primary gsf1-save">Save</button>
-						<button class="btn gsf1-cancel">Cancel</button>
-					</div>
-				<?php else: ?>
-					<div class="btn-group pull-right"><button class="btn btn-primary gsf1-edit">Edit</button></div>
-					<div class="btn-group pull-right">
-						<button class="btn btn-primary gsf1-save">Save</button>
-						<button class="btn gsf1-cancel">Cancel</button>
-					</div>
-				<?php endif ?>
+				<div class="btn-group pull-right"><button class="btn btn-primary gsf1-edit">Edit</button></div>
+				<div class="btn-group pull-right">
+					<button class="btn btn-primary gsf1-save">Save</button>
+					<button class="btn gsf1-cancel">Cancel</button>
+				</div>
 	    	</li>
 		    <li class="item">
 		        <strong>soap_img: </strong>
@@ -45,68 +38,47 @@
 		    	</div>
 		    </li>
 		    <li class="item">
-		    	<?php if ($gsf1['create_new_form']): ?>
-					<div class="btn-group pull-right">
-						<button class="btn btn-primary gsf1-save">Save</button>
-						<button class="btn gsf1-cancel">Cancel</button>
-					</div>
-				<?php else: ?>
-					<div class="btn-group pull-right"><button class="btn btn-primary gsf1-edit">Edit</button></div>
-					<div class="btn-group pull-right">
-						<button class="btn btn-primary gsf1-save">Save</button>
-						<button class="btn gsf1-cancel">Cancel</button>
-					</div>
-				<?php endif ?>
-		    </li>
+				<div class="btn-group pull-right"><button class="btn btn-primary gsf1-edit">Edit</button></div>
+				<div class="btn-group pull-right">
+					<button class="btn btn-primary gsf1-save">Save</button>
+					<button class="btn gsf1-cancel">Cancel</button>
+				</div>
+	    	</li>
 		</ul>
 	</form>
 </div>
 <script type="text/javascript">
 $(function() {
-	<?php if ($gsf1['create_new_form']): ?>
-		$(document).on('click', '#gsf1-results .gsf1-save', function() {
-			// do ajax post to save
-			$.ajax({
-				url: base_url + 'ajax/patient/' + form + '/' + <?php echo $patient->id_patient ?> + '/undefined?create', 
-				method: 'post', 
-				data: $('#gsf1-form').serialize(),
-				dataType: 'json', 
-				success: function(r) {
-					console.log(r);
-					return false;
-				}
-			});
-			return false;
-		});
-		$(document).on('click', '#gsf1-results .gsf1-cancel', function() {
-			ajaxPatient('consultation', 'patient_notes');
-			return false;
-		});
-	<?php else: ?>
-		$(document).ready(function() {
-			$('#gsf1-results .gsf1-input').hide();
-			$('#gsf1-results .gsf1-save').hide();
-			$('#gsf1-results .gsf1-cancel').hide();
-		});
-		$(document).on('click', '#gsf1-results .gsf1-edit', function() {
-			$('#gsf1-message').text('');
-			$('#gsf1-results .gsf1-save').show();
-			$('#gsf1-results .gsf1-cancel').show();
-			$('#gsf1-results .gsf1-input').show();
-			$('#gsf1-results .gsf1-output').hide();
-			$('#gsf1-results .gsf1-edit').hide();
+	$(document).ready(function() {
+		$('#gsf1-results .gsf1-input').hide();
+		$('#gsf1-results .gsf1-save').hide();
+		$('#gsf1-results .gsf1-cancel').hide();
+	});
+	$(document).on('click', '#gsf1-results .gsf1-edit', function() {
+		$('#gsf1-message').text('');
+		$('#gsf1-results .gsf1-save').show();
+		$('#gsf1-results .gsf1-cancel').show();
+		$('#gsf1-results .gsf1-input').show();
+		$('#gsf1-results .gsf1-output').hide();
+		$('#gsf1-results .gsf1-edit').hide();
 
-			return false;
-		});
-		$(document).on('click', '#gsf1-results .gsf1-cancel', function() {
-			$('#gsf1-results .gsf1-save').hide();
-			$('#gsf1-results .gsf1-cancel').hide();
-			$('#gsf1-results .gsf1-input').hide();
-			$('#gsf1-results .gsf1-output').show();
-			$('#gsf1-results .gsf1-edit').show();
-			// ajaxPatient('gsf1');
-			return false;
-		});
-	<?php endif ?>
+		return false;
+	});
+	$(document).on('click', '#gsf1-results .gsf1-cancel', function() {
+		$('#gsf1-results .gsf1-save').hide();
+		$('#gsf1-results .gsf1-cancel').hide();
+		$('#gsf1-results .gsf1-input').hide();
+		$('#gsf1-results .gsf1-output').show();
+		$('#gsf1-results .gsf1-edit').show();
+		return false;
+	});
+	$(document).on('click', '#gsf1-results .gsf1-save', function() {
+		$('#gsf1-results .gsf1-save').hide();
+		$('#gsf1-results .gsf1-cancel').hide();
+		$('#gsf1-results .gsf1-input').hide();
+		$('#gsf1-results .gsf1-output').show();
+		$('#gsf1-results .gsf1-edit').show();
+		return false;
+	});
 });
 </script>

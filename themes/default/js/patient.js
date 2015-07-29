@@ -7,9 +7,10 @@ function ajaxPatient(form, id_result, id_loading, id_form, what2do) {
         url: base_url + 'ajax/patient/' + form + '/' + $('#id_patient').text() + '/' + id_form + '?' + what2do, 
         dataType: 'json', 
         success: function(r) {
+            console.log(form + ' ' + id_result);
             $('#' + id_result).html(r.html);
             $('#' + id_loading).hide();
-            if (id_result == 'patient_informations' && form == 'notes') {
+            if (form == 'notes' && id_result == 'patient_informations') {
                 ajaxPatient('consultation', 'patient_notes');
             };
             return false;
@@ -37,7 +38,8 @@ $(function() {
     $(document).on('click', 'a[id^="patient-notes-ajax-"]', function() {
         form = $(this).attr('id').replace(/^patient-notes-ajax-/, '');
         form = form.replace(/-/, '_');
-        ajaxPatient(form, 'patient_notes', 'notes_loading');
+        ajaxPatient(form, 'patient_notes');
+        console.log(form + ' patient_notes');
         return false;
     });
 

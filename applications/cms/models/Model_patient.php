@@ -2,6 +2,7 @@
 
 class Model_Patient extends Base_Model {
     public function addPatient($data) {
+        $this->security->xss_clean($data);
         $this->db->insert('patients', $data);
         return $this->db->insert_id();
     }

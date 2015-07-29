@@ -34,8 +34,22 @@ class Test extends Base_Controller {
 // exit();
     	// $this->load->dbforge();
     	foreach ($result as $form) {
-   			// $myfile = fopen(VIEWPATH . 'default' . DS . str_replace('_', DS, $form->table_name) . '.php', "w+") or die("Unable to open file!");
-			// fwrite($myfile, $form->name);
+            // $file_code = $form->name . ' Create';
+            // echo $file_code . '<br>';
+            // $myfile = fopen(VIEWPATH . 'default' . DS . 'form' . DS . preg_replace('/^form_/', '', $form->table_name) . '_create.php', "w+") or die("Unable to open file!");
+            // fwrite($myfile, $file_code);
+            // fclose($myfile);
+
+            // echo VIEWPATH . 'default' . DS . 'form' . DS . preg_replace('/^form_/', '', $form->table_name) . '_create.php';
+            $form_view = preg_replace('/^form_/', '', $form->table_name);
+            $file_code = "<?php defined('BASEPATH') OR exit('No direct script access allowed');\r\n\r\nclass Model_$form->table_name extends Base_Model {\r\n";
+            $file_code .= "\tpublic \$data = array('view_file' => 'form/$form_view');\r\n";
+            $file_code .= "\r\n\tpublic function index(\$d) {\r\n\t\treturn \$this->data;\r\n\t}\r\n";
+            $file_code .= "\r\n\tpublic function create(\$d) {\r\n\t\t\$this->data['view_file'] = 'form/" . $form_view . "_create';\r\n\t\treturn \$this->data;\r\n\t}\r\n";
+            $file_code .="}\r\n\r\n";
+            echo $file_code;
+   // 			$myfile = fopen(PATH_MODELS . 'form' . DS . 'Model_' . $form->table_name . '.php', "w+") or die("Unable to open file!");
+			// fwrite($myfile, $file_code);
 			// fclose($myfile);
     		// echo "// Category: " . ($form->category ? $form->category : 'None') . "\r\n";
     		// echo "// Type: $form->type\r\n";

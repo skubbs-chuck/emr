@@ -68,11 +68,11 @@ class Patient extends Base_Controller {
 		$this->form_validation->set_rules('gender', 'Gender', 'required');
 		$this->form_validation->set_rules('account_type', 'Account Type', 'required');
 		if ($this->form_validation->run()) {
-			$post_data = $this->input->post(NULL);
+			$post_data = $this->input->post(NULL, TRUE);
 			// $post_data = $_POST;
-			$post_data['first_name'] = ucwords($post_data['first_name']);
-			$post_data['middle_name'] = ucwords($post_data['middle_name']);
-			$post_data['last_name'] = ucwords($post_data['last_name']);
+			$post_data['first_name'] = html_escape(ucwords($post_data['first_name']));
+			$post_data['middle_name'] = html_escape(ucwords($post_data['middle_name']));
+			$post_data['last_name'] = html_escape(ucwords($post_data['last_name']));
 			$contacts = array();
 			$identifications = array();
 			if (isset($post_data['contacts_type']) && isset($post_data['contacts_number'])) {
@@ -80,7 +80,7 @@ class Patient extends Base_Controller {
 				$post_data['contacts_type'] = array_values($post_data['contacts_type']);
 				$post_data['contacts_number'] = array_values($post_data['contacts_number']);
 				for ($i=0; $i < count($post_data['contacts_type']); $i++) 
-					$contacts[] = array($post_data['contacts_type'][$i], $post_data['contacts_number'][$i]);
+					$contacts[] = array(html_escape($post_data['contacts_type'][$i]), html_escape($post_data['contacts_number'][$i]));
 				unset($post_data['contacts_type'], $post_data['contacts_number']);
 			}
 
@@ -89,7 +89,7 @@ class Patient extends Base_Controller {
 				$post_data['identifications_type'] = array_values($post_data['identifications_type']);
 				$post_data['identifications_number'] = array_values($post_data['identifications_number']);
 				for ($i=0; $i < count($post_data['identifications_type']); $i++) 
-					$identifications[] = array($post_data['identifications_type'][$i], $post_data['identifications_number'][$i]);
+					$identifications[] = array(html_escape($post_data['identifications_type'][$i]), html_escape($post_data['identifications_number'][$i]));
 				unset($post_data['identifications_type'], $post_data['identifications_number']);
 			}
 

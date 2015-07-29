@@ -9,15 +9,15 @@ class Model_Form extends Base_Model {
 			$post_data = $this->_post('blood_type', 'immunization', 'phas_date_year', 
 				'phas_detail', 'personal_social', 'family_relative', 'family_desease', 'other');
 			$data = array(
-				'blood_type' => $this->input->post('blood_type'), 
-				'immunization' => $this->input->post('immunization'), 
-				'personal_social' => $this->input->post('personal_social'), 
-				'other' => $this->input->post('other'));
+				'blood_type' => html_escape($this->input->post('blood_type')), 
+				'immunization' => html_escape($this->input->post('immunization')), 
+				'personal_social' => html_escape($this->input->post('personal_social')), 
+				'other' => html_escape($this->input->post('other')));
 
 			$phas_count = (count($post_data['phas_date_year']) >= count($post_data['phas_detail'])) ? count($post_data['phas_date_year']) : count($post_data['phas_detail']);
 			for ($i=0; $i < $phas_count; $i++) { 
 				if (!empty($post_data['phas_date_year'][$i]) || !empty($post_data['phas_detail'][$i])) {
-					$data['phas'][$i] = array($post_data['phas_date_year'][$i], $post_data['phas_detail'][$i]);
+					$data['phas'][$i] = array(html_escape($post_data['phas_date_year'][$i]), html_escape($post_data['phas_detail'][$i]));
 				}
 				
 			}
@@ -25,13 +25,14 @@ class Model_Form extends Base_Model {
 			$family_count = (count($post_data['family_relative']) >= count($post_data['family_desease'])) ? count($post_data['family_relative']) : count($post_data['family_desease']);
 			for ($i=0; $i < $family_count; $i++) { 
 				if (!empty($post_data['family_relative'][$i]) || !empty($post_data['family_desease'][$i])) {
-					$data['family'][$i] = array($post_data['family_relative'][$i], $post_data['family_desease'][$i]);
+					$data['family'][$i] = array(html_escape($post_data['family_relative'][$i]), html_escape($post_data['family_desease'][$i]));
 				}
 			}
 
 			$data['phas'] = json_encode($data['phas']);
 			$data['family'] = json_encode($data['family']);
 			$data['id_user'] = $this->session->userdata('user')->id_user;
+			$data = $this->security->xss_clean($data);
 
 			$this->db->where('id_patient', $id_patient);
 			$query = $this->db->get('medical_history');

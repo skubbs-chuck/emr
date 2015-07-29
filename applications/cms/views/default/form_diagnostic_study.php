@@ -1,15 +1,15 @@
 <div class="box no-border">
 	<div class="box-body">
-			<div class="btn-group pull-right">
-	    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-	        Create <span class="caret"></span>
-	        <span class="sr-only">Toggle Dropdown</span>
-	    </button>
-	    <ul class="dropdown-menu scrollable-menu" role="menu">
-	        <?php foreach ($diagnostic_study['form_list'] as $form): ?>
-	        	<li><a href="#" id="create-new-note-<?php echo $form->table_name ?>"><?php echo $form->name ?></a></li>
-	        <?php endforeach ?>
-	    </ul>
+		<div class="btn-group pull-right" id="create-new-note">
+		    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+		        Create <span class="caret"></span>
+		        <span class="sr-only">Toggle Dropdown</span>
+		    </button>
+		    <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
+		        <?php foreach ($diagnostic_study['form_list'] as $form): ?>
+		        	<li><a href="#" id="create-new-note-<?php echo $form->table_name ?>"><?php echo $form->name ?></a></li>
+		        <?php endforeach ?>
+		    </ul>
 		</div>
 	</div>
 </div>
@@ -26,7 +26,7 @@
 	            </a>
 	        </div>
 			<div id="<?php echo $form->tbl . '_' . $form->$id ?>" class="panel-collapse collapse">
-	            <div class="panel-body" form-tbl="<?php echo $form->name ?>" form-id="<?php echo $form->$id ?>" id="diagnostic_study_data_<?php echo $form->$id ?>_<?php echo $form->tbl ?>"></div>
+	            <div class="panel-body" form-tbl="<?php echo $form->tbl ?>" form-id="<?php echo $form->$id ?>" id="diagnostic_study_data_<?php echo $form->$id ?>_<?php echo $form->tbl ?>"></div>
 	        </div>
 		</div>
 	<?php endforeach ?>
@@ -42,10 +42,28 @@ $(function(){
 		   	ajaxPatient(form, id_result, 'patient_loading', form_id);
 		});
 	});
-	$(document).on('click', 'a[id^="create-new-note-form_"]', function() {
-        form_to_create = $(this).attr('id').replace(/^create-new-note-form_/, '');
-        // alert(form_to_create);
-        ajaxPatient(form_to_create, 'result_diagnostic_study');
+	$(document).on('click', 'a[id^="create-new-note-"]', function() {
+        form = $(this).attr('id').replace(/^create-new-note-/, '');
+        id_result = 'result_diagnostic_study';
+        id_loading = 'patient_loading';
+        $.ajax({
+	        url: base_url + 'ajax/patient/' + form + '/' + <?php echo $diagnostic_study['id_patient'] ?> + '/' + <?php echo $diagnostic_study['id_form'] ?> + '/create', 
+	        dataType: 'json', 
+	        success: function(r) {
+	            $('#' + id_result).html(r.html);
+	            $('#' + id_loading).hide();
+	            return false;
+	        }, 
+	        complete: function(xhr, textStatus) {
+	            if (xhr.status != 200) {
+	                $('#' + id_result).html('<div class="text-center alert alert-danger"><h4>ERROR ' + xhr.status + '</h4>' + xhr.statusText + '</div>');
+	                $('#' + id_loading).hide();
+	            };
+	            
+	            return false;
+	        }
+	    });
+        $('#create-new-note').removeClass('open');
         return false;
     });
 });
