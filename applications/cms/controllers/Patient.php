@@ -11,8 +11,7 @@ class Patient extends Base_Controller {
 		if (!$this->model_session->is_logged_in()) 
             redirect('user/login');
 
-        $this
-        	 ->addCss($this->tplUrl . 'plugins/datepicker/datepicker3.css')
+        $this->addCss($this->tplUrl . 'plugins/datepicker/datepicker3.css')
         	 ->addJs($this->tplUrl . 'plugins/datepicker/bootstrap-datepicker.js')
 			 ->addCss($this->tplUrl . 'css/patient.css')
 			 ->addJs($this->tplUrl . 'js/patient.js');
@@ -27,20 +26,6 @@ class Patient extends Base_Controller {
 	}
 
 	public function profile($id_patient = NULL) {
-		// Past Medical History
-		// Medications
-		// Immunization
-		// Health Tracker
-		// Growth Chart
-
-		// Resent Notes
-		// 	Consultation
-		// 	Nurse Visit
-		// 	Diagnostic Study
-		// 	Procedure
-		// 	Operation
-		// 	Other
-			
 		$id_patient = (int) $id_patient;
 		$this->data['patient'] = array();
 
@@ -53,7 +38,6 @@ class Patient extends Base_Controller {
 
         $this->data['patient']->birth_date = $this->formatDate($this->data['patient']->birth_date);
         $this->data['member_since'] = $this->formatDate($this->data['patient']->creation_date);
-        $this->_homeAssets();
         $this->display();
 	}
 
@@ -107,11 +91,5 @@ class Patient extends Base_Controller {
 		}
 
 		$this->display();
-	}
-
-	public function test() {
-		// $this->session->set_flashdata('alert_message', 'test');
-		$this->setFlashAlert('something something');
-		redirect('patient/management');
 	}
 }

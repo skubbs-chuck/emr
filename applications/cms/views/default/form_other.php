@@ -32,39 +32,3 @@
 	<?php endforeach ?>
 	</div>
 </div>
-<script>
-$(function(){
-	$(document).ready(function(){
-		$('div[id^="other_data_"]').each(function(index) {
-		    form_id = $(this).attr('form-id');
-		    form = $(this).attr('form-tbl');
-		    id_result = this.id;
-		   	ajaxPatient(form, id_result, 'patient_loading', form_id);
-		});
-	});
-	$(document).on('click', 'a[id^="create-new-note-"]', function() {
-        form = $(this).attr('id').replace(/^create-new-note-/, '');
-        id_result = 'result_other';
-        id_loading = 'patient_loading';
-        $.ajax({
-	        url: base_url + 'ajax/patient/' + form + '/' + <?php echo $other['id_patient'] ?> + '/' + <?php echo $other['id_form'] ?> + '/create', 
-	        dataType: 'json', 
-	        success: function(r) {
-	            $('#' + id_result).html(r.html);
-	            $('#' + id_loading).hide();
-	            return false;
-	        }, 
-	        complete: function(xhr, textStatus) {
-	            if (xhr.status != 200) {
-	                $('#' + id_result).html('<div class="text-center alert alert-danger"><h4>ERROR ' + xhr.status + '</h4>' + xhr.statusText + '</div>');
-	                $('#' + id_loading).hide();
-	            };
-	            
-	            return false;
-	        }
-	    });
-        $('#create-new-note').removeClass('open');
-        return false;
-    });
-});
-</script>

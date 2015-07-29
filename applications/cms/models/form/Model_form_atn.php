@@ -8,6 +8,9 @@ class Model_form_atn extends Base_Model {
 	}
 
 	public function create($d) {
+		
+		$query = $this->db->get('clinics');
+		$this->data['clinics'] = $query->result();
 		$this->data['view_file'] = 'form/atn_create';
 		return $this->data;
 	}

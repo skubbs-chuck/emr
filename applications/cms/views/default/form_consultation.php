@@ -1,13 +1,13 @@
 <div class="box no-border">
 	<div class="box-body">
-		<div class="btn-group pull-right" id="create-new-note">
+		<div class="btn-group pull-right" id="create-new-consultation">
 		    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
 		        Create <span class="caret"></span>
 		        <span class="sr-only">Toggle Dropdown</span>
 		    </button>
 		    <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
 		        <?php foreach ($consultation['form_list'] as $form): ?>
-		        	<li><a href="#" id="create-new-note-<?php echo $form->table_name ?>"><?php echo $form->name ?></a></li>
+		        	<li><a href="#" id="create-new-consultation-<?php echo $form->table_name ?>"><?php echo $form->name ?></a></li>
 		        <?php endforeach ?>
 		    </ul>
 		</div>
@@ -42,8 +42,8 @@ $(function(){
 		   	ajaxPatient(form, id_result, 'patient_loading', form_id);
 		});
 	});
-	$(document).on('click', 'a[id^="create-new-note-"]', function() {
-        form = $(this).attr('id').replace(/^create-new-note-/, '');
+	$(document).on('click', 'a[id^="create-new-consultation-"]', function() {
+        form = $(this).attr('id').replace(/^create-new-consultation-/, '');
         id_result = 'result_consultation';
         id_loading = 'patient_loading';
         $.ajax({
@@ -63,7 +63,7 @@ $(function(){
 	            return false;
 	        }
 	    });
-        $('#create-new-note').removeClass('open');
+        $('#create-new-consultation').removeClass('open');
         return false;
     });
 });
