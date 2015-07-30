@@ -1,13 +1,17 @@
+<div id="nurse_visit_vars" style="display:none">
+	<input type="hidden" id="nurse_visit_var-id_patient" value="<?php echo $nurse_visit['id_patient'] ?>">
+	<input type="hidden" id="nurse_visit_var-id_form" value="<?php echo $nurse_visit['id_form'] ?>">
+</div>
 <div class="box no-border">
 	<div class="box-body">
-		<div class="btn-group pull-right" id="create-new-nurse_visit">
+		<div class="btn-group pull-right" id="create_new_notes-nurse_visit">
 		    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
 		        Create <span class="caret"></span>
 		        <span class="sr-only">Toggle Dropdown</span>
 		    </button>
 		    <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
 		        <?php foreach ($nurse_visit['form_list'] as $form): ?>
-		        	<li><a href="#" id="create-new-nurse_visit-<?php echo $form->table_name ?>"><?php echo $form->name ?></a></li>
+		        	<li><a href="#" id="create_new_notes-nurse_visit-<?php echo $form->table_name ?>"><?php echo $form->name ?></a></li>
 		        <?php endforeach ?>
 		    </ul>
 		</div>
@@ -15,6 +19,7 @@
 </div>
 <div id="result_nurse_visit">
 	<div class="panel-group" id="nurse_visit_accordion">
+	<?php if ($nurse_visit['forms']): ?>
 	<?php foreach ($nurse_visit['forms'] as $form): $id = 'id_' . $form->tbl; ?>
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -30,42 +35,18 @@
 	        </div>
 		</div>
 	<?php endforeach ?>
+	<?php else: ?>
+		<div class="panel panel-default">
+			<div class="alert alert-warning text-center">No results found.</div>
+		</div>
+	<?php endif ?>
 	</div>
 </div>
 <script>
-$(function(){
-	$(document).ready(function(){
-		$('div[id^="nurse_visit_data_"]').each(function(index) {
-		    form_id = $(this).attr('form-id');
-		    form = $(this).attr('form-tbl');
-		    id_result = this.id;
-		   	ajaxPatient(form, id_result, 'patient_loading', form_id);
-		});
-	});
-	$(document).on('click', 'a[id^="create-new-nurse_visit-"]', function() {
-        form = $(this).attr('id').replace(/^create-new-nurse_visit-/, '');
-        id_result = 'result_nurse_visit';
-        id_loading = 'patient_loading';
-        $.ajax({
-	        url: base_url + 'ajax/patient/' + form + '/' + <?php echo $nurse_visit['id_patient'] ?> + '/' + <?php echo $nurse_visit['id_form'] ?> + '/create', 
-	        dataType: 'json', 
-	        success: function(r) {
-	            $('#' + id_result).html('');
-	            $('#' + id_result).html(r.html);
-	            $('#' + id_loading).hide();
-	            return false;
-	        }, 
-	        complete: function(xhr, textStatus) {
-	            if (xhr.status != 200) {
-	                $('#' + id_result).html('<div class="text-center alert alert-danger"><h4>ERROR ' + xhr.status + '</h4>' + xhr.statusText + '</div>');
-	                $('#' + id_loading).hide();
-	            };
-	            
-	            return false;
-	        }
-	    });
-        $('#create-new-nurse_visit').removeClass('open');
-        return false;
-    });
+$('div[id^="nurse_visit_data_"]').each(function(index) {
+    form_id = $(this).attr('form-id');
+    form = $(this).attr('form-tbl');
+    id_result = this.id;
+    ajaxPatient(form, id_result, 'patient_loading', form_id);
 });
 </script>

@@ -29,9 +29,6 @@ $('#patient-add-birth_date').datepicker({
 });
 // patient->add end
 
-
-
-
 function ajaxPatient(form, id_result, id_loading, id_form, what2do) {
     id_result = (typeof id_result !== 'undefined') ? id_result : 'patient_informations';
     id_loading = (typeof id_loading !== 'undefined') ? id_loading : 'patient_loading';
@@ -59,6 +56,7 @@ function ajaxPatient(form, id_result, id_loading, id_form, what2do) {
     });
 }
 
+// medical history start
 ajaxPatient('medical_history');
 $(document).on('click', 'a[id^="patient-ajax-"]', function() {
     form = $(this).attr('id').replace(/^patient-ajax-/, '');
@@ -71,5 +69,35 @@ $(document).on('click', 'a[id^="patient-notes-ajax-"]', function() {
     form = $(this).attr('id').replace(/^patient-notes-ajax-/, '');
     form = form.replace(/-/, '_');
     ajaxPatient(form, 'patient_notes');
+    return false;
+});
+
+$(document).on('click', 'a[id^="create_new_notes-"]', function() {
+    inf = this.id.split('-');
+    id_patient = $('#' + inf[1] + '_var-id_patient').val();
+    id_form = $('#' + inf[1] + '_var-id_form').val();
+    form = inf[2];
+    id_result = 'result_' + inf[1];
+    id_loading = 'patient_loading';
+    $.ajax({
+        url: base_url + 'ajax/patient/' + form + '/' + id_patient + '/' + id_form + '/create?time=' + Date.now(), 
+        dataType: 'json', 
+        success: function(r) {
+            $('#' + id_result).html('');
+            $('#' + id_result).html(r.html);
+            $('#' + id_loading).hide();
+            return false;
+        }, 
+        complete: function(xhr, textStatus) {
+            if (xhr.status != 200) {
+                $('#' + id_result).html('<div class="text-center alert alert-danger"><h4>ERROR ' + xhr.status + '</h4>' + xhr.statusText + '</div>');
+                $('#' + id_loading).hide();
+            };
+            
+            return false;
+        }
+    });
+
+    $(this).parent().parent().parent().removeClass('open');
     return false;
 });

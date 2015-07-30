@@ -12,9 +12,6 @@
 					<button class="btn atn-cancel">Cancel</button>
 				</div>
 	    	</li>
-	    	<li class="item">
-	    		<?php print_r($atn['clinics']) ?>
-	    	</li>
 		    <li class="item">
 		    	<strong>Order/Notes: </strong>
 		    	<div>
