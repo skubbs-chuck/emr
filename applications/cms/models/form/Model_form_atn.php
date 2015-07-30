@@ -10,6 +10,7 @@ class Model_form_atn extends Base_Model {
 	public function create($d) {
 		
 		$this->db->select('id_clinic,name');
+		$this->db->order_by('id_clinic');
 		$query = $this->db->get('clinics');
 		foreach ($query->result() as $clinics => $clinic) 
 			$this->data['clinics'][$clinic->id_clinic] = $clinic->name;
