@@ -31,12 +31,14 @@
 					<tbody>
 						<?php if (isset($clinic_list) && $clinic_list): ?>
 							<?php foreach ($clinic_list as $clinic): ?>
+							<tr>
 								<td><a href="<?php echo base_url() . 'clinic/edit/' . $clinic->id_clinic ?>"><?php echo $clinic->name ?></a></td>
 								<td><?php echo $clinic->hour_start ?></td>
 								<td><?php echo $clinic->hour_end ?></td>
 								<td><?php echo implode(', ', array($clinic->country, $clinic->street, $clinic->city . ' City', $clinic->zip_code)) ?></td>
 								<td><?php echo ($clinic->contact_number) ? $clinic->contact_number : 'none' ?></td>
 								<td>delete</td>
+							</tr>
 							<?php endforeach ?>
 						<?php else: ?>
 							<tr>
