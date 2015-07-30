@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Asia/Manila');
 
 $config['base_url'] = '';
 $config['index_page'] = '';
@@ -78,3 +79,4 @@ define('MODULES_DIR', PATH_APP . 'modules' . DS);
 // $config['json_database'] = array(
 //     'path' => PATH_JSON_DB, 
 // );
+

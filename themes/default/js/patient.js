@@ -101,3 +101,20 @@ $(document).on('click', 'a[id^="create_new_notes-"]', function() {
     $(this).parent().parent().parent().removeClass('open');
     return false;
 });
+
+$(document).on('focus', '.skubbs-datepicker', function() {
+    $(this).datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true, 
+        toggleActive: true
+    });
+});
+
+
+$(document).on('focus', '.skubbs-timepicker', function() {
+    $(this).timepicker({
+        minuteStep: 5,
+        showInputs: false
+    });
+});

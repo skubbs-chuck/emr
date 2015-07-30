@@ -13,6 +13,8 @@ class Patient extends Base_Controller {
 
         $this->addCss($this->tplUrl . 'plugins/datepicker/datepicker3.css')
         	 ->addJs($this->tplUrl . 'plugins/datepicker/bootstrap-datepicker.js')
+			 ->addCss($this->tplUrl . 'plugins/timepicker/bootstrap-timepicker.min.css')
+			 ->addJs($this->tplUrl . 'plugins/timepicker/bootstrap-timepicker.min.js')
 			 ->addCss($this->tplUrl . 'css/patient.css')
 			 ->addJs($this->tplUrl . 'js/patient.js');
 	}
