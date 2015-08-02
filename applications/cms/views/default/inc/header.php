@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?php echo $site_name . ' - ' . $title ?></title>
+        <link rel="icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon" />
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="description" content="<?php echo $description ?>">
         <meta name="keywords" content="<?php echo $keywords ?>">

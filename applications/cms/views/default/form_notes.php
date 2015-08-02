@@ -1,14 +1,12 @@
-<div class="box-body no-margin">
-	<ul class="nav nav-pills btn-xs">
-        <li class="active"><a href="#" id="patient-notes-ajax-consultation" data-toggle="tab">Consultation</a></li>
-        <li><a href="#" id="patient-notes-ajax-nurse-visit" data-toggle="tab">Nurse Visit</a></li>
-        <li><a href="#" id="patient-notes-ajax-diagnostic-study" data-toggle="tab">Diagnostic Study</a></li>
-        <!-- <li><a href="#" id="patient-notes-ajax-procedure" data-toggle="tab">Procedure</a></li>
-        <li><a href="#" id="patient-notes-ajax-operation" data-toggle="tab">Operation</a></li> -->
-        <li><a href="#" id="patient-notes-ajax-other" data-toggle="tab">Other</a></li>
-    </ul>
-    <div class="box box-primary flat">
-        <div class="box-body" id="patient_notes"></div>
-        <div class="overlay" id="notes_loading"><i class="fa fa-refresh fa-spin"></i></div>
+<div id="notes" class="box box-primary no-border padding10">
+    <div class="box-body no-margin no-padding">
+        <ul class="nav nav-pills btn-xs">
+            <li class="active"><a href="#" class="skubbs_ajax" s-wrap="notes" s-request="consultation" data-toggle="tab">Consultation</a></li>
+            <li><a href="#" class="skubbs_ajax" s-wrap="notes" s-request="nurse_visit" data-toggle="tab">Nurse Visit</a></li>
+            <li><a href="#" class="skubbs_ajax" s-wrap="notes" s-request="diagnostic_study" data-toggle="tab">Diagnostic Study</a></li>
+            <li><a href="#" class="skubbs_ajax" s-wrap="notes" s-request="other" data-toggle="tab">Other</a></li>
+        </ul>
     </div>
+    <div class="box box-primary flat skubbs_result"></div>
+    <div class="overlay skubbs_loading"><i class="fa fa-refresh fa-spin"></i></div>
 </div>

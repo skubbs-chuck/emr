@@ -1,5 +1,5 @@
 <?php include_once $inc_header; ?>
-<div class="content-wrapper">
+<div class="content-wrapper" id="patient-result">
     <section class="content-header">
         <h1>Add New Patient</h1> 
     </section>
@@ -44,7 +44,7 @@
                                 <label>Birth Date:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    <?php echo form_input(array('name' => 'birth_date', 'value' => ($this->input->post('birth_date') ? $this->input->post('birth_date') : date("Y-m-d")), 'id' => 'patient-add-birth_date', 'class' => 'form-control', 'data-inputmask' => "'alias': 'dd/mm/yyyy'", 'data-mask' => '')) ?>
+                                    <?php echo form_input(array('name' => 'birth_date', 'value' => ($this->input->post('birth_date') ? $this->input->post('birth_date') : date("Y-m-d")), 'class' => 'form-control skubbs-datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'", 'data-mask' => '')) ?>
                                 </div>
                             </div>
                             </td>
@@ -133,14 +133,14 @@
                             <td>
                                 <?php echo form_label('Contacts', 'contacts'); ?>
                                 <div id="contacts"></div>
-                                <a class="btn btn-info" id="patient-add-contact">Add Contact</a>
+                                <a class="btn btn-info skubbs_btn-add_number" skubbs-id="contacts" skubbs-name="date_year|detail" skubbs-type="contacts">Add Contact</a>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <?php echo form_label('Identifications', 'identifications'); ?>
                                 <div id="identifications"></div>
-                                <a class="btn btn-info" id="patient-add-identification">Add Identification</a>
+                                <a class="btn btn-info skubbs_btn-add_number" skubbs-id="identifications" skubbs-name="date_year|detail">Add Identification</a>
                             </td>
                         </tr>
                         <tr>

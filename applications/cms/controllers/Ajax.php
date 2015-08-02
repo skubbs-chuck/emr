@@ -3,14 +3,17 @@
 class Ajax extends Base_Controller {
 
 	public function patient() {
+        if (!$this->model_session->is_logged_in()) 
+            redirect('user/login');
+
 		$error = 0;
-		$args = func_get_args();
-		$form = isset($args[0]) ? $args[0] : 'noform';
-		$id_patient = isset($args[1]) ? (int) $args[1] : 0;
-		$id_form = isset($args[2]) ? (int) $args[2] : 0;
-		$action = isset($args[3]) ? $args[3] : 'index';
-		if (!$this->model_session->is_logged_in()) 
-			redirect('user/login');
+		$args  = func_get_args();
+        
+		$form       = isset($args[0]) ? $args[0] : 'noform';
+		$action     = isset($args[1]) ? $args[1] : 'index';
+        $method     = (isset($args[2]) && $args[2] == 'post') ? $args[2] : 'get';
+		$id_patient = isset($args[3]) ? (int) $args[3] : 0;
+		$id_form    = isset($args[4]) ? (int) $args[4] : 0;
 
 		
 		$this->data['id_patient'] = $id_patient;
