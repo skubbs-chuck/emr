@@ -17,7 +17,7 @@
 				    <div class="form-group">
 				        <label>Date:</label>
 				        <div class="input-group">
-				            <?php echo form_input(array('name' => 'visit_date', 'value' => ($this->input->post('visit_date') ? $this->input->post('visit_date') : date("Y-m-d")), 'id' => 'visit_date', 'class' => 'form-control skubbs-datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'", 'data-mask' => '')) ?>
+				            <?php echo form_input(array('name' => 'visit_date', 'value' => ($this->input->post('visit_date') ? $this->input->post('visit_date') : date("Y-m-d")), 'id' => 'visit_date', 'class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'", 'data-mask' => '')) ?>
 			                <div class="input-group-addon">
 			                    <i class="fa fa-calendar"></i>
 			                </div>
@@ -30,7 +30,7 @@
 				    <div class="form-group">
 				        <label>Start Time:</label>
 				        <div class="input-group">
-				            <?php echo form_input(array('name' => 'start_time', 'value' => ($this->input->post('start_time') ? $this->input->post('start_time') : date('h:i A')), 'id' => 'visit_date', 'class' => 'form-control skubbs-timepicker')) ?>
+				            <?php echo form_input(array('name' => 'start_time', 'value' => ($this->input->post('start_time') ? $this->input->post('start_time') : date('h:i A')), 'id' => 'visit_date', 'class' => 'form-control skubbs_timepicker')) ?>
 			                <div class="input-group-addon">
 			                    <i class="fa fa-clock-o"></i>
 			                </div>

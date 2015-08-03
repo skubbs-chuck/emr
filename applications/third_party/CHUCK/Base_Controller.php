@@ -64,7 +64,8 @@ class Base_Controller Extends MY_Controller {
              ->addCss($this->tplUrl . 'css/skins/skin-blue.min.css');
 
         $this->addJs($this->tplUrl . 'plugins/slimScroll/jquery.slimscroll.min.js')
-             ->addJs($this->tplUrl . 'js/app.min.js');
+             ->addJs($this->tplUrl . 'js/app.min.js')
+             ->addJs($this->tplUrl . 'js/skubbs.js');
     }
 
     protected function setFlashAlert($message, $type = false) {

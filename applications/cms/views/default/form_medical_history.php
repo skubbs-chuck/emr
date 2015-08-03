@@ -1,21 +1,20 @@
-<!-- <pre><?php print_r($medical_history) ?></pre> -->
 <div id="medical_history" class="box-body no-margin">
     <div class="skubbs_result">
-        <div>
-            <div class="btn-group pull-right">
-                <a href="#" class="btn btn-info skubbs_btn">Edit</a>
-            </div>
-            <div class="btn-group pull-right">
-                <a href="#" class="btn btn-primary hide skubbs_btn">Save</a>
-                <a href="#" class="btn hide skubbs_btn">Cancel</a>
-            </div>
-        </div>
         <form action="#" method="post" id="data_medical_history">
             <ul class="products-list product-list-in-box margin">
                 <li class="item" id="message">
                     <?php if (isset($medical_history['var']['message'])): ?>
                         <div class="alert alert-<?php echo $medical_history['var']['message_type'] ?>"><?php echo $medical_history['var']['message'] ?></div>
                     <?php endif ?>
+                </li>
+                <li class="item">
+                    <div class="btn-group pull-right">
+                        <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
+                    </div>
+                    <div class="btn-group pull-right">
+                        <a href="#" class="btn btn-primary skubbs_btn-save" style="display:none">Save</a>
+                        <a href="#" class="btn btn-default skubbs_btn-cancel" style="display:none">Cancel</a>
+                    </div>
                 </li>
                 <li class="item">
                     <strong>Blood Type: </strong>
@@ -61,7 +60,7 @@
                             <tfoot>
                                 <tr class="skubbs_input">
                                     <td colspan="2">
-                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" skubbs-id="phas" skubbs-name="date_year|detail">Add Entry</a>
+                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-id="phas">Add Entry</a>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -98,7 +97,7 @@
                                     <td>
                                         <div class="input-group" style="margin-bottom: 5px">
                                             <input type="text" class="form-control" name="family_desease[]" value="<?php echo $family[1] ?>">
-                                            <span class="input-group-addon skubbs_btn-remove btn btn-danger"><i class="fa fa-remove "></i></span>
+                                            <a href="#" class="input-group-addon skubbs_btn-remove btn btn-danger"><i class="fa fa-remove "></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -107,7 +106,7 @@
                             <tfoot>
                                 <tr class="skubbs_input">
                                     <td colspan="2">
-                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" skubbs-id="family" skubbs-name="relative|desease">Add Entry</a>
+                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-id="family" s-name="relative|desease">Add Entry</a>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -121,17 +120,17 @@
                         <textarea name="other" id="other" class="form-control skubbs_input" rows="3"><?php echo $medical_history['data']->other ?></textarea>
                     </div>
                 </li>
+                <li class="item">
+                    <div class="btn-group pull-right">
+                        <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
+                    </div>
+                    <div class="btn-group pull-right">
+                        <a href="#" class="btn btn-primary skubbs_btn-save" style="display:none">Save</a>
+                        <a href="#" class="btn btn-default skubbs_btn-cancel" style="display:none">Cancel</a>
+                    </div>
+                </li>
             </ul>
         </form>
-        <div>
-            <div class="btn-group pull-right">
-                <a href="#" class="btn btn-info skubbs_btn">Edit</a>
-            </div>
-            <div class="btn-group pull-right">
-                <a href="#" class="btn btn-primary hide skubbs_btn">Save</a>
-                <a href="#" class="btn hide skubbs_btn">Cancel</a>
-            </div>
-        </div>
     </div>
     <div class="overlay skubbs_loading"><i class="fa fa-refresh fa-spin"></i></div>
 </div>
