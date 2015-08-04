@@ -7,7 +7,7 @@
             </button>
             <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
                 <?php foreach ($diagnostic_study['form_list'] as $form): ?>
-                    <li><a href="#" class="skubbs_ajax" s-wrap="diagnostic_study" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
+                    <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="diagnostic_study" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
                 <?php endforeach ?>
             </ul>
         </div>
