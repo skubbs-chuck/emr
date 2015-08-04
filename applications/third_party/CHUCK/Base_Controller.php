@@ -26,16 +26,16 @@ class Base_Controller Extends MY_Controller {
 
     protected function _post() {
         $arr = func_get_args();
-    	if ($arr) {
-    		$result = array();
-    		foreach ($arr as $key) {
-    			$result[$key] = $this->input->post($key);
-    		}
+        if ($arr) {
+            $result = array();
+            foreach ($arr as $key) {
+                $result[$key] = $this->input->post($key);
+            }
 
-    		return $result;
-    	}
+            return $result;
+        }
 
-    	return $this->input->post(false, $xss_clean);
+        return $this->input->post(false, $xss_clean);
     }
 
     protected function mysqlDate($date) {
@@ -64,40 +64,39 @@ class Base_Controller Extends MY_Controller {
              ->addCss($this->tplUrl . 'css/skins/skin-blue.min.css');
 
         $this->addJs($this->tplUrl . 'plugins/slimScroll/jquery.slimscroll.min.js')
-             ->addJs($this->tplUrl . 'js/app.min.js')
-             ->addJs($this->tplUrl . 'js/skubbs.js');
+             ->addJs($this->tplUrl . 'js/app.min.js');
     }
 
     protected function setFlashAlert($message, $type = false) {
-    	$flashdata = '';
-    	switch ($type) {
-    		case 'error':
-    		case 'danger':
-    		case 3:
-    			$flashdata .= '<div class="alert alert-danger">';
-    			$flashdata .= '<i class="icon fa fa-ban"></i> ' . $message;
-    			$flashdata .= '</div>';
-    			break;
-    		case 'warning':
-    		case 2:
-    			$flashdata .= '<div class="alert alert-warning">';
-    			$flashdata .= '<i class="icon fa fa-warning"></i> ' . $message;
-    			$flashdata .= '</div>';
-    			break;
-    		case 'success':
-    		case 1:
-    			$flashdata .= '<div class="alert alert-success">';
-    			$flashdata .= '<i class="icon fa fa-check"></i> ' . $message;
-    			$flashdata .= '</div>';
-    			break;
-    		default:
-    			$flashdata .= '<div class="alert alert-info">';
-    			$flashdata .= '<i class="icon fa fa-info"></i> ' . $message;
-    			$flashdata .= '</div>';
-    			break;
-    	}
+        $flashdata = '';
+        switch ($type) {
+            case 'error':
+            case 'danger':
+            case 3:
+                $flashdata .= '<div class="alert alert-danger">';
+                $flashdata .= '<i class="icon fa fa-ban"></i> ' . $message;
+                $flashdata .= '</div>';
+                break;
+            case 'warning':
+            case 2:
+                $flashdata .= '<div class="alert alert-warning">';
+                $flashdata .= '<i class="icon fa fa-warning"></i> ' . $message;
+                $flashdata .= '</div>';
+                break;
+            case 'success':
+            case 1:
+                $flashdata .= '<div class="alert alert-success">';
+                $flashdata .= '<i class="icon fa fa-check"></i> ' . $message;
+                $flashdata .= '</div>';
+                break;
+            default:
+                $flashdata .= '<div class="alert alert-info">';
+                $flashdata .= '<i class="icon fa fa-info"></i> ' . $message;
+                $flashdata .= '</div>';
+                break;
+        }
 
-    	$this->session->set_flashdata('alert_message', $flashdata);
+        $this->session->set_flashdata('alert_message', $flashdata);
     }
 
     protected function addCss($path) {
@@ -128,9 +127,9 @@ class Base_Controller Extends MY_Controller {
 
         
         if (file_exists(VIEWPATH . $data['theme'] . DS . $this->cm . '.php')) 
-        	$name = $this->cm; // controller_name/method_name.php
+            $name = $this->cm; // controller_name/method_name.php
         else if (file_exists(VIEWPATH . $data['theme'] . DS . $this->c_m . '.php')) 
-        	$name = $this->c_m; // controller_name_method_name.php
+            $name = $this->c_m; // controller_name_method_name.php
         
         $name = ($this->method == 'index') ? $this->controller : ((!$name) ? strtoupper($this->controller) . '-' . strtoupper($this->method) . ' doesnt exist' : $name);
         
@@ -139,8 +138,8 @@ class Base_Controller Extends MY_Controller {
     }
 
     protected function _pagination($config = array()) {
-    	$this->load->library('pagination');
-    	$pagination = array();
+        $this->load->library('pagination');
+        $pagination = array();
         $pagination["base_url"] = base_url() . $this->cm;
         $pagination["total_rows"] = 0;
         $pagination["per_page"] = 10;

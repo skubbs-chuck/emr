@@ -23,25 +23,25 @@
         <div class="login-box-body">
             <p class="login-box-msg">Account Login</p>
             <?php if ($this->session->flashdata('alert_message')): ?>
-            	<div class="alert alert-danger">
-					<i class="icon fa fa-ban"></i> <?php echo $this->session->flashdata('alert_message') ?>
-				</div>
+                <div class="alert alert-danger">
+                    <i class="icon fa fa-ban"></i> <?php echo $this->session->flashdata('alert_message') ?>
+                </div>
             <?php endif ?>
-			
+            
             <?php echo form_open('user/auth'); ?>
-	            <div class="form-group has-feedback">
-	                <?php echo form_input(array('name' => 'username', 'placeholder' => 'Username', 'class' => 'form-control', 'required' => 'required')); ?>
-	                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-	            </div>
-	            <div class="form-group has-feedback">
-	                <?php echo form_password(array('name' => 'password', 'placeholder' => 'Password', 'class' => 'form-control', 'required' => 'required')); ?>
-	                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-	            </div>
-				<div class="row">
-					<div class="checkbox text-right col-xs-12">
-						<label>
-							Keep me logged <ins></ins> <?php echo form_checkbox('remember_me', true); ?>
-						</label>
+                <div class="form-group has-feedback">
+                    <?php echo form_input(array('name' => 'username', 'placeholder' => 'Username', 'class' => 'form-control', 'required' => 'required')); ?>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <?php echo form_password(array('name' => 'password', 'placeholder' => 'Password', 'class' => 'form-control', 'required' => 'required')); ?>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="checkbox text-right col-xs-12">
+                        <label>
+                            Keep me logged <ins></ins> <?php echo form_checkbox('remember_me', true); ?>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
@@ -49,7 +49,7 @@
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                     </div>
                 </div>
-			<?php echo form_close(); ?>
+            <?php echo form_close(); ?>
         </div>
     </div>
     <?php foreach ($jsBottom as $src): ?>

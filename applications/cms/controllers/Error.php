@@ -2,13 +2,13 @@
 
 class Error extends Base_Controller {
 
-	public function __construct() {
-		parent::__construct();
-	}
+    public function __construct() {
+        parent::__construct();
+    }
 
-	public function page_not_found() {
-		$this->load->view('default/errors/404');
-	}
+    public function page_not_found() {
+        $this->load->view('default/errors/404');
+    }
 
 
 }

@@ -4,29 +4,29 @@
         <h1><?php echo $uinfo->first_name . ' ' . $uinfo->last_name ?>'s Profile</h1> 
     </section>
     <section class="content">
-    	<div class="row">
-    		<div class="col-md-12">
-    		<?php echo $this->session->flashdata('alert_message') ?>
-    		</div>
-    	</div>
+        <div class="row">
+            <div class="col-md-12">
+            <?php echo $this->session->flashdata('alert_message') ?>
+            </div>
+        </div>
         <div class="box">
         <?php echo form_open(false, false, array('id_user' => $uinfo->id_user)); ?>
             <div class="box-header with-border">
                 <h3 class="box-title">Personal Information</h3>
                 <span class="pull-right">
-                	<a href="<?php echo base_url() . 'user/profile/' . $username_or_id ?>" class="btn btn-info btn-xs">BACK</a>
+                    <a href="<?php echo base_url() . 'user/profile/' . $username_or_id ?>" class="btn btn-info btn-xs">BACK</a>
                 </span>
             </div>
             <div class="box-body no-padding">
                 <table class="table table-hover table-striped">
                     <tbody>
-	                    <tr>
+                        <tr>
                             <td>First Name:</td>
                             <td><?php echo form_input(array('name' => 'first_name', 'value' => $uinfo->first_name, 'placeholder' => 'First Name', 'class' => 'form-control')) ?></td>
                         </tr>
                         <tr>
                             <td>Last Name:</td>
-                            <td><?php echo form_input(array('name' => 'last_name', 'value' => $uinfo->last_name, 'placeholder' => 'Last Name', 'class' => 'form-control')) ?></td>	
+                            <td><?php echo form_input(array('name' => 'last_name', 'value' => $uinfo->last_name, 'placeholder' => 'Last Name', 'class' => 'form-control')) ?></td>    
                         </tr>
                         <tr>
                             <td>Username:</td>

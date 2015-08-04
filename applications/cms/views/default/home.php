@@ -4,11 +4,11 @@
         <h1>Dashboard <small>Electronic Medical Records</small></h1>
     </section>
     <section class="content">
-    	<div class="row">
-    		<div class="col-md-12">
-    		<?php echo $this->session->flashdata('alert_message') ?>
-    		</div>
-    	</div>
+        <div class="row">
+            <div class="col-md-12">
+            <?php echo $this->session->flashdata('alert_message') ?>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-6 col-xs-12">
                 <div class="info-box">

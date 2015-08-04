@@ -4,9 +4,9 @@ date_default_timezone_set('Asia/Manila');
 
 $config['base_url'] = '';
 $config['index_page'] = '';
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol']    = 'REQUEST_URI';
 $config['url_suffix'] = '';
-$config['language']	= 'english';
+$config['language']    = 'english';
 $config['charset'] = 'UTF-8';
 $config['enable_hooks'] = FALSE;
 $config['subclass_prefix'] = 'MY_';
@@ -35,11 +35,11 @@ $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
 
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_prefix']    = '';
+$config['cookie_domain']    = '';
+$config['cookie_path']        = '/';
+$config['cookie_secure']    = FALSE;
+$config['cookie_httponly']     = FALSE;
 $config['standardize_newlines'] = FALSE;
 $config['global_xss_filtering'] = FALSE;
 $config['csrf_protection'] = FALSE;
@@ -58,7 +58,7 @@ $config['proxy_ips'] = '';
 | Custom Config Start
 */
 $config['data'] = array(
-	'company_name' => 'Skubbs Philippines', 
+    'company_name' => 'Skubbs Philippines', 
     'company_url' => 'http://www.skubbs.com', 
     'site_name' => 'Skubbs Philippines', 
     'title' => 'Electronic Medical Records',

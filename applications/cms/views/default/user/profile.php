@@ -8,8 +8,8 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Personal Information</h3>
                 <span class="pull-right">
-                	<a href="<?php echo base_url() . 'user/edit/' . $username_or_id ?>" class="btn btn-primary btn-xs">EDIT</a>
-                	<a href="<?php echo base_url() . 'user/management/' ?>" class="btn btn-info btn-xs">BACK</a>
+                    <a href="<?php echo base_url() . 'user/edit/' . $username_or_id ?>" class="btn btn-primary btn-xs">EDIT</a>
+                    <a href="<?php echo base_url() . 'user/management/' ?>" class="btn btn-info btn-xs">BACK</a>
                 </span>
             </div>
             <div class="box-body no-padding">
