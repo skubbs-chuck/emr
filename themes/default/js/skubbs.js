@@ -70,7 +70,7 @@
         ajax: function(el) {
             ajax = (typeof el != 'undefined') ? el : moo.skubbs_attr($(this));
             moo.patient_config(ajax);
-            console.log(ajax);
+            // console.log(ajax);
 
             // if ($(this).attr('s-loaded')) { return false; };
             $(ajax.loading).show();
