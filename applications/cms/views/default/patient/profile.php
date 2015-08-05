@@ -20,9 +20,9 @@
         <div class="box-header"><h3 class="box-title">Patient Informations</h3></div>
         <div class="box-body no-padding no-margin">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#" class="skubbs_ajax" s-request="medical_history" data-toggle="tab">Medical History</a></li>
-                <li><a href="#" class="skubbs_ajax" s-request="notes" s-onload="consultation" data-toggle="tab">Notes</a></li>
-                <li><a href="#" class="skubbs_ajax" s-request="medications" data-toggle="tab">Medications</a></li>
+                <li class="active"><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="medical_history" data-toggle="tab">Medical History</a></li>
+                <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="notes" s-onload="consultation" data-toggle="tab">Notes</a></li>
+                <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="medications" data-toggle="tab">Medications</a></li>
             </ul>
         </div>
         <div class="skubbs_result"></div>

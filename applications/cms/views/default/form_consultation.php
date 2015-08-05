@@ -17,9 +17,9 @@
         <?php if ($consultation['forms']): ?>
         <?php foreach ($consultation['forms'] as $form): $id = 'id_' . $form->tbl; ?>
             <?php $wrap = $form->tbl . '-' . $form->$id ?>
-            <div id="wrap-consultation-<?php echo $wrap ?>" s-request="<?php echo $form->tbl ?>" s-form-id="<?php echo $id ?>" s-wrap="wrap-consultation-<?php echo $wrap ?>" class="panel panel-default skubbs_ajax">
+            <div id="wrap-consultation-<?php echo $wrap ?>" class="panel panel-default">
                 <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#consultation_accordion" href="#consultation-<?php echo $wrap ?>">
+                    <a data-toggle="collapse" data-parent="#consultation_accordion" href="#consultation-<?php echo $wrap ?>" s-request="<?php echo $form->tbl ?>" s-form-id="<?php echo $id ?>" s-wrap="wrap-consultation-<?php echo $wrap ?>" class="skubbs_ajax">
                         <h4 class="panel-title">
                             <?php echo $form->tbl_name ?>
                             <span class="pull-right"><small><?php echo date('M-d-Y', strtotime($form->creation_date)) ?></small></span>

@@ -132,14 +132,14 @@
                         <tr>
                             <td>
                                 <?php echo form_label('Contacts', 'contacts'); ?>
-                                <div id="contacts"></div>
+                                <div id="ci_contacts"></div>
                                 <a class="btn btn-info btn-xs skubbs_btn-add" s-id="contacts">Add Contact</a>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <?php echo form_label('Identifications', 'identifications'); ?>
-                                <div id="identifications"></div>
+                                <div id="ci_identifications"></div>
                                 <a class="btn btn-info btn-xs skubbs_btn-add" s-id="identifications">Add Identification</a>
                             </td>
                         </tr>

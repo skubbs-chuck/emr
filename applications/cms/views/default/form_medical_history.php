@@ -8,12 +8,12 @@
                     <?php endif ?>
                 </li>
                 <li class="item">
-                    <div class="btn-group pull-right">
+                    <div class="btn-group pull-right skubbs-e">
                         <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
                     </div>
-                    <div class="btn-group pull-right">
-                        <a href="#" class="btn btn-primary skubbs_btn-save" style="display:none">Save</a>
-                        <a href="#" class="btn btn-default skubbs_btn-cancel" style="display:none">Cancel</a>
+                    <div class="btn-group pull-right skubbs-sc" style="display:none">
+                        <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post">Save</a>
+                        <a href="#" class="btn btn-default skubbs_btn-cancel">Cancel</a>
                     </div>
                 </li>
                 <li class="item">
@@ -34,11 +34,11 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="label-primary col-md-4">Date/Year</th>
-                                    <th class="label-primary col-md-8">Details</th>
+                                    <th class="label-primary">Date/Year</th>
+                                    <th class="label-primary">Details</th>
                                 </tr>
                             </thead>
-                            <tbody id="phas">
+                            <tbody id="pf_phas">
                                 <?php foreach ($medical_history['data']->phas as $phas): ?>
                                 <tr class="skubbs_output">
                                     <td><?php echo $phas[0] ?></td>
@@ -60,7 +60,7 @@
                             <tfoot>
                                 <tr class="skubbs_input">
                                     <td colspan="2">
-                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-id="phas">Add Entry</a>
+                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-names="date_year,detail" s-id="phas">Add Entry</a>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -80,11 +80,11 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="label-primary col-md-4">Relative</th>
-                                    <th class="label-primary col-md-8">Desease Details</th>
+                                    <th class="label-primary col-md-5">Relative</th>
+                                    <th class="label-primary col-md-7">Desease Details</th>
                                 </tr>
                             </thead>
-                            <tbody id="family">
+                            <tbody id="pf_family">
                                 <?php foreach ($medical_history['data']->family as $family): ?>
                                 <tr class="skubbs_output">
                                     <td><?php echo $family[0] ?></td>
@@ -106,7 +106,7 @@
                             <tfoot>
                                 <tr class="skubbs_input">
                                     <td colspan="2">
-                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-id="family" s-name="relative|desease">Add Entry</a>
+                                        <a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-names="family_relative,family_desease" s-id="family" s-name="relative|desease">Add Entry</a>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -121,12 +121,12 @@
                     </div>
                 </li>
                 <li class="item">
-                    <div class="btn-group pull-right">
+                    <div class="btn-group pull-right skubbs-e">
                         <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
                     </div>
-                    <div class="btn-group pull-right">
-                        <a href="#" class="btn btn-primary skubbs_btn-save" style="display:none">Save</a>
-                        <a href="#" class="btn btn-default skubbs_btn-cancel" style="display:none">Cancel</a>
+                    <div class="btn-group pull-right skubbs-sc" style="display:none">
+                        <a href="#" class="btn btn-primary skubbs_btn-save">Save</a>
+                        <a href="#" class="btn btn-default skubbs_btn-cancel">Cancel</a>
                     </div>
                 </li>
             </ul>
