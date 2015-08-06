@@ -1,74 +1,46 @@
-<div class="box-body no-margin" id="gnv-results">
-    <form action="#" method="post" id="gnv-form">
-        <ul class="products-list product-list-in-box margin">
-            <li class="item" id="gnv-message">
-                <?php if (isset($gnv['var']['message'])): ?>
-                    <div class="alert alert-<?php echo $gnv['var']['message_type'] ?>"><?php echo $gnv['var']['message'] ?></div>
-                <?php endif ?>
-            </li>
-            <li class="item">
-                <div class="btn-group pull-right">
-                    <button class="btn btn-primary gnv-save">Save</button>
-                    <button class="btn gnv-cancel">Cancel</button>
-                </div>
-            </li>
-            <li class="item">
-                <strong>Nursing Assessment: </strong>
-                <div>
-                    <textarea name="order_note" id="order_note" class="form-control gnv-input" rows="3"><?php echo $gnv['data']->order_note ?></textarea>
-                </div>
-            </li>
-            <li class="item">
-                <strong>Assessment: </strong>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="label-primary col-md-4">Date/Year</th>
-                                <th class="label-primary col-md-8">Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="phas">
-                            <tr class="mh-input" style="display: table-row;">
-                                <td>
-                                    <input type="text" name="phas_date_year[]" value="2some details<img src=&quot;" class="form-control">
-                                </td>
-                                <td>
-                                    <div class="input-group" style="margin-bottom: 5px">
-                                        <input type="text" class="form-control" name="phas_detail[]" value="">
-                                        <span class="input-group-addon remove-contact btn btn-danger"><i class="fa fa-remove "></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="mh-input" style="display: table-row;">
-                                <td colspan="2">
-                                    <a href="#" class="btn btn-info btn-xs" id="medical-history-add-phas">Add Entry</a>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </li>
-            <li class="item">
-                <strong>Implementation: </strong>
-                <div>
-                    <textarea name="order_note" id="order_note" class="form-control gnv-input" rows="3"><?php echo $gnv['data']->order_note ?></textarea>
-                </div>
-            </li>
-            <li class="item">
-                <strong>Evaluation: </strong>
-                <div>
-                    <textarea name="order_note" id="order_note" class="form-control gnv-input" rows="3"><?php echo $gnv['data']->order_note ?></textarea>
-                </div>
-            </li>
-            <li class="item">
-                <div class="btn-group pull-right">
-                    <button class="btn btn-primary gnv-save">Save</button>
-                    <button class="btn gnv-cancel">Cancel</button>
-                </div>
-            </li>
-        </ul>
-    </form>
-</div>
+<form action="#" method="post" id="data_form_gnv">
+    <ul class="products-list product-list-in-box margin">
+        <li class="item" id="gnv-message">
+            <?php if (isset($gnv['var']['message'])): ?>
+                <div class="alert alert-<?php echo $gnv['var']['message_type'] ?>"><?php echo $gnv['var']['message'] ?></div>
+            <?php endif ?>
+        </li>
+        <li class="item">
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary skubbs_ajax" s-method="post" s-wrap="nurse_visit" s-action="create" s-request="form_gnv">Submit</button>
+                <button class="btn skubbs_ajax" s-wrap="notes" s-request="nurse_visit">Cancel</button>
+            </div>
+        </li>
+        <li class="item">
+            <strong>Nursing Assessment: </strong>
+            <div><textarea name="nursing_assessment" class="form-control" rows="3"><?php echo $gnv['data']->nursing_assessment ?></textarea></div>
+        </li>
+        <li class="item">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead><tr><th class="label-primary">Assessment</th></tr></thead>
+                    <tbody id="assessment_ndp"></tbody>
+                    <tfoot>
+                        <tr style="display: table-row;">
+                            <td colspan="2"><a href="#" class="btn btn-info btn-xs skubbs_btn-add" s-id="ndp">Add Diagnosis</a></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </li>
+        <li class="item">
+            <strong>Implementation: </strong>
+            <div><textarea name="implementation" class="form-control" rows="3"><?php echo $gnv['data']->implementation ?></textarea></div>
+        </li>
+        <li class="item">
+            <strong>Evaluation: </strong>
+            <div><textarea name="evaluation" class="form-control" rows="3"><?php echo $gnv['data']->evaluation ?></textarea></div>
+        </li>
+        <li class="item">
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary skubbs_ajax" s-method="post" s-wrap="nurse_visit" s-action="create" s-request="form_gnv">Submit</button>
+                <button class="btn skubbs_ajax" s-wrap="notes" s-request="nurse_visit">Cancel</button>
+            </div>
+        </li>
+    </ul>
+</form>

@@ -1,3 +1,4 @@
+var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};
 (function($) {
     var moo = {
         patient: {
@@ -68,11 +69,11 @@
             return opts;
         }, 
         ajax: function(el) {
+            console.log(el);
             ajax = (typeof el != 'undefined') ? el : moo.skubbs_attr($(this));
             moo.patient_config(ajax);
-            // console.log(ajax);
 
-            // if ($(this).attr('s-loaded')) { return false; };
+            // console.log(ajax); return false;
             $(ajax.loading).show();
             $.ajax({
                 url: ajax.target_url,
@@ -128,6 +129,9 @@
             $(this).skubbs('showHideList', o);
         }, 
         btn_save: function(o) {
+            // console.log($(this));
+            // console.log(o);
+            // console.log(moo.patient);
             $(this).skubbs('ajax');
         }, 
         btn_create: function(o) {
@@ -165,6 +169,21 @@
             $('div#ci_' + o.id).append(inp);
             $('div#ci_' + o.id + '>div.skubbs_input').show();
         }, 
+        app_inp_ndp: function(o) {
+            inp = '<tr class="skubbs_input" style="display: table-row;">' +
+                '<td>' +
+                    '<label>Nursing Diagnosis</label>' +
+                    '<input type="text" name="' + o.id + '_diagnosis[]" class="form-control">' +
+                    '<label>Plan</label>' +
+                    '<div class="input-group" style="margin-bottom: 5px">' +
+                        '<textarea name="' + o.id + '_plan[]" class="form-control" rows="3"></textarea>' +
+                        '<a class="input-group-addon skubbs_btn-remove btn btn-danger"><i class="fa fa-remove "></i></a>' +
+                    '</div>' +
+                '</td>' +
+            '</tr>';
+            $('#assessment_' + o.id).append(inp);
+            $('#assessment_' + o.id + '>div.skubbs_input').show();
+        },
         btn_add: function(o) {
             o = $.extend(o, moo.skubbs_attr($(this)));
             switch(o.id) {
@@ -176,6 +195,9 @@
                 case 'identifications':
                     moo.app_inp_ci(o);
                 break;
+                case 'ndp': // Assessment [Nursing Diagnosis, Plan]
+                    moo.app_inp_ndp(o);
+                break;
             }
         }, 
         btn_remove: function(o) {
@@ -184,6 +206,7 @@
     };
 
     $.fn.skubbs = function(oom) {
+
         moo.init();
         if (moo[oom]) {
             return moo[oom].apply(this, Array.prototype.slice.call(arguments, 1));
@@ -194,12 +217,17 @@
             // $.error('Method ' +  oom + ' does not exist on jQuery.skubbs');
             console.log('Method \'' +  oom + '\' does not exist on jQuery.skubbs');
         }
-    }
+    };
+
+    $.urlParam = function(name) {
+        var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return (results != null && results[1] != '') ? results[1] : 0;
+    };
 })(jQuery);
+
 
 $(document).on('click', 'a[class*="skubbs_btn-"]', function() { $(this).skubbs('btn'); return false; });
 $(document).on('click', '.skubbs_ajax', function() { $(this).skubbs('ajax'); return false; });
-$(document).ready(function() { $(this).skubbs('ajax'); });
 $(document).on('focus', '.skubbs_datepicker', function() {
     $(this).datepicker({
         format: "yyyy-mm-dd",
@@ -217,4 +245,17 @@ $(document).on('focus', '.skubbs_timepicker', function() {
 $(document).on('change', '.patient_now', function(){
     $('div[id^="patient_now_"]').hide();
     $('#patient_now_' + $(this).val()).show();
+});
+
+$(document).ready(function() { 
+    if ($.urlParam('skubbs_ajax')) {
+        // console.log(Base64.decode($.urlParam('skubbs_ajax')));
+        // return false;
+        // var f = jQuery.parseJSON(Base64.decode($.urlParam('skubbs_ajax')));
+        // console.log($(this)skubbs_attr(f);
+        // console.log(f);
+        $(this).skubbs('ajax', f);
+    } else {
+        $(this).skubbs('ajax'); 
+    };
 });

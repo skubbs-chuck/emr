@@ -1,6 +1,7 @@
 <?php include_once $inc_header; ?>
 <div class="content-wrapper">
 <section id="patient" class="content">
+    <!-- <a href="#" class="skubbs_btn-save" s-action="create" s-wrap="nurse_visit" s-request="form_gnv" s-method="post" s-id-patient="1" s-id-form="2" s-loading="1">test me</a> -->
     <span id="var-id_patient"><?php echo $patient->id_patient ?></span>
     <span id="var-id_form">0</span>
     <div class="well">
