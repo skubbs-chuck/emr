@@ -8,7 +8,8 @@
 .hide, 
 span[id^="var-"], 
 .skubbs_loading, 
-.skubbs_input
+.skubbs_input, 
+div[id^="patient_now_"]
 {
     display: none;
 }

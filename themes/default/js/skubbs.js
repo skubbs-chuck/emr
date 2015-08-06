@@ -214,3 +214,7 @@ $(document).on('focus', '.skubbs_timepicker', function() {
         showInputs: false
     });
 });
+$(document).on('change', '.patient_now', function(){
+    $('div[id^="patient_now_"]').hide();
+    $('#patient_now_' + $(this).val()).show();
+});
