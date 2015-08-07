@@ -13,7 +13,7 @@
         </li>
         <li class="item">
             <label for="id_clinic">Clinic:</label>
-            <?php echo form_dropdown('id_clinic', $pwnn['clinics'], $pwnn['data']->id_clinic, 'class="form-control"'); ?>
+            <?php echo form_dropdown('id_clinic', $current_clinics, $current_id_clinic, 'class="form-control"') ?>
         </li>
         <li class="item">
             <div class="form-group">

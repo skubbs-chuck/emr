@@ -1,6 +1,6 @@
 <form action="#" method="post" id="data_form_atn">
     <ul class="products-list product-list-in-box margin">
-        <li class="item" id="atn-message">
+        <li class="item">
             <?php if (isset($atn['var']['message'])): ?>
                 <div class="alert alert-<?php echo $atn['var']['message_type'] ?>"><?php echo $atn['var']['message'] ?></div>
             <?php endif ?>
@@ -13,13 +13,13 @@
         </li>
         <li class="item">
             <label for="id_clinic">Clinic:</label>
-            <?php echo form_dropdown('id_clinic', $atn['clinics'], $atn['data']->id_clinic, 'class="form-control"'); ?>
+            <?php echo $atn['form']['id_clinic'] ?>
         </li>
         <li class="item">
             <div class="form-group">
                 <label>Visit Date:</label>
                 <div class="input-group">
-                    <?php echo form_input(array('name' => 'visit_date', 'value' => ($this->input->post('visit_date') ? $this->input->post('visit_date') : date("Y-m-d")), 'id' => 'visit_date', 'class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'", 'data-mask' => '')) ?>
+                    <?php echo $atn['form']['visit_date'] ?>
                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                 </div>
             </div>
@@ -28,16 +28,14 @@
             <div class="form-group">
                 <label>Start Time:</label>
                 <div class="input-group">
-                    <?php echo form_input(array('name' => 'start_time', 'value' => ($this->input->post('start_time') ? $this->input->post('start_time') : date('h:i A')), 'id' => 'visit_date', 'class' => 'form-control skubbs_timepicker')) ?>
+                    <?php echo $atn['form']['start_time'] ?>
                     <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
                 </div>
             </div>
         </li>
         <li class="item">
             <strong>Order/Notes: </strong>
-            <div>
-                <textarea name="order_note" class="form-control" rows="3"><?php echo $atn['data']->order_note ?></textarea>
-            </div>
+            <div><?php echo $atn['form']['order_note'] ?></div>
         </li>
         <li class="item">
             <div class="btn-group pull-right">

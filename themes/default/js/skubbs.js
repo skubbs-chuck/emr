@@ -182,7 +182,8 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
                 data: $(ajax.data).serialize(), 
                 dataType: 'json', 
                 success: function(response) {
-                    console.log(response[ajax.request.replace(/^form_/, '')]);
+                    // console.log(response[ajax.request.replace(/^form_/, '')]);
+                    console.log(response);
                     $(ajax.loading).hide();
                     $(ajax.result).html(response.html);
 

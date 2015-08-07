@@ -14,14 +14,15 @@ class Ajax extends Base_Controller {
         $method     = (isset($args[2]) && $args[2] == 'post') ? $args[2] : 'get';
         $id_patient = isset($args[3]) ? (int) $args[3] : 0;
         $id_form    = isset($args[4]) ? (int) $args[4] : 0;
-
-        
-        $this->data['id_patient'] = $id_patient;
-        $this->data['id_form'] = $id_form;
-        $this->data['data'] = array();
         
         $query = $this->db->get_where('patients', array('id_patient' => (int) $id_patient));
         $this->data['patient'] = ($query->num_rows()) ? $query->row() : redirect('patient/management');
+        
+        foreach ($this->session->userdata('current_clinics') as $clinic)
+            $this->data['current_clinics'][$clinic->id_clinic] = $clinic->name;
+        $this->data['current_id_clinic'] = $this->session->userdata('current_id_clinic');
+        $this->data['id_patient'] = $id_patient;
+        $this->data['id_form'] = $id_form;
 
 
         $model_form = 'model_' . $form;
@@ -39,8 +40,6 @@ class Ajax extends Base_Controller {
             if (method_exists($this->f, $action)) {
                 $form = preg_replace('/^form_/', '', $form);
                 $this->data[$form] = $this->f->$action($this->data);
-                $this->data[$form]['id_patient'] = $id_patient;
-                $this->data[$form]['id_form'] = $id_form;
                 $this->display($this->data[$form]['view_file']);
                 $this->data['html'] = ob_get_contents();
             } else 
