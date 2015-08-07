@@ -2,6 +2,12 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+        <div class="user-panel info">
+            <?php foreach ($this->session->userdata('current_clinics') as $clinic):
+                $current_clinics[$clinic->id_clinic] = $clinic->name;
+            endforeach ?>
+            <?php echo form_dropdown('clinics_raw', $current_clinics, $this->session->userdata('current_id_clinic'), 'id="current_clinic" class="form-control"') ?>
+        </div>
         <ul class="sidebar-menu">
             <li<?php if ($current_page == 'home/index') echo ' class="active"'; ?>><a href="<?php echo base_url() ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             

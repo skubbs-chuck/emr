@@ -15,7 +15,7 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-<body class="skin-blue fixed">
+<body class="skin-blue fixed box">
 <div class="wrapper">
 <header class="main-header">
     <a href="<?php echo base_url() ?>" class="logo">

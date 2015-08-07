@@ -12,6 +12,9 @@ class Clinic extends Base_Controller {
             redirect('user/login');
     }
 
+    public function select() {
+    }
+
     public function management() {
         $pagination = $this->_pagination(array('total_rows' => $this->model_clinic->clinicsCount()));
         $this->pagination->initialize($pagination);

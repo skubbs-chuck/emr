@@ -4,7 +4,8 @@ class Model_User extends Base_Model {
 
     public function addUser($data) {
         foreach ($data as $key => $value) 
-            $data[$key] = html_escape($value);
+            $data[$key] = ($key == 'clinics') ? json_encode($value) : html_escape($value);
+        
         $data['enabled'] = 1;
         $this->load->model('model_password');
         $data['salt'] = $this->model_password->generateSalt();
@@ -34,7 +35,7 @@ class Model_User extends Base_Model {
 
     public function updateUserById($id_user, $data) {
         foreach ($data as $key => $value) 
-            $data[$key] = html_escape($value);
+            $data[$key] = ($key == 'clinics') ? json_encode($value) : html_escape($value);
         $this->db->where('id_user', $id_user);
         $this->db->update('users', $data);
         return $this->db->affected_rows();
@@ -42,7 +43,7 @@ class Model_User extends Base_Model {
 
     public function updateUserByUsername($username, $data) {
         foreach ($data as $key => $value) 
-            $data[$key] = html_escape($value);
+            $data[$key] = ($key == 'clinics') ? json_encode($value) : html_escape($value);
         $this->db->where('username', $username);
         $this->db->update('users', $data);
         return $this->db->affected_rows();

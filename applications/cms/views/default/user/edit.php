@@ -60,6 +60,24 @@
                             <td>S2 License No.:</td>
                             <td><?php echo form_input(array('name' => 's2_license_number', 'placeholder' => 'S2 License No.e', 'class' => 'form-control')) ?></td>
                         </tr>
+                        <tr>
+                            <td>Clinics: <small class="text-danger">*</small></td>
+                            <td colspan="2">
+                            <?php var_export() ?>
+                                <div>
+                                    <?php $db_clinics = json_decode($uinfo->clinics); ?>
+                                    <?php foreach ($clinics as $id => $name): ?>
+                                        <?php
+                                        $is_clinic_checked = false;
+                                        foreach ($db_clinics as $db_clinic_id) 
+                                            if ((int) $db_clinic_id == $id)
+                                                $is_clinic_checked = true;
+                                        ?>
+                                        <label class="col-md-6"><?php echo form_checkbox('clinics[]', $id, $is_clinic_checked) ?> <?php echo $name ?></label>
+                                    <?php endforeach ?>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

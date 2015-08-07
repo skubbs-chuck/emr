@@ -71,6 +71,12 @@ class Model_Session extends Base_Model {
         if ($remember_me) 
             $this->create_remember_me();
         
+        $clinics = json_decode($userdata->clinics);
+        $this->db->where_in('id_clinic', $clinics);
+        $sql = $this->db->get('clinics');
+        $this->session->set_userdata('current_clinics', $sql->result());
+        $this->session->set_userdata('current_id_clinic', $clinics[0]);
+        
 
         return $this->session->set_userdata('user', $userdata);
     }

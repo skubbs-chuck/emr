@@ -42,14 +42,17 @@ class User extends Base_Controller {
 
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]|is_unique[users.username]', array('is_unique' => 'Username already taken.'));
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[20]|is_unique[users.username]', array('is_unique' => 'Username already taken.'));
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]', array('is_unique' => 'Email already taken.'));
         $this->form_validation->set_rules('first_name', 'First Name', 'trim|required|min_length[4]');
         $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required|min_length[5]');
         $this->form_validation->set_rules('specialty', 'Specialization', 'trim|required');
+        $this->form_validation->set_rules('clinics[]', 'Clinics', 'required');
         if ($this->form_validation->run()) {
             $post_data = $this->_post('username', 'password', 'email', 'first_name', 'last_name', 'specialty');
+            $post_data['clinics'] = $this->input->post('clinics');
+            
             $id_user = $this->model_user->addUser($post_data);
             if ($id_user) {
                 $this->setFlashAlert($post_data['username'] . ' has been sucessfully added.', 'success');
@@ -58,6 +61,13 @@ class User extends Base_Controller {
                 $this->data['insert_error'] = 'Error inserting user. please contact your site administrator';
             }
         }
+
+
+        $this->db->select('id_clinic,name');
+        $this->db->order_by('id_clinic');
+        $query = $this->db->get('clinics');
+        foreach ($query->result() as $clinics => $clinic) 
+            $this->data['clinics'][$clinic->id_clinic] = $clinic->name;
 
         $this->_homeAssets();
         $this->display();
@@ -114,9 +124,10 @@ class User extends Base_Controller {
 
             if ($this->input->post(NULL)) {
                 $updated = $this->model_user->updateUserById($username_or_id, $udata);
-                $updated ? $this->setFlashAlert('Account has been updated', 'success') : $this->setFlashAlert('Error updating account', 'error');
+                $updated ? $this->setFlashAlert('Account has been updated', 'success') : $this->setFlashAlert('Error updating account with id \'' . ((int) $username_or_id) . '\'', 'error');
             }
             
+            $this->data['uinfo'] = $this->model_user->getUserById($username_or_id);
         } else if (!is_numeric($username_or_id) && $username_or_id) {
             
             $this->data['uinfo'] = $this->model_user->getUserByUsername($username_or_id);
@@ -125,18 +136,26 @@ class User extends Base_Controller {
 
             if ($this->input->post(NULL)) {
                 $updated = $this->model_user->updateUserByUsername($username_or_id, $udata);
-                $updated ? $this->setFlashAlert('Account has been updated', 'success') : $this->setFlashAlert('Error updating account', 'error');
+                $updated ? $this->setFlashAlert('Account has been updated', 'success') : $this->setFlashAlert('Error updating ' . html_escape($username_or_id) . '\'s account', 'error');
             }
+
+            $this->data['uinfo'] = $this->model_user->getUserByUsername($username_or_id);
         } else {
 
             if ($this->input->post(NULL) && isset($session_user->id_user)) {
                 $updated = $this->model_user->updateUserById($session_user->id_user, $udata);
-                $updated ? $this->setFlashAlert('Account has been updated', 'success') : $this->setFlashAlert('Error updating account1', 'error');
+                $updated ? $this->setFlashAlert('Account has been updated', 'success') : $this->setFlashAlert('Error updating your account', 'error');
             }
 
+            $this->data['uinfo'] = $this->model_user->getUserById($session_user->id_user);
         }
 
         // print_r($this->session->userdata('user')); exit();
+        $this->db->select('id_clinic,name');
+        $this->db->order_by('id_clinic');
+        $query = $this->db->get('clinics');
+        foreach ($query->result() as $clinics => $clinic) 
+            $this->data['clinics'][$clinic->id_clinic] = $clinic->name;
 
         $this->_homeAssets();
         $this->display();

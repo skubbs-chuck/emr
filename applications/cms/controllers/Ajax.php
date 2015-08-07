@@ -56,4 +56,25 @@ class Ajax extends Base_Controller {
         $this->output->set_header("Content-type: application/json");
         echo json_encode($this->data, JSON_PRETTY_PRINT);
     }
+
+    public function switch_clinic($id_clinic) {
+        $exists = 0;
+        $id_clinic = (int) $id_clinic;
+        if (!$this->model_session->is_logged_in()) 
+            redirect('user/login');
+
+        $clinics = json_decode($this->session->userdata('user')->clinics);
+        foreach ($clinics as $key => $user_id_clinic) {
+            // $clinics[$key] = (int) $user_id_clinic;
+            
+            if ($id_clinic == $user_id_clinic)
+                $exists++;
+        }
+
+        $this->session->set_userdata('current_id_clinic', ($exists) ? $id_clinic : $clinics[0]);
+    }
+
+    public function clinics() {
+        
+    }
 }

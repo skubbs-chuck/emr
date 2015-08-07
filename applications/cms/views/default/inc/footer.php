@@ -6,5 +6,22 @@
     <?php foreach ($jsBottom as $src): ?>
     <script src="<?php echo $src; ?>" type="text/javascript"></script>
     <?php endforeach ?>
+    <script>
+    $(document).on('change', 'select#current_clinic', function() {
+        var switch_clinic = $(this).val();
+        $('#body_loading').show();
+        $.ajax({
+            url: base_url + 'ajax/switch_clinic/' + switch_clinic,
+            success: function(response) {
+                // Add alert/notification here
+                $('#body_loading').hide();
+            },
+            complete: function(xhr, textStatus) {
+                $('#body_loading').hide();
+            }
+        });
+    });
+    </script>
+<div class="overlay" id="body_loading" style="display:none"><i class="fa fa-refresh fa-spin"></i></div>
 </body>
 </html>

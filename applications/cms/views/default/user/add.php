@@ -12,44 +12,32 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Add New User</h3>
-                <span class="pull-right">
-                    <a href="<?php echo base_url() . 'user/management' ?>" class="btn btn-info btn-xs">BACK</a>
-                </span>
+                <span class="pull-right"><a href="<?php echo base_url() . 'user/management' ?>" class="btn btn-info btn-xs">BACK</a></span>
             </div>
             <div class="box-body no-padding">
                 <?php echo form_open(); ?>
                 <table class="table table-hover table-striped">
                     <tbody>
-                        <tr>
-                            <td>
-                                <?php echo validation_errors(); ?>
-                                <?php echo isset($insert_error) ? $insert_error : '' ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'username', 'value' => $this->input->post('username'), 'placeholder' => 'Username', 'class' => 'form-control', 'required' => 'required')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_password(array('name' => 'password', 'placeholder' => 'Password', 'class' => 'form-control', 'required' => 'required')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'first_name', 'value' => $this->input->post('first_name'), 'placeholder' => 'First Name', 'class' => 'form-control', 'required' => 'required')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'last_name', 'value' => $this->input->post('last_name'), 'placeholder' => 'Last Name', 'class' => 'form-control', 'required' => 'required')) ?></td>    
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'email', 'value' => $this->input->post('email'), 'placeholder' => 'Email Address', 'class' => 'form-control', 'required' => 'required')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'contact_number', 'value' => $this->input->post('contact_number'), 'placeholder' => 'Contact Number', 'class' => 'form-control')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'address', 'value' => $this->input->post('address'), 'placeholder' => 'Address', 'class' => 'form-control')) ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo form_input(array('name' => 'specialty', 'value' => $this->input->post('specialty'), 'placeholder' => 'Specialization', 'class' => 'form-control', 'required' => 'required')) ?></td>
-                        </tr>
+                        <tr><td>
+                            <?php echo validation_errors(); ?>
+                            <?php echo isset($insert_error) ? $insert_error : '' ?>
+                        </td></tr>
+                        <tr><td><?php echo form_input(array('name' => 'username', 'value' => $this->input->post('username'), 'placeholder' => 'Username', 'class' => 'form-control', 'required' => 'required')) ?></td></tr>
+                        <tr><td><?php echo form_password(array('name' => 'password', 'placeholder' => 'Password', 'class' => 'form-control', 'required' => 'required')) ?></td></tr>
+                        <tr><td><?php echo form_input(array('name' => 'first_name', 'value' => $this->input->post('first_name'), 'placeholder' => 'First Name', 'class' => 'form-control', 'required' => 'required')) ?></td></tr>
+                        <tr><td><?php echo form_input(array('name' => 'last_name', 'value' => $this->input->post('last_name'), 'placeholder' => 'Last Name', 'class' => 'form-control', 'required' => 'required')) ?></td>    </tr>
+                        <tr><td><?php echo form_input(array('name' => 'email', 'value' => $this->input->post('email'), 'placeholder' => 'Email Address', 'class' => 'form-control', 'required' => 'required')) ?></td></tr>
+                        <tr><td><?php echo form_input(array('name' => 'contact_number', 'value' => $this->input->post('contact_number'), 'placeholder' => 'Contact Number', 'class' => 'form-control')) ?></td></tr>
+                        <tr><td><?php echo form_input(array('name' => 'address', 'value' => $this->input->post('address'), 'placeholder' => 'Address', 'class' => 'form-control')) ?></td></tr>
+                        <tr><td><?php echo form_input(array('name' => 'specialty', 'value' => $this->input->post('specialty'), 'placeholder' => 'Specialization', 'class' => 'form-control', 'required' => 'required')) ?></td></tr>
+                        <tr><td>
+                            <label>Clinics: <small class="text-danger">*</small></label>
+                            <div>
+                                <?php foreach ($clinics as $id => $name): ?>
+                                    <label class="col-md-3"><?php echo form_checkbox('clinics[]', $id) ?> <?php echo $name ?></label>
+                                <?php endforeach ?>
+                            </div>
+                        </td></tr>
                     </tbody>
                 </table>
             </div>
