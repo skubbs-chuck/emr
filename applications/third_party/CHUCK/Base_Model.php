@@ -9,6 +9,7 @@ class Base_Model extends MY_Model {
         'date' => 'Y-m-d', 
         'time' => 'h:i A', 
     );
+    
     protected function _post() {
         $arr = func_get_args();
         if ($arr) {
