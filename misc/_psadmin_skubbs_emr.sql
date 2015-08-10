@@ -83,7 +83,7 @@ CREATE TABLE `clinics` (
   `website` text NOT NULL,
   PRIMARY KEY (`id_clinic`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `clinics` (
 
 LOCK TABLES `clinics` WRITE;
 /*!40000 ALTER TABLE `clinics` DISABLE KEYS */;
-INSERT INTO `clinics` VALUES (9,'Skubbs Dental Clinic','08:00 AM','06:00 PM','','','','Philippines','','','');
+INSERT INTO `clinics` VALUES (9,'Skubbs Dental Clinic','08:00 AM','06:00 PM','','','','Philippines','','',''),(10,'Chuck Clinic','09:00 AM','06:00 PM','','','','Philippines','','',''),(11,'Another Clinic','09:00 AM','06:00 PM','','','','Philippines','','','');
 /*!40000 ALTER TABLE `clinics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,9 +140,12 @@ CREATE TABLE `form_atn` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `visit_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `order_note` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_atn`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +154,7 @@ CREATE TABLE `form_atn` (
 
 LOCK TABLES `form_atn` WRITE;
 /*!40000 ALTER TABLE `form_atn` DISABLE KEYS */;
+INSERT INTO `form_atn` VALUES (17,2,9,0,'2015-08-10','16:06:00','allin','2015-08-10 16:06:59'),(18,2,9,0,'2015-08-10','15:48:00','yes!!!','2015-08-10 15:48:57'),(19,2,9,0,'2015-08-04','19:06:00','awd','2015-08-10 16:06:40');
 /*!40000 ALTER TABLE `form_atn` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +213,7 @@ CREATE TABLE `form_cbc` (
   `monocytes` varchar(255) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_cbc`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,13 +266,13 @@ LOCK TABLES `form_cbcf` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `form_cmof`
+-- Table structure for table `form_comf`
 --
 
-DROP TABLE IF EXISTS `form_cmof`;
+DROP TABLE IF EXISTS `form_comf`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `form_cmof` (
+CREATE TABLE `form_comf` (
   `id_form_cmof` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
@@ -292,12 +296,12 @@ CREATE TABLE `form_cmof` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `form_cmof`
+-- Dumping data for table `form_comf`
 --
 
-LOCK TABLES `form_cmof` WRITE;
-/*!40000 ALTER TABLE `form_cmof` DISABLE KEYS */;
-/*!40000 ALTER TABLE `form_cmof` ENABLE KEYS */;
+LOCK TABLES `form_comf` WRITE;
+/*!40000 ALTER TABLE `form_comf` DISABLE KEYS */;
+/*!40000 ALTER TABLE `form_comf` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -538,9 +542,13 @@ CREATE TABLE `form_gnv` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `nursing_assessment` text NOT NULL,
+  `ndp` longtext NOT NULL,
+  `implementation` text NOT NULL,
+  `evaluation` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_gnv`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -549,6 +557,7 @@ CREATE TABLE `form_gnv` (
 
 LOCK TABLES `form_gnv` WRITE;
 /*!40000 ALTER TABLE `form_gnv` DISABLE KEYS */;
+INSERT INTO `form_gnv` VALUES (14,2,9,0,'awd','[[\"awd\",\"awd\"]]','awd','awd','2015-08-10 17:41:59');
 /*!40000 ALTER TABLE `form_gnv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1151,7 +1160,7 @@ CREATE TABLE `forms` (
 
 LOCK TABLES `forms` WRITE;
 /*!40000 ALTER TABLE `forms` DISABLE KEYS */;
-INSERT INTO `forms` VALUES (1,0,4,'CBC','form_cbc'),(2,0,4,'CBC Form','form_cbcf'),(3,0,2,'Certificate of Medical Fitness','form_cmof'),(4,0,4,'Chest X-ray','form_cx'),(5,0,1,'Gen SOAP Follow Up','form_gsf1'),(6,0,2,'Medical Certificate 1','form_mc1'),(7,0,2,'Medical Certificate 2','form_mc2'),(8,0,2,'Medical Certificate 3','form_mc3'),(9,0,4,'Ob First Trimester Ultrasound','form_oftu'),(11,0,2,'Thank You Letter','form_tyl'),(12,0,1,'Wound Assessment','form_wa'),(13,3,1,'[Derma] Consult','form_dc'),(14,3,1,'[Derma] Follow-Up','form_df'),(15,0,1,'[ENT] Consult 1','form_ec1'),(16,0,1,'[ENT] Consult 2','form_ec2'),(17,0,1,'[Gen] SOAP Follow-up','form_gsf2'),(18,0,1,'[Gen] SOAP Note','form_gsn'),(19,0,1,'[Gen] SOAP w/ Notes Template','form_gswnt'),(20,0,4,'[LABMERGE] Urinalysis','form_lu'),(21,0,1,'[Ob/Gyn] Gynecology Consult','form_oggc'),(22,0,1,'[Ob/Gyn] Prenatal Consult','form_ogpc'),(23,0,1,'[Ob/Gyn] Prenatal Flowsheet','form_ogpf'),(24,6,1,'[Ophtha] Consult 1','form_oc1'),(25,6,1,'[Ophtha] Consult 2','form_oc2'),(26,6,1,'[Ophtha] Consult 3','form_oc3'),(27,0,1,'[Pedia] Consult','form_pediac'),(28,0,1,'[Pulmo] Consult','form_pulmoc'),(29,0,1,'[Surgery] Consult','form_sc'),(30,0,7,'[Aesthetics] Therapist\'s Notes','form_atn'),(31,0,7,'[Gen] Nurse Visit','form_gnv'),(32,0,7,'[Preventive Wellness] Nurse\'s Notes','form_pwnn');
+INSERT INTO `forms` VALUES (1,0,4,'CBC','form_cbc'),(2,0,4,'CBC Form','form_cbcf'),(3,0,2,'Certificate of Medical Fitness','form_comf'),(4,0,4,'Chest X-ray','form_cx'),(5,0,1,'Gen SOAP Follow Up','form_gsf1'),(6,0,2,'Medical Certificate 1','form_mc1'),(7,0,2,'Medical Certificate 2','form_mc2'),(8,0,2,'Medical Certificate 3','form_mc3'),(9,0,4,'Ob First Trimester Ultrasound','form_oftu'),(11,0,2,'Thank You Letter','form_tyl'),(12,0,1,'Wound Assessment','form_wa'),(13,3,1,'[Derma] Consult','form_dc'),(14,3,1,'[Derma] Follow-Up','form_df'),(15,0,1,'[ENT] Consult 1','form_ec1'),(16,0,1,'[ENT] Consult 2','form_ec2'),(17,0,1,'[Gen] SOAP Follow-up','form_gsf2'),(18,0,1,'[Gen] SOAP Note','form_gsn'),(19,0,1,'[Gen] SOAP w/ Notes Template','form_gswnt'),(20,0,4,'[LABMERGE] Urinalysis','form_lu'),(21,0,1,'[Ob/Gyn] Gynecology Consult','form_oggc'),(22,0,1,'[Ob/Gyn] Prenatal Consult','form_ogpc'),(23,0,1,'[Ob/Gyn] Prenatal Flowsheet','form_ogpf'),(24,6,1,'[Ophtha] Consult 1','form_oc1'),(25,6,1,'[Ophtha] Consult 2','form_oc2'),(26,6,1,'[Ophtha] Consult 3','form_oc3'),(27,0,1,'[Pedia] Consult','form_pediac'),(28,0,1,'[Pulmo] Consult','form_pulmoc'),(29,0,1,'[Surgery] Consult','form_sc'),(30,0,7,'[Aesthetics] Therapist\'s Notes','form_atn'),(31,0,7,'[Gen] Nurse Visit','form_gnv'),(32,0,7,'[Preventive Wellness] Nurse\'s Notes','form_pwnn');
 /*!40000 ALTER TABLE `forms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1313,7 +1322,7 @@ CREATE TABLE `medical_history` (
 
 LOCK TABLES `medical_history` WRITE;
 /*!40000 ALTER TABLE `medical_history` DISABLE KEYS */;
-INSERT INTO `medical_history` VALUES (1,2,1,'O+','Immunization here dude','[[\"date year here 1\",\"some details\"],[\"date year here 2\",\"details here 2\"],[\"1wq\",\"1\"],[\"\",\"1\"],[\"2\",\"\"]]','past personal and social history','[[\"relative name 1\",\"relative desease details 1\"]]','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','0000-00-00 00:00:00'),(2,3,1,'A+','awd','[[\"awd\",\"awd\"]]','','[[\"a\",\"\"],[\"\",\"asq\"]]','wdafag','0000-00-00 00:00:00');
+INSERT INTO `medical_history` VALUES (1,2,1,'A-','Immunization here dude!1a','[[\"date year here 2&lt;a href=&quot;\",\"details here 2\"],[\"1wq\",\"1\"],[\"2some details&lt;img src=&quot;\",\"\"],[\"\",\"a\"],[\"a\",\"a\"]]','past personal and social history&lt;scriptbreaker src=&quot;','[[\"asasa\",\"\"]]','awdLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.some details&lt;img src=&quot;','0000-00-00 00:00:00'),(2,3,1,'B-','awd','[[\"awd\",\"awd\"]]','','[[\"a\",\"\"],[\"\",\"asq\"]]','wdafag','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `medical_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1448,7 +1457,7 @@ CREATE TABLE `patients` (
   `identifications` longtext NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_patient`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1457,7 +1466,7 @@ CREATE TABLE `patients` (
 
 LOCK TABLES `patients` WRITE;
 /*!40000 ALTER TABLE `patients` DISABLE KEYS */;
-INSERT INTO `patients` VALUES (2,'Chuck','Osmeña','Lagumbay','Ewan','1990-07-07','Bohol','Male','Single','Filipino','Web Developer',0,'Address Here','Makati','1215','Cavite','PH','SAME AS ABOVE','','','','','c0mp1l3r911@gmail.com','HMO/Company','Unknown','','Larry Lagumbay','Buenafe Lagumbay','[]','[]','2015-07-16 00:00:00'),(3,'Aaaaa','Aaaaa','Aaaaa','','2015-07-22','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Home Fax\",\"awdawdawd\"],[\"Home Phone\",\"awdawdawdawdawd\"]]','[[\"Driver License\",\"111111111111111111111111111111111111111\"]]','0000-00-00 00:00:00'),(4,'Test','Test','Test','','0000-00-00','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','0000-00-00 00:00:00'),(5,'Tstt','Testt','Testt','','0000-00-00','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Mobile\",\"3rsefsvseg\"],[\"Mobile\",\"eg2w4egsdxv\"],[\"Mobile\",\"eg2w4egsdxv\"]]','[]','0000-00-00 00:00:00'),(6,'Xxx','Xxx','Xxx','','0000-00-00','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-22 07:44:49'),(7,'Ggg','Ggg','Ggg','ggg','1990-06-12','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-22 07:59:39'),(8,'Qweqwe','Qweqwe','Qweqwe','qweqwe','1990-07-18','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-22 08:32:24');
+INSERT INTO `patients` VALUES (2,'Chuck','Osmeña','Lagumbay','Ewan','1990-07-07','Bohol','Male','Single','Filipino','Web Developer',0,'Address Here','Makati','1215','Cavite','PH','SAME AS ABOVE','','','','','c0mp1l3r911@gmail.com','HMO/Company','Unknown','','Larry Lagumbay','Buenafe Lagumbay','[]','[]','2015-07-16 00:00:00'),(3,'Aaaaa','Aaaaa','Aaaaa','','2015-07-22','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Home Fax\",\"awdawdawd\"],[\"Home Phone\",\"awdawdawdawdawd\"]]','[[\"Driver License\",\"111111111111111111111111111111111111111\"]]','0000-00-00 00:00:00'),(4,'Test','Test','Test','','0000-00-00','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','0000-00-00 00:00:00'),(5,'Tstt','Testt','Testt','','0000-00-00','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Mobile\",\"3rsefsvseg\"],[\"Mobile\",\"eg2w4egsdxv\"],[\"Mobile\",\"eg2w4egsdxv\"]]','[]','0000-00-00 00:00:00'),(6,'Xxx','Xxx','Xxx','','0000-00-00','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-22 07:44:49'),(7,'Ggg','Ggg','Ggg','ggg','1990-06-12','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-22 07:59:39'),(8,'Qweqwe','Qweqwe','Qweqwe','qweqwe','1990-07-18','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-22 08:32:24'),(9,'tfwgfkhnc','Aawdawd','Aaaaa','','2015-07-29','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-29 07:27:16'),(10,'&lt;img ','Wegdsvgw4w','Sedvwes','','2015-07-29','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[]','[]','2015-07-29 08:01:35'),(11,'Aaaaa','Aaaaa','Aaaaa','','2015-08-03','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Mobile\",\"\"],[\"Mobile\",\"\"]]','[[\"Driver License\",\"\"]]','2015-08-03 14:19:01'),(12,'Qqqqqqqqqqqqq','Qqqqqqqqqqqqqqqq','Qqqqqqqqqqqqq','','2015-08-05','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Work\",\"awd\"],[\"Mobile\",\"awdddw\"]]','[[\"Employee No.\",\"awdawdawdawd\"]]','2015-08-05 15:40:32'),(13,'Awdwadawdadwadw','Awdadwdawadwdawdaw','Awdadwdawdawddaw','','2015-08-07','','Male','Single','61','',0,'','','','','PH','','','','','PH','','Individual','','Walkins','','','[[\"Mobile\",\"\"]]','[]','2015-08-07 10:50:52');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1514,7 +1523,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1);
+INSERT INTO `sessions` VALUES ('55291ac3bb07257afbb3eddb37375cf2ee0cedfe',1),('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('aec63681c9a20e66c9b950ce6a480a20726188bf',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('bf616dcff27a3e7b64b5aef60e5d3a605376b742',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1),('e5315851be98132492d2d3e40af2daef06a95fc1',1);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1592,12 +1601,13 @@ CREATE TABLE `users` (
   `license_number` varchar(255) NOT NULL,
   `ptr_number` varchar(255) NOT NULL,
   `s2_license_number` varchar(255) NOT NULL,
+  `clinics` text NOT NULL,
   `group` varchar(255) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1606,7 +1616,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'chuck','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',1,'ustdoz@gmail.com','Chuck','Osmeña','Lagumbay','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Web Developer','','','','1',1,'2015-06-23 18:15:28'),(2,'skubbs','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs@gmail.com','Skubbs','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','1',1,'2015-06-23 18:15:28'),(3,'skubbs1','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs1@gmail.com','Skubbs1','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','1',1,'2015-06-23 18:15:28'),(4,'skubbs2','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs2@gmail.com','Skubbs2','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','1',1,'2015-06-23 18:15:28'),(6,'psadmin','921e244bf87d5f45903fceb8da85e13c','Mk$ZoK%U',0,'info@preskubbs.com','Skubbs','','Philippines','68421112','4th Flr Unit 4K, Westgate Tower 1709 Investment Drive, Madrigal Business Park Ayala Alabang, Muntinlupa City','','',0,'0000-00-00','','Web Developer','','','','',1,'0000-00-00 00:00:00');
+INSERT INTO `users` VALUES (1,'chuck','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',1,'ustdoz@gmail.com','Chuck','Osmeña','Lagumbay','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Web Developer','','','','[\"9\",\"10\"]','1',1,'2015-06-23 18:15:28'),(2,'skubbs','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs@gmail.com','Skubbs','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','','1',1,'2015-06-23 18:15:28'),(3,'skubbs1','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs1@gmail.com','Skubbs1','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','','1',1,'2015-06-23 18:15:28'),(4,'skubbs2','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs2@gmail.com','Skubbs2','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','','1',1,'2015-06-23 18:15:28'),(6,'psadmin','921e244bf87d5f45903fceb8da85e13c','Mk$ZoK%U',0,'info@preskubbs.com','Skubbs&lt;a','','Philippines','68421112','4th Flr Unit 4K, Westgate Tower 1709 Investment Drive, Madrigal Business Park Ayala Alabang, Muntinlupa City','','',0,'0000-00-00','','Web Developer','','','','','',1,'0000-00-00 00:00:00'),(7,'aasasasasasasasas','07001fd4a8a30383a723d65f0f33365b','aM8s!YR&',0,'awda@awd.caw','awda','','awdaa','','','','',0,'0000-00-00','','awda','','','','','',1,'0000-00-00 00:00:00'),(9,'newwithclinic','8492dae5b1b2e916dfcfec5342b0ee1e','hMJW1JdM',0,'newwithclinic@newwithclinic.new','newwithclinic','','newwithclinic','','','','',0,'0000-00-00','','newwithclinic','','','','[\"9\",\"10\"]','',1,'0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1647,4 +1657,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-28 18:01:17
+-- Dump completed on 2015-08-10 17:42:58

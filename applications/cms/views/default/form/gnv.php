@@ -15,34 +15,53 @@
             </div>
         </li>
         <li class="item">
-            <label for="id_clinic">Clinic:</label>
-            <span class="skubbs_output"><?php echo $gnv['data']->clinic_name ?></span>
-            <span class="skubbs_input"><?php echo $gnv['form']['id_clinic'] ?></span>
+            <strong>Nursing Assessment: </strong>
+            <div class="skubbs_output"><?php echo html_escape($gnv['data']->nursing_assessment) ?></div>
+            <div class="skubbs_input"><?php echo $gnv['form']['nursing_assessment'] ?></div>
         </li>
         <li class="item">
-            <label>Visit Date:</label>
-            <span class="skubbs_output"><?php echo date('F j, Y', strtotime($gnv['data']->visit_date)) ?></span>
-            <div class="form-group skubbs_input">
-                <div class="input-group">
-                    <?php echo $gnv['form']['visit_date'] ?>
-                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                </div>
-            </div>
-        </li>
-        <li class="item bootstrap-timepicker">
-        <label>Start Time:</label>
-            <span class="skubbs_output"><?php echo date('h:i A', strtotime($gnv['data']->start_time)) ?></span>
-            <div class="form-group skubbs_input">
-                <div class="input-group">
-                    <?php echo $gnv['form']['start_time'] ?>
-                    <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
-                </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead><tr><th class="label-primary">Assessment</th></tr></thead>
+                    <tbody id="assessment_ndp">
+                        <?php $ndps = json_decode($gnv['data']->ndp); ?>
+                        <?php foreach ($ndps as $ndp): ?>
+                        <tr class="skubbs_output">
+                            <td>
+                                <label>Nursing Diagnosis</label>
+                                <div><?php echo $ndp[0] ?></div>
+                                <label>Plan</label>
+                                <div><?php echo $ndp[1] ?></div>
+                            </td>
+                        </tr>
+                        <tr class="skubbs_input" style="display: none;">
+                            <td>
+                                <label>Nursing Diagnosis</label>
+                                <input type="text" name="ndp_diagnosis[]" class="form-control" value="<?php echo $ndp[0] ?>">
+                                <label>Plan</label>
+                                <div class="input-group" style="margin-bottom: 5px">
+                                    <textarea name="ndp_plan[]" class="form-control" rows="3"><?php echo $ndp[1] ?></textarea><a class="input-group-addon skubbs_btn-remove btn btn-danger"><i class="fa fa-remove "></i></a></div>
+                            </td>
+                        </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                    <tfoot>
+                        <tr style="display: table-row;">
+                            <td colspan="2"><a href="#" class="skubbs_input btn btn-info btn-xs skubbs_btn-add" s-id="ndp">Add Diagnosis</a></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </li>
         <li class="item">
-            <strong>Order/Notes: </strong>
-            <div class="skubbs_output"><?php echo html_escape($gnv['data']->order_note) ?></div>
-            <div class="skubbs_input"><?php echo $gnv['form']['order_note'] ?></div>
+            <strong>Implementation: </strong>
+            <div class="skubbs_output"><?php echo html_escape($gnv['data']->implementation) ?></div>
+            <div class="skubbs_input"><?php echo $gnv['form']['implementation'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Evaluation: </strong>
+            <div class="skubbs_output"><?php echo html_escape($gnv['data']->evaluation) ?></div>
+            <div class="skubbs_input"><?php echo $gnv['form']['evaluation'] ?></div>
         </li>
         <li class="item">
             <div class="btn-group pull-right skubbs-e">

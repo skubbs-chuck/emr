@@ -13,11 +13,13 @@ class Model_form_gnv extends Base_Model {
 
     public function init($d) {
         if ($this->data['post']) {
+            $diagnosis = $this->input->post('ndp_diagnosis');
+            $plan = $this->input->post('ndp_plan');
             $ndp = array();
-            if (isset($ndp_diagnosis) && isset($ndp_plan)) {
-                $ndp_diagnosis = array_values($this->data['post']['ndp_diagnosis']);
-                $ndp_plan      = array_values($this->data['post']['plan']);
-
+            if ($diagnosis && $plan) {
+                $ndp_diagnosis = array_values($diagnosis);
+                $ndp_plan      = array_values($plan);
+                
                 for ($i=0; $i < count($ndp_diagnosis); $i++) 
                     if (!empty($ndp_diagnosis[$i]) || !empty($ndp_plan[$i])) 
                         $ndp[] = array(html_escape($ndp_diagnosis[$i]), html_escape($ndp_plan[$i]));
@@ -27,7 +29,7 @@ class Model_form_gnv extends Base_Model {
                 'id_patient'         => $d['id_patient'], 
                 'id_clinic'          => $d['current_id_clinic'], 
                 'nursing_assessment' => html_escape($this->data['post']['nursing_assessment']), 
-                'ndp'                => ($ndp) ? json_encode($ndp) : '[]', 
+                'ndp'                => json_encode($ndp), 
                 'implementation'     => html_escape($this->data['post']['implementation']), 
                 'evaluation'         => html_escape($this->data['post']['evaluation']), 
                 'creation_date'      => date($this->format['sql_datetime']));
@@ -76,7 +78,7 @@ class Model_form_gnv extends Base_Model {
 // if ($this->input->post(NULL)) {
 //             $ndp_diagnosis = $this->input->post('ndp_diagnosis', TRUE);
 //             $ndp_plan      = $this->input->post('ndp_plan', TRUE);
-//             if (isset($ndp_diagnosis) && isset($ndp_plan)) {
+//             if ($ndp_diagnosis) && $ndp_plan)) {
 //                 $ndp = array();
 //                 $ndp['diagnosis'] = array_values($ndp_diagnosis);
 //                 $ndp['plan']      = array_values($ndp_plan);
