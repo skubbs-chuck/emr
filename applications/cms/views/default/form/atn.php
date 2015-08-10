@@ -10,7 +10,7 @@
                 <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
             </div>
             <div class="btn-group pull-right skubbs-sc" style="display:none">
-                <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post" s-wrap="wrap-nurse_visit-<?php echo $atn['form_name'] ?>-<?php echo $id_form ?>" s-request="<?php echo $atn['form_name'] ?>">Save</a>
+                <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post" s-wrap="wrap-nurse_visit-<?php echo $atn['form_name'] ?>-<?php echo $id_form ?>" s-id-form="<?php echo $id_form ?>" s-id-patient="<?php echo $id_patient ?>" s-request="<?php echo $atn['form_name'] ?>">Save</a>
                 <a href="#" class="btn btn-default skubbs_btn-cancel">Cancel</a>
             </div>
         </li>
@@ -49,7 +49,7 @@
                 <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
             </div>
             <div class="btn-group pull-right skubbs-sc" style="display:none">
-                <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post">Save</a>
+                <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post" s-wrap="wrap-nurse_visit-<?php echo $atn['form_name'] ?>-<?php echo $id_form ?>" s-id-form="<?php echo $id_form ?>" s-id-patient="<?php echo $id_patient ?>" s-request="<?php echo $atn['form_name'] ?>">Save</a>
                 <a href="#" class="btn btn-default skubbs_btn-cancel">Cancel</a>
             </div>
         </li>

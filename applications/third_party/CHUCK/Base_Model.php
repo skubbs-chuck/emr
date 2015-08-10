@@ -38,7 +38,7 @@ class Base_Model extends MY_Model {
 
     public function form_textarea($name, $value, $attr = array()) {
         $value = $this->input->post($name) ? $this->input->post($name, TRUE) : $value;
-        $inp = array_merge_recursive(array('name' => $name, 'value' => $value, 'rows' => 3), $attr);
+        $inp = array_merge_recursive(array('name' => $name, 'value' => html_escape($value), 'rows' => 3), $attr);
         return form_textarea($inp);
     }
 }

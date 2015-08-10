@@ -23,7 +23,7 @@
                     s-request="<?php echo $form->tbl ?>" s-id-form="<?php echo $form->$id ?>" s-wrap="wrap-nurse_visit-<?php echo $wrap ?>" class="skubbs_ajax">
                         <h4 class="panel-title">
                             <?php echo $form->tbl_name ?>
-                            <span class="pull-right"><small><?php echo date('M-d-Y', strtotime($form->creation_date)) ?></small></span>
+                            <!-- <span class="pull-right"><small><?php echo date('M-d-Y', strtotime($form->creation_date)) ?></small></span> -->
                         </h4>
                     </a>
                 </div>

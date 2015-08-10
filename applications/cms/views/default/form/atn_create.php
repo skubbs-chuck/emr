@@ -1,10 +1,14 @@
-<form action="#" method="post" id="data_form_atn">
+<?php if ($atn['created']): ?>
+    <?php if (isset($atn['alert']['type'])): ?>
+        <div class="alert alert-<?php echo $atn['alert']['type'] ?>"><?php echo $atn['alert']['message'] ?></div>
+    <?php endif ?>
+<script>
+setTimeout(function() {
+    $('#notes>div>ul>li.active>a.skubbs_ajax').click();
+}, 3000);
+</script>
+<?php else: ?><form action="#" method="post" id="data_form_atn">
     <ul class="products-list product-list-in-box margin">
-        <li class="item">
-            <?php if (isset($atn['var']['message'])): ?>
-                <div class="alert alert-<?php echo $atn['var']['message_type'] ?>"><?php echo $atn['var']['message'] ?></div>
-            <?php endif ?>
-        </li>
         <li class="item">
             <div class="btn-group pull-right">
                 <button class="btn btn-primary skubbs_ajax" s-method="post" s-wrap="nurse_visit" s-action="create" s-request="form_atn">Submit</button>
@@ -45,3 +49,4 @@
         </li>
     </ul>
 </form>
+<?php endif; ?>
