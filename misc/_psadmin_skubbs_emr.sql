@@ -1020,9 +1020,15 @@ CREATE TABLE `form_pwnn` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `visit_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `focus` text NOT NULL,
+  `data` text NOT NULL,
+  `action` text NOT NULL,
+  `recommendation` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_pwnn`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1031,6 +1037,7 @@ CREATE TABLE `form_pwnn` (
 
 LOCK TABLES `form_pwnn` WRITE;
 /*!40000 ALTER TABLE `form_pwnn` DISABLE KEYS */;
+INSERT INTO `form_pwnn` VALUES (1,2,9,0,'2015-08-10','17:58:00','awdaaaa','awdaaaaa','awd','awd','2015-08-10 17:58:54');
 /*!40000 ALTER TABLE `form_pwnn` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1657,4 +1664,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-10 17:42:58
+-- Dump completed on 2015-08-10 17:59:44
