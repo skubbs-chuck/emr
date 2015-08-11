@@ -6,9 +6,10 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
-                <?php foreach ($consultation['form_list'] as $form): ?>
+<!--                 <?php foreach ($consultation['form_list'] as $form): ?>
                     <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="consultation" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
-                <?php endforeach ?>
+                <?php endforeach ?> -->
+                <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="consultation" s-request="form_gsf1" s-action="create">Gen SOAP Follow Up</a></li>
             </ul>
         </div>
     </div>

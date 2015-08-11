@@ -1,65 +1,72 @@
-<div class="box-body no-margin" id="atn-results">
-    <form action="#" method="post" id="atn-form">
-        <ul class="products-list product-list-in-box margin">
-            <li class="item" id="atn-message">
-                <?php if (isset($atn['var']['message'])): ?>
-                    <div class="alert alert-<?php echo $atn['var']['message_type'] ?>"><?php echo $atn['var']['message'] ?></div>
-                <?php endif ?>
-            </li>
-            <li class="item">
-                <div class="btn-group pull-right">
-                    <button class="btn btn-primary atn-save">Save</button>
-                    <button class="btn atn-cancel">Cancel</button>
+<?php if ($tyl['created']): ?>
+    <?php if (isset($tyl['alert']['type'])): ?>
+        <div class="alert alert-<?php echo $tyl['alert']['type'] ?>"><?php echo $tyl['alert']['message'] ?></div>
+    <?php endif ?>
+<script>
+setTimeout(function() {
+    $('#notes>div>ul>li.active>a.skubbs_ajax').click();
+}, 3000);
+</script>
+<?php else: ?><form action="#" method="post" id="data_form_tyl">
+    <ul class="products-list product-list-in-box margin">
+        <li class="item">
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary skubbs_ajax" s-method="post" s-wrap="other" s-action="create" s-request="form_tyl">Submit</button>
+                <button class="btn skubbs_ajax" s-wrap="notes" s-request="other">Cancel</button>
+            </div>
+        </li>
+        <li class="item">
+            <div class="form-group">
+                <label>Visit Date:</label>
+                <div class="input-group">
+                    <?php echo $tyl['form']['visit_date'] ?>
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                 </div>
-            </li>
-            <li class="item">
-                <label for="visit_date">Date:</label>
-                <?php echo form_input(array('name' => 'visit_date', 'value' => ($this->input->post('visit_date') ? $this->input->post('visit_date') : date("Y-m-d")), 'id' => 'visit_date', 'class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'", 'data-mask' => '')) ?>
-            </li>
-            <li class="item bootstrap-timepicker">
-                <label for="visit_date">Start Time:</label>
-                <?php echo form_input(array('name' => 'start_time', 'value' => ($this->input->post('start_time') ? $this->input->post('start_time') : date('h:i A')), 'id' => 'visit_date', 'class' => 'form-control skubbs_timepicker')) ?>
-            </li>
-            <li class="item">
-                <label for="visit_date">To:</label>
-                <?php echo form_input(array('name' => 'visit_date', 'value' => $this->input->post('visit_date'), 'id' => 'visit_date', 'class' => 'form-control')) ?>
-            </li>
-            <li class="item">
-                <label for="visit_date">Specialty:</label>
-                <?php echo form_input(array('name' => 'visit_date', 'value' => $this->input->post('visit_date'), 'id' => 'visit_date', 'class' => 'form-control')) ?>
-            </li>
-            <li class="item">
-                <label for="visit_date">Clinic Name:</label>
-                <?php echo form_input(array('name' => 'visit_date', 'value' => $this->input->post('visit_date'), 'id' => 'visit_date', 'class' => 'form-control')) ?>
-            </li>
-            <li class="item">
-                <label for="visit_date">Clinic Address:</label>
-                <div>
-                    <textarea name="order_note" id="order_note" class="form-control atn-input" rows="3"><?php echo $atn['data']->order_note ?></textarea>
+            </div>
+        </li>
+        <li class="item bootstrap-timepicker">
+            <div class="form-group">
+                <label>Start Time:</label>
+                <div class="input-group">
+                    <?php echo $tyl['form']['start_time'] ?>
+                    <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
                 </div>
-            </li>
-            <li class="item">
-                <label for="visit_date">Clinic Contact No.:</label>
-                <?php echo form_input(array('name' => 'visit_date', 'value' => $this->input->post('visit_date'), 'id' => 'visit_date', 'class' => 'form-control')) ?>
-            </li>
-            <li class="item">
-                <label for="visit_date">Diagnosis:</label>
-                <div>
-                    <textarea name="order_note" id="order_note" class="form-control atn-input" rows="3"><?php echo $atn['data']->order_note ?></textarea>
-                </div>
-            </li>
-            <li class="item">
-                <label for="visit_date">Recommendation:</label>
-                <div>
-                    <textarea name="order_note" id="order_note" class="form-control atn-input" rows="3"><?php echo $atn['data']->order_note ?></textarea>
-                </div>
-            </li>
-            <li class="item">
-                <div class="btn-group pull-right">
-                    <button class="btn btn-primary atn-save">Save</button>
-                    <button class="btn atn-cancel">Cancel</button>
-                </div>
-            </li>
-        </ul>
-    </form>
-</div>
+            </div>
+        </li>
+        <li class="item">
+            <strong>To: </strong>
+            <div><?php echo $tyl['form']['to'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Specialty: </strong>
+            <div><?php echo $tyl['form']['specialty'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Clinic Name: </strong>
+            <div><?php echo $tyl['form']['clinic_name'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Clinic Address: </strong>
+            <div><?php echo $tyl['form']['clinic_address'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Clinic Contact No.: </strong>
+            <div><?php echo $tyl['form']['clinic_contact'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Diagnosis: </strong>
+            <div><?php echo $tyl['form']['diagnosis'] ?></div>
+        </li>
+        <li class="item">
+            <strong>Recommendation: </strong>
+            <div><?php echo $tyl['form']['recommendation'] ?></div>
+        </li>
+        <li class="item">
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary skubbs_ajax" s-method="post" s-wrap="other" s-action="create" s-request="form_tyl">Submit</button>
+                <button class="btn skubbs_ajax" s-wrap="notes" s-request="other">Cancel</button>
+            </div>
+        </li>
+    </ul>
+</form>
+<?php endif; ?>
