@@ -1,525 +1,120 @@
 <?php
 
 class Model_Form extends Base_Model {
+    public $sql = array();
 
-    public function medical_history($id_patient, $id_form = 0) {
-        $json = array();
+    public function init($data) {
+        $this->data = $data;
+        if (method_exists($this, $this->data['ar']['request_type'])) 
+            $this->{$this->data['ar']['request_type']}();
         
-        if ($this->input->post(NULL)) {
-            $post_data = $this->_post('blood_type', 'immunization', 'phas_date_year', 
-                'phas_detail', 'personal_social', 'family_relative', 'family_desease', 'other');
-            $data = array(
-                'blood_type' => html_escape($this->input->post('blood_type')), 
-                'immunization' => html_escape($this->input->post('immunization')), 
-                'personal_social' => html_escape($this->input->post('personal_social')), 
-                'other' => html_escape($this->input->post('other')));
-
-            $phas_count = (count($post_data['phas_date_year']) >= count($post_data['phas_detail'])) ? count($post_data['phas_date_year']) : count($post_data['phas_detail']);
-            for ($i=0; $i < $phas_count; $i++) { 
-                if (!empty($post_data['phas_date_year'][$i]) || !empty($post_data['phas_detail'][$i])) {
-                    $data['phas'][$i] = array(html_escape($post_data['phas_date_year'][$i]), html_escape($post_data['phas_detail'][$i]));
-                }
-                
-            }
-
-            $family_count = (count($post_data['family_relative']) >= count($post_data['family_desease'])) ? count($post_data['family_relative']) : count($post_data['family_desease']);
-            for ($i=0; $i < $family_count; $i++) { 
-                if (!empty($post_data['family_relative'][$i]) || !empty($post_data['family_desease'][$i])) {
-                    $data['family'][$i] = array(html_escape($post_data['family_relative'][$i]), html_escape($post_data['family_desease'][$i]));
-                }
-            }
-
-            $data['phas'] = json_encode($data['phas']);
-            $data['family'] = json_encode($data['family']);
-            $data['id_user'] = $this->session->userdata('user')->id_user;
-            $data = $this->security->xss_clean($data);
-
-            $this->db->where('id_patient', $id_patient);
-            $query = $this->db->get('medical_history');
-            if ($query->num_rows() > 0) {
-                $this->db->where('id_patient', $id_patient);
-                $this->db->update('medical_history', $data);
-                $json['var']['message'] = 'Successfully updated Medical History';
-                $json['var']['message_type'] = 'success';
-            } else {
-                $data['id_patient'] = $id_patient;
-                $this->db->where('id_patient', $id_patient);
-                $this->db->insert('medical_history', $data);
-                $json['var']['message'] = 'Successfully created Medical History';
-                $json['var']['message_type'] = 'success';
-            }
-        }
-
-        $this->db->where('id_patient', $id_patient);
-        $query = $this->db->get('medical_history');
-        $json['var']['blood_type']  = array(
-            '' => '-- Select --', 
-            'A+' => 'A+', 'A-' => 'A-', 
-            'B+' => 'B+', 'B-' => 'B-', 
-            'AB+' => 'AB+', 'AB-' => 'AB-', 
-            'O+' => 'O+', 'O-' => 'O-'
-        );
-
-        if ($query->num_rows() > 0) {
-            $data = $query->row();
-            $data->phas = json_decode($data->phas, true);
-            $data->family = json_decode($data->family, true);
-            $json['data'] = $data;
-        }
-
-
-
-        return $json;
+        return $this->data;
     }
 
-    public function notes() {
-        $args = func_get_args();
-        $json = array();
-        // $this->db->select(
-        //     'forms.id_form,forms.id_form_category,forms.id_form_type,forms.table_name,' . 
-        //     'forms.name as name,form_categories.name as category_name,form_types.name as type_name'
-        // );
-        // $this->db->join('form_types', 'form_types.id_form_type = forms.id_form_type');
-        // $this->db->join('form_categories', 'form_categories.id_form_category = forms.id_form_category', 'left');
-        // $query = $this->db->get('forms');
-        // $json['form_list'] = $query->result();
-        return $json;
+    public function form() {
+        $this->data['view'] = 'form/' . $this->data['ar']['action'];
+        $this->data['post'] = $this->input->post(NULL, TRUE);
+        $this->data['this_form'] = array(
+            'name' => $this->data['ar']['request'],
+            'created' => false,
+            'alert' => array('type' => 0, 'message' => ''), 
+            'items' => array(),
+        );
+
+        $method = $this->data['ar']['request'];
+        if (method_exists($this, $method)) {
+            if ($this->data['post']) {
+                $this->data['post']['id_clinic'] = 
+                    array_key_exists((int) $this->data['post']['id_clinic'], $this->data['current_clinics']) 
+                    ? (int) $this->data['post']['id_clinic'] : $this->data['current_id_clinic'];
+            }
+
+            $this->$method();
+        }
+    }
+
+    public function form_gsf1() {
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'     => $this->data['ar']['id_patient'], 
+                'id_clinic'      => $this->data['post']['id_clinic'], 
+                'id_user'        => $this->session->userdata('user')->id_user, 
+                'soap_img'       => html_escape($this->data['post']['soap_img']), 
+                'subjective'     => html_escape($this->data['post']['subjective']), 
+                'plan'           => html_escape($this->data['post']['plan']), 
+                'creation_date'  => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['alert'] = array('type' => 'success', 'message' => 'successfully updated Gen SOAP Follow Up');
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['created'] = true;
+                $this->data['alert'] = array('type' => 'success', 'message' => 'successfully created Gen SOAP Follow Up');
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['this_form']['items'] = array(
+            array(
+                'label' => 'soap_img', 
+                'output' => $this->data['result']->soap_img, 
+                'input' => $this->form_input('soap_img', $this->data['result']->soap_img, array('class' => 'form-control'))), 
+            array(
+                'label' => 'Subjective', 
+                'output' => $this->data['result']->subjective, 
+                'input' => $this->form_textarea('subjective', html_escape($this->data['result']->subjective), array('class' => 'form-control'))), 
+            array(
+                'label' => 'Plan', 
+                'output' => $this->data['result']->plan, 
+                'input' => $this->form_textarea('plan', html_escape($this->data['result']->plan), array('class' => 'form-control'))), 
+        );
+    }
+
+    public function tab() {
+        $this->data['view'] = 'form/tab_' . $this->data['ar']['request'];
+        $method = 'tab_' . $this->data['ar']['request'];
+        if (method_exists($this, $method)) 
+            $this->$method();
+    }
+
+    public function tab_notes_consultation() {
+        $this->db->select('name, table_name');
+        $this->db->where('id_form_type', 1); // consultation
+        $query = $this->db->get('forms');
+        $this->data['consultation']['form_list'] = $query->result();
+        $this->data['consultation']['count'] = 0;
+        
+        foreach ($this->data['consultation']['form_list'] as $row) {
+            $name = preg_replace('/^form_/', '', $row->table_name);
+            $this->db->select('id_patient,creation_date,id_' . $row->table_name);
+            $this->db->where('id_patient', $this->data['patient']->id_patient);
+            $this->db->order_by('creation_date', 'desc');
+            $query = $this->db->get($row->table_name);
+            if ($query->num_rows()) {
+                foreach ($query->result() as $r) {
+                    $this->data['consultation']['count']++;
+                    $r->name = $name;
+                    $r->tbl = $row->table_name;
+                    $r->tbl_name = $row->name;
+                    $this->data['consultation']['forms'][] = $r;
+                }
+            }
+        }
+
+        if ($this->data['consultation']['forms']) 
+            usort($this->data['consultation']['forms'], array($this, 'sortByCreationDate'));
     }
 
     public function sortByCreationDate($a, $b) {
         return strtotime($b->creation_date) - strtotime($a->creation_date) ;
     }
-
-    public function consultation($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $json = array();
-        
-        $this->db->select('name, table_name');
-        $this->db->where('id_form_type', 1); // consultation
-        $query = $this->db->get('forms');
-        $forms = $query->result();
-        $json['form_list'] = $forms;
-
-        $counter = 0;
-        foreach ($forms as $row) {
-
-            $name = preg_replace('/^form_/', '', $row->table_name);
-            $this->db->select('id_patient,creation_date,id_' . $row->table_name);
-            $this->db->where('id_patient', $id_patient);
-            $this->db->order_by('creation_date', 'desc');
-            $query = $this->db->get($row->table_name);
-            if ($query->num_rows()) {
-                foreach ($query->result() as $r) {
-                    $counter++;
-                    $r->name = $name;
-                    $r->tbl = $row->table_name;
-                    $r->tbl_name = $row->name;
-                    $json['forms'][] = $r;
-                }
-            }
-        }
-
-        $json['id_patient'] = $id_patient;
-        $json['count'] = $counter;
-
-        usort($json['forms'], array('Model_Form', 'sortByCreationDate'));
-        return $json;
-    }
-
-    public function nurse_visit($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $json = array();
-        
-        $this->db->select('name, table_name');
-        $this->db->where('id_form_type', 7); // nurse_visit
-        $query = $this->db->get('forms');
-        $forms = $query->result();
-        $json['form_list'] = $forms;
-
-        return $json;
-    }
-
-    public function diagnostic_study($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $json = array();
-        
-        $this->db->select('name, table_name');
-        $this->db->where('id_form_type', 4); // diagnostic_study
-        $query = $this->db->get('forms');
-        $forms = $query->result();
-        $json['form_list'] = $forms;
-
-        return $json;
-    }
-
-    public function procedure($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $json = array();
-        
-        $this->db->select('name, table_name');
-        $this->db->where('id_form_type', 5); // procedure
-        $query = $this->db->get('forms');
-        $forms = $query->result();
-        $json['form_list'] = $forms;
-
-        return $json;
-    }
-
-    public function operation($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $json = array();
-        
-        $this->db->select('name, table_name');
-        $this->db->where('id_form_type', 6); // operation
-        $query = $this->db->get('forms');
-        $forms = $query->result();
-        $json['form_list'] = $forms;
-
-        return $json;
-    }
-
-    public function other($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $json = array();
-        
-        $this->db->select('name, table_name');
-        $this->db->where('id_form_type', 2); // other / letters
-        $query = $this->db->get('forms');
-        $forms = $query->result();
-        $json['form_list'] = $forms;
-
-        return $json;
-    }
-
-    public function cbc($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function cbcf($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function cmof($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function cx($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function gsf1($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        $this->db->where('id_patient', $id_patient);
-        $this->db->where('id_form_gsf1', $id_form);
-        $query = $this->db->get('form_gsf1');
-        if ($query->num_rows()) 
-            $json['data'] = $query->row();
-        
-        if (isset($_GET['create'])) {
-            $json['aa'] = 'chuck';
-        }
-
-        return $json;
-    }
-
-    public function mc1($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function mc2($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function mc3($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function oftu($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function ph($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function tyl($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function wa($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function dc($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function df($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function ec1($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function ec2($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function gsf2($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function gsn($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function gswnt($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function lu($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function oggc($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function ogpc($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function ogpf($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function oc1($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function oc2($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function oc3($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function pediac($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function pulmoc($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function sc($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function atn($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function gnv($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-    public function pwnn($id_patient, $id_form = 0) {
-        $id_patient = (int) $id_patient;
-        $id_form = (int) $id_form; // database table id
-        $json = array();
-        $json['id_patient'] = $id_patient;
-        $json['id_form'] = $id_form;
-
-        return $json;
-    }
-
-
 }

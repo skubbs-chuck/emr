@@ -44,7 +44,7 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
             p.data = 'form#data_' + p.request;
             p.loading = 'div#' + p.wrap + '>div.skubbs_loading';
             p.result = 'div#' + p.wrap + '>div.skubbs_result';
-            p.target_url = base_url + ['ajax', p.page, p.request, p.action, p.method, p.id_patient, p.id_form, Date.now()].join('/');
+            p.target_url = base_url + ['ajax', p.page].join('/');
         }, 
         skubbs_attr: function(el) {
             var opts = {};
@@ -173,11 +173,10 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
             
             ajax = (typeof el != 'undefined') ? el : moo.skubbs_attr($(this));
             moo.patient_config(ajax);
-            // console.log(ajax);
-            // console.log(ajax); return false;
             $(ajax.loading).show();
+            var ajax_request = Base64.encode(JSON.stringify(ajax));
             $.ajax({
-                url: ajax.target_url,
+                url: ajax.target_url + '?ajax_request=' + ajax_request,
                 method: ajax.method,
                 data: $(ajax.data).serialize(), 
                 dataType: 'json', 
@@ -249,14 +248,5 @@ $(document).on('change', '.patient_now', function() {
     $('#patient_now_' + $(this).val()).show();
 });
 $(document).ready(function() { 
-    // if ($.urlParam('skubbs_ajax')) {
-    //     // console.log(Base64.decode($.urlParam('skubbs_ajax')));
-    //     // return false;
-    //     // var f = jQuery.parseJSON(Base64.decode($.urlParam('skubbs_ajax')));
-    //     // console.log($(this)skubbs_attr(f);
-    //     // console.log(f);
-    //     $(this).skubbs('ajax', f);
-    // } else {
-        $(this).skubbs('ajax'); 
-    // };
+    $(this).skubbs('ajax'); 
 });

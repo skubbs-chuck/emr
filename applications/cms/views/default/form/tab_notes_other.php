@@ -1,4 +1,4 @@
-<div id="other" class="box no-border">
+<div id="notes_other" class="box no-border">
     <div class="box-body">
         <div class="btn-group pull-right">
             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
@@ -7,14 +7,14 @@
             </button>
             <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
                 <?php foreach ($other['form_list'] as $form): ?>
-                    <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="other" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
+                    <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_other" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
                 <?php endforeach ?>
-                <!-- <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="other" s-request="form_tyl" s-action="create">Thank You Letter</a></li> -->
+                <!-- <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_other" s-request="form_tyl" s-action="create">Thank You Letter</a></li> -->
             </ul>
         </div>
     </div>
     <div class="box no-border flat skubbs_result">
-        <div class="panel-group" id="other_accordion">
+        <div class="panel-group" id="notes_other_accordion">
         <?php if ($other['forms']): ?>
         <?php foreach ($other['forms'] as $form): $id = 'id_' . $form->tbl; ?>
             <?php $wrap = $form->tbl . '-' . $form->$id ?>
@@ -28,7 +28,7 @@
                         </h4>
                     </a>
                 </div>
-                <div id="other-<?php echo $wrap ?>" class="panel-collapse collapse skubbs_result"><div class="text-center">Rendering Data...</div></div>
+                <div id="notes_other-<?php echo $wrap ?>" class="panel-collapse collapse skubbs_result"><div class="text-center">Rendering Data...</div></div>
                 <div class="overlay skubbs_loading"><i class="fa fa-refresh fa-spin"></i></div>
             </div>
         <?php endforeach ?>
