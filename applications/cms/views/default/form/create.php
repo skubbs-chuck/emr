@@ -1,7 +1,5 @@
-<?php if ($this_form['created']): ?>
-    <?php if (isset($this_form['alert']['type'])): ?>
-        <div class="alert alert-<?php echo $this_form['alert']['type'] ?>"><?php echo $this_form['alert']['message'] ?></div>
-    <?php endif ?>
+<?php if ($this_form['alert']['type']): ?>
+    <div class="alert alert-<?php echo $this_form['alert']['type'] ?>"><?php echo $this_form['alert']['message'] ?></div>
     <script>
     setTimeout(function() {
         $('#notes>div>ul>li.active>a.skubbs_ajax').click();
@@ -17,7 +15,7 @@
         </li>
         <?php foreach ($this_form['items'] as $item): ?>
         <li class="item <?php echo $item['class'] ?>">
-            <label><?php echo $item['label'] ?></label>
+            <div><label><?php echo $item['label'] ?>:</label></div>
             <?php if ($item['group']): ?>
             <div class="form-group">
                 <div class="input-group">

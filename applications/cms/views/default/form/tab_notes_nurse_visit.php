@@ -9,6 +9,7 @@
                 <?php foreach ($nurse_visit['form_list'] as $form): ?>
                     <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_nurse_visit" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
                 <?php endforeach ?>
+                <!-- <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_nurse_visit" s-request="form_gsf1" s-action="create">Gen SOAP Follow Up</a></li> -->
             </ul>
         </div>
     </div>
@@ -17,13 +18,13 @@
         <?php if ($nurse_visit['forms']): ?>
         <?php foreach ($nurse_visit['forms'] as $form): $id = 'id_' . $form->tbl; ?>
             <?php $wrap = $form->tbl . '-' . $form->$id ?>
-            <div id="wrap-nurse_visit-<?php echo $wrap ?>" class="panel panel-default">
+            <div id="wrap-notes_nurse_visit-<?php echo $wrap ?>" class="panel panel-default">
                 <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#nurse_visit_accordion" href="#nurse_visit-<?php echo $wrap ?>" 
-                    s-request="<?php echo $form->tbl ?>" s-id-form="<?php echo $form->$id ?>" s-wrap="wrap-nurse_visit-<?php echo $wrap ?>" class="skubbs_ajax">
+                    <a data-toggle="collapse" data-parent="#nurse_visit_accordion" href="#notes_nurse_visit-<?php echo $wrap ?>" 
+                    s-request="<?php echo $form->tbl ?>" s-id-form="<?php echo $form->$id ?>" s-wrap="wrap-notes_nurse_visit-<?php echo $wrap ?>" class="skubbs_ajax">
                         <h4 class="panel-title">
                             <?php echo $form->tbl_name ?>
-                            <!-- <span class="pull-right"><small><?php echo date('M-d-Y', strtotime($form->creation_date)) ?></small></span> -->
+                            <span class="pull-right"><small><?php echo date('M-d-Y', strtotime($form->creation_date)) ?></small></span>
                         </h4>
                     </a>
                 </div>
