@@ -16,9 +16,9 @@
         </li>
         <?php foreach ($this_form['items'] as $item): ?>
         <li class="item <?php echo $item['class'] ?>">
-            <div><label><?php echo $item['label'] ?>:</label></div>
-            <div><span class="skubbs_output"><?php echo $item['output'] ?></span></div>
             <?php if ($item['group']): ?>
+            <div><label><?php echo $item['label'] ?></label></div>
+            <div><span class="skubbs_output"><?php echo $item['output'] ?></span></div>
             <div class="form-group skubbs_input">
                 <div class="input-group">
                     <?php echo $item['input'] ?>
@@ -27,7 +27,15 @@
                     <?php endif ?>
                 </div>
             </div>
+            <?php elseif ($item['ndp']): ?>
+                <?php include_once __DIR__ . DS . 'item_ndp.php'; ?>
+            <?php elseif ($item['cbc']): ?>
+                <?php include_once __DIR__ . DS . 'item_cbc.php'; ?>
+            <?php elseif ($item['mc2_di']): ?>
+                <?php include_once __DIR__ . DS . 'item_mc2_di.php'; ?>
             <?php else: ?>
+            <div><label><?php echo $item['label'] ?></label></div>
+            <div><span class="skubbs_output"><?php echo $item['output'] ?></span></div>
             <span class="skubbs_input"><?php echo $item['input'] ?></span>
             <?php endif ?>
         </li>
@@ -37,7 +45,7 @@
                 <a href="#" class="btn btn-info skubbs_btn-edit">Edit</a>
             </div>
             <div class="btn-group pull-right skubbs-sc" style="display:none">
-                <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post" s-wrap="wrap-<?php echo $ar['wrapper'] ?>-<?php echo $this_form['name'] ?>-<?php echo $id_form ?>" s-id-form="<?php echo $id_form ?>" s-id-patient="<?php echo $id_patient ?>" s-request="<?php echo $this_form['name'] ?>">Save</a>
+                <a href="#" class="btn btn-primary skubbs_btn-save" s-method="post" s-wrap="wrap-<?php echo $ar['wrapper'] ?>-<?php echo $this_form['name'] ?>-<?php echo $ar['id_form'] ?>" s-id-form="<?php echo $ar['id_form'] ?>" s-id-patient="<?php echo $ar['id_patient'] ?>" s-request="<?php echo $this_form['name'] ?>">Save</a>
                 <a href="#" class="btn btn-default skubbs_btn-cancel">Cancel</a>
             </div>
         </li>

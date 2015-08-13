@@ -15,8 +15,8 @@
         </li>
         <?php foreach ($this_form['items'] as $item): ?>
         <li class="item <?php echo $item['class'] ?>">
-            <div><label><?php echo $item['label'] ?>:</label></div>
             <?php if ($item['group']): ?>
+            <div><label><?php echo $item['label'] ?></label></div>
             <div class="form-group">
                 <div class="input-group">
                     <?php echo $item['input'] ?>
@@ -25,7 +25,14 @@
                     <?php endif ?>
                 </div>
             </div>
+            <?php elseif ($item['ndp']): ?>
+                <?php include_once __DIR__ . DS . 'item_ndp_create.php'; ?>
+            <?php elseif ($item['cbc']): ?>
+                <?php include_once __DIR__ . DS . 'item_cbc_create.php'; ?>
+            <?php elseif ($item['mc2_di']): ?>
+                <?php include_once __DIR__ . DS . 'item_mc2_di_create.php'; ?>
             <?php else: ?>
+            <div><label><?php echo $item['label'] ?></label></div>
             <?php echo $item['input'] ?>
             <?php endif ?>
         </li>

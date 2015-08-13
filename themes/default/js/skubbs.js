@@ -95,9 +95,6 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
             $(this).skubbs('showHideList', o);
         }, 
         btn_save: function(o) {
-            // console.log($(this));
-            // console.log(o);
-            // console.log(moo.patient);
             $(this).skubbs('ajax');
         }, 
         btn_create: function(o) {
@@ -170,7 +167,6 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
             $(this).closest('.skubbs_input').remove();
         }, 
         ajax: function(el) {
-            
             ajax = (typeof el != 'undefined') ? el : moo.skubbs_attr($(this));
             moo.patient_config(ajax);
             $(ajax.loading).show();
@@ -178,14 +174,12 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
             $.ajax({
                 url: ajax.target_url + '?ajax_request=' + ajax_request,
                 method: ajax.method,
-                data: $(ajax.data).serialize(), 
+                data: (ajax.method == 'get') ? {} : $(ajax.data).serialize(), 
                 dataType: 'json', 
                 success: function(response) {
                     if (!$(ajax.result).length) {
                         console.log(ajax.result + ' does not exist');
                     };
-                    // console.log(response[ajax.request.replace(/^form_/, '')]);
-                    console.log(response);
                     $(ajax.loading).hide();
                     $(ajax.result).html(response.html);
 
@@ -229,7 +223,21 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
     };
 })(jQuery);
 
-
+$(document).on('change', '.skubbs-mc2-di', function() {
+    if ($(this).val() == 1) {
+        $('input[name="inclusive_on"]').show();
+        $('input[name="inclusive_range_from"]').hide();
+        $('input[name="inclusive_range_to"]').hide();
+    } else if ($(this).val() == 2) {
+        $('input[name="inclusive_on"]').hide();
+        $('input[name="inclusive_range_from"]').show();
+        $('input[name="inclusive_range_to"]').show();
+    } else {
+        $('input[name="inclusive_on"]').hide();
+        $('input[name="inclusive_range_from"]').hide();
+        $('input[name="inclusive_range_to"]').hide();
+    };
+});
 $(document).on('click', 'a[class*="skubbs_btn-"]', function() { $(this).skubbs('btn'); return false; });
 $(document).on('click', '.skubbs_ajax', function() { $(this).skubbs('ajax'); return false; });
 $(document).on('focus', '.skubbs_datepicker', function() {

@@ -20,7 +20,7 @@
             <?php $wrap = $form->tbl . '-' . $form->$id ?>
             <div id="wrap-notes_consultation-<?php echo $wrap ?>" class="panel panel-default">
                 <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#consultation_accordion" href="#notes_consultation-<?php echo $wrap ?>" 
+                    <a data-toggle="collapse" data-parent="#notes_consultation_accordion" href="#notes_consultation-<?php echo $wrap ?>" 
                     s-request="<?php echo $form->tbl ?>" s-id-form="<?php echo $form->$id ?>" s-wrap="wrap-notes_consultation-<?php echo $wrap ?>" class="skubbs_ajax">
                         <h4 class="panel-title">
                             <?php echo $form->tbl_name ?>
