@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.16, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.5.25a, for Win32 (x86)
 --
 -- Host: localhost    Database: psadmin_skubbs_emr
 -- ------------------------------------------------------
--- Server version	5.6.16
+-- Server version	5.5.25a
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -282,18 +282,19 @@ CREATE TABLE `form_comf` (
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `to` varchar(255) NOT NULL,
-  `date_examined` date NOT NULL,
+  `examined_date` date NOT NULL,
   `diagnosis` text NOT NULL,
   `rest_day_no` int(11) NOT NULL,
-  `good_health` int(11) NOT NULL,
-  `cleared_date` date NOT NULL,
-  `cleared_limitation_date` date NOT NULL,
-  `no_lifting` tinyint(4) NOT NULL,
-  `no_bending` tinyint(4) NOT NULL,
-  `no_prolonged` tinyint(4) NOT NULL,
-  `limit_equipment` tinyint(4) NOT NULL,
-  `other` text NOT NULL,
-  `unable_to_work` text NOT NULL,
+  `pn` tinyint(1) NOT NULL DEFAULT '0',
+  `pn_on_date1` date NOT NULL,
+  `pn_on_date2` date NOT NULL,
+  `pn_no_lifting` tinyint(1) NOT NULL,
+  `pn_no_bending` tinyint(1) NOT NULL,
+  `pn_no_prolonged` tinyint(1) NOT NULL,
+  `pn_equip_limit` tinyint(1) NOT NULL,
+  `pn_other` tinyint(1) NOT NULL,
+  `pn_other_val` varchar(255) DEFAULT NULL,
+  `pn_unable2work` varchar(255) DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_comf`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1634,7 +1635,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('1fe49b53fee37c44e00db2c8d38960a93f5f2a50',1),('325bb9698072f3b83578503ba271998ff40a6fa7',1),('55291ac3bb07257afbb3eddb37375cf2ee0cedfe',1),('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('aec63681c9a20e66c9b950ce6a480a20726188bf',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('bf616dcff27a3e7b64b5aef60e5d3a605376b742',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1),('e5315851be98132492d2d3e40af2daef06a95fc1',1);
+INSERT INTO `sessions` VALUES ('127e1f821bc86cf61419249667097e2e3b661f1d',1),('1fe49b53fee37c44e00db2c8d38960a93f5f2a50',1),('325bb9698072f3b83578503ba271998ff40a6fa7',1),('55291ac3bb07257afbb3eddb37375cf2ee0cedfe',1),('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('aec63681c9a20e66c9b950ce6a480a20726188bf',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('bf616dcff27a3e7b64b5aef60e5d3a605376b742',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1),('e5315851be98132492d2d3e40af2daef06a95fc1',1);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1768,4 +1769,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-14 18:09:24
+-- Dump completed on 2015-08-14 23:06:51

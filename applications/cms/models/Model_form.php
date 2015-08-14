@@ -40,11 +40,21 @@ class Model_Form extends Base_Model {
                 'id_patient'       => $this->data['ar']['id_patient'],
                 'id_clinic'        => $this->data['post']['id_clinic'],
                 'id_user'          => $this->session->userdata('user')->id_user,
-                'assessed_date'    => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])),
-                'start_time'       => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
                 'to'               => html_escape($this->data['post']['to']),
-                'institution'      => html_escape($this->data['post']['institution']),
+                'examined_date'    => date($this->format['sql_date'], strtotime($this->data['post']['examined_date'])),
                 'diagnosis'        => html_escape($this->data['post']['diagnosis']),
+                'rest_day_no'      => (int) $this->data['post']['rest_day_no'],
+                // ''
+                // pn
+                // pn_on_date1
+                // pn_on_date2
+                // pn_no_lifting
+                // pn_no_bending
+                // pn_no_prolonged
+                // pn_equip_limit
+                // pn_other (default: 0)
+                // pn_other_val
+                // pn_unable
                 'recommended_rest' => html_escape($this->data['post']['recommended_rest']),
                 'recommendation'   => html_escape($this->data['post']['recommendation']),
                 'creation_date'    => date($this->format['sql_datetime']));
@@ -72,6 +82,7 @@ class Model_Form extends Base_Model {
             $this->form_items('This is to certify that I have seen and examined ' . $this->data['patient']->first_name . ', ' . $this->data['patient']->middle_name . ' ' . $this->data['patient']->last_name . ' on', 'examined_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
             $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
             $this->form_items('# of Rest Day', 'rest_day_no', array('type' => 'number', 'class' => 'form-control')),
+            array('incl' => 'comf_efpn', 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
         );
     }
 
