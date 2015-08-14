@@ -30,6 +30,51 @@ class Model_Form extends Base_Model {
     }
 
     // Notes > Other
+    public function form_comf() {
+        $this->data['ar']['wrapper'] = 'notes_other';
+        $this->data['this_form']['title'] = 'Certificate of Medical Fitness';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'       => $this->data['ar']['id_patient'],
+                'id_clinic'        => $this->data['post']['id_clinic'],
+                'id_user'          => $this->session->userdata('user')->id_user,
+                'assessed_date'    => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])),
+                'start_time'       => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
+                'to'               => html_escape($this->data['post']['to']),
+                'institution'      => html_escape($this->data['post']['institution']),
+                'diagnosis'        => html_escape($this->data['post']['diagnosis']),
+                'recommended_rest' => html_escape($this->data['post']['recommended_rest']),
+                'recommendation'   => html_escape($this->data['post']['recommendation']),
+                'creation_date'    => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('To', 'to', array('class' => 'form-control')), 
+            $this->form_items('This is to certify that I have seen and examined ' . $this->data['patient']->first_name . ', ' . $this->data['patient']->middle_name . ' ' . $this->data['patient']->last_name . ' on', 'examined_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('# of Rest Day', 'rest_day_no', array('type' => 'number', 'class' => 'form-control')),
+        );
+    }
+
     public function form_mc3() {
         $this->data['ar']['wrapper'] = 'notes_other';
         $this->data['this_form']['title'] = 'Medical Certificate 3';
