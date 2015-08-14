@@ -320,17 +320,18 @@ CREATE TABLE `form_cx` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `specimen_no` int(11) NOT NULL,
-  `examination` text NOT NULL,
-  `history` text NOT NULL,
-  `comparison` text NOT NULL,
-  `technique` text NOT NULL,
-  `findings` text NOT NULL,
-  `impression` text NOT NULL,
-  `radiologist` text NOT NULL,
+  `specimen_no` varchar(255) DEFAULT NULL,
+  `examination` text,
+  `history` text,
+  `comparison` text,
+  `technique` text,
+  `findings` text,
+  `impression` text,
+  `radiologist` int(11) NOT NULL DEFAULT '0',
+  `radiologist_other` varchar(255) DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_cx`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,6 +340,7 @@ CREATE TABLE `form_cx` (
 
 LOCK TABLES `form_cx` WRITE;
 /*!40000 ALTER TABLE `form_cx` DISABLE KEYS */;
+INSERT INTO `form_cx` VALUES (1,2,10,1,'1','1','1','1','1','1',NULL,0,'WTF','2015-08-14 13:34:42');
 /*!40000 ALTER TABLE `form_cx` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,7 +375,7 @@ CREATE TABLE `form_dc` (
   `follow_up` date NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_dc`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +592,7 @@ CREATE TABLE `form_gsf1` (
 
 LOCK TABLES `form_gsf1` WRITE;
 /*!40000 ALTER TABLE `form_gsf1` DISABLE KEYS */;
-INSERT INTO `form_gsf1` VALUES (4,2,9,1,'121','13','1','2015-08-13 14:56:26'),(5,2,9,1,'1','1','1','2015-08-13 14:56:32'),(6,3,9,1,'soap img','subjective','plan','2015-08-13 16:01:58');
+INSERT INTO `form_gsf1` VALUES (4,2,9,1,'121','13','1','2015-08-13 14:56:26'),(5,2,10,1,'1','12','1','2015-08-14 12:03:39'),(6,3,9,1,'soap img','subjective','plan','2015-08-13 16:01:58');
 /*!40000 ALTER TABLE `form_gsf1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -684,9 +686,30 @@ CREATE TABLE `form_lu` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `specimen_no` varchar(255) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `transparency` varchar(255) DEFAULT NULL,
+  `glucose` varchar(255) DEFAULT NULL,
+  `bile` varchar(255) DEFAULT NULL,
+  `ketone` varchar(255) DEFAULT NULL,
+  `gravity` varchar(255) DEFAULT NULL,
+  `phr` varchar(255) DEFAULT NULL,
+  `protein` varchar(255) DEFAULT NULL,
+  `urobilinogen` varchar(255) DEFAULT NULL,
+  `nitrites` varchar(255) DEFAULT NULL,
+  `blood` varchar(255) DEFAULT NULL,
+  `leukocytes` varchar(255) DEFAULT NULL,
+  `rbc` varchar(255) DEFAULT NULL,
+  `wbc` varchar(255) DEFAULT NULL,
+  `ec` varchar(255) DEFAULT NULL,
+  `casts` varchar(255) DEFAULT NULL,
+  `bacteria` varchar(255) DEFAULT NULL,
+  `pathologist` int(11) NOT NULL DEFAULT '0',
+  `pathologist_other` varchar(255) DEFAULT NULL,
+  `technologist` varchar(255) DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_lu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -695,6 +718,7 @@ CREATE TABLE `form_lu` (
 
 LOCK TABLES `form_lu` WRITE;
 /*!40000 ALTER TABLE `form_lu` DISABLE KEYS */;
+INSERT INTO `form_lu` VALUES (1,2,10,1,'','1','1','-','-','+','','','-','','+','+','+','','1','','1','1',0,'1','1','2015-08-14 17:12:45');
 /*!40000 ALTER TABLE `form_lu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -748,7 +772,7 @@ CREATE TABLE `form_mc2` (
   `comments` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_mc2`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -757,7 +781,7 @@ CREATE TABLE `form_mc2` (
 
 LOCK TABLES `form_mc2` WRITE;
 /*!40000 ALTER TABLE `form_mc2` DISABLE KEYS */;
-INSERT INTO `form_mc2` VALUES (1,3,9,1,'2015-08-13','17:30:00','1','Work',0,'0000-00-00','0000-00-00','0000-00-00','1','1','2015-08-13 17:30:48'),(2,3,9,1,'2015-08-13','19:12:00','1','School',2,'2015-08-05','2015-07-23','2015-11-25','1','1','2015-08-13 19:13:13');
+INSERT INTO `form_mc2` VALUES (1,3,9,1,'2015-08-13','17:30:00','1','Work',0,'0000-00-00','0000-00-00','0000-00-00','1','1','2015-08-13 17:30:48'),(2,3,9,1,'2015-08-13','19:12:00','1','School',2,'2015-08-05','2015-07-23','2015-11-25','1','1','2015-08-13 19:13:13'),(3,2,10,1,'2015-08-14','17:16:00','','',1,'2015-08-20','1970-01-01','1970-01-01','1','1','2015-08-14 17:16:13'),(4,2,10,1,'2015-08-14','17:20:00','','',1,'2015-08-20','2015-08-14','2015-08-14','','1','2015-08-14 17:21:12');
 /*!40000 ALTER TABLE `form_mc2` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -773,9 +797,16 @@ CREATE TABLE `form_mc3` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `assessed_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `to` varchar(255) DEFAULT NULL,
+  `institution` varchar(255) DEFAULT NULL,
+  `diagnosis` text,
+  `recommended_rest` varchar(255) DEFAULT NULL,
+  `recommendation` text,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_mc3`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -784,6 +815,7 @@ CREATE TABLE `form_mc3` (
 
 LOCK TABLES `form_mc3` WRITE;
 /*!40000 ALTER TABLE `form_mc3` DISABLE KEYS */;
+INSERT INTO `form_mc3` VALUES (1,2,10,1,'2015-08-14','17:43:00','1','1','1','1111','1','2015-08-14 17:44:02');
 /*!40000 ALTER TABLE `form_mc3` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -801,7 +833,7 @@ CREATE TABLE `form_oc1` (
   `id_user` int(11) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_oc1`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -877,9 +909,31 @@ CREATE TABLE `form_oftu` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `visit_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `doctor` int(11) NOT NULL DEFAULT '0',
+  `doctor_other` varchar(255) DEFAULT NULL,
+  `on_score` varchar(255) DEFAULT NULL,
+  `lmp` varchar(255) DEFAULT NULL,
+  `aog` varchar(255) DEFAULT NULL,
+  `edc` varchar(255) DEFAULT NULL,
+  `gs_cm` varchar(50) DEFAULT NULL,
+  `gs_wks` varchar(50) DEFAULT NULL,
+  `crl_cm` varchar(50) DEFAULT NULL,
+  `crl_wks` varchar(50) DEFAULT NULL,
+  `ys_cm` varchar(50) DEFAULT NULL,
+  `ys_wks` varchar(50) DEFAULT NULL,
+  `comments` text,
+  `fhr` varchar(50) DEFAULT NULL,
+  `aua` varchar(50) DEFAULT NULL,
+  `cerix` text,
+  `adnexae` text,
+  `others` text,
+  `impression` text,
+  `remarks` text,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_oftu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -888,6 +942,7 @@ CREATE TABLE `form_oftu` (
 
 LOCK TABLES `form_oftu` WRITE;
 /*!40000 ALTER TABLE `form_oftu` DISABLE KEYS */;
+INSERT INTO `form_oftu` VALUES (1,2,10,1,'2015-08-14','15:31:00',2,'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','2015-08-14 15:32:34');
 /*!40000 ALTER TABLE `form_oftu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1378,7 +1433,7 @@ CREATE TABLE `medical_history` (
 
 LOCK TABLES `medical_history` WRITE;
 /*!40000 ALTER TABLE `medical_history` DISABLE KEYS */;
-INSERT INTO `medical_history` VALUES (1,2,1,'A-','Immunization here dude!1a','[]','past personal and social history&amp;amp;lt;scriptbreaker src=&amp;amp;quot;','[]','awdLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&amp;amp;#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.some details&amp;amp;lt;img src=&amp;amp;quot;','0000-00-00 00:00:00'),(2,3,1,'','','[]','','[]','','0000-00-00 00:00:00');
+INSERT INTO `medical_history` VALUES (1,2,1,'A-','Immunization here dude!1a','[]','past personal and social history&amp;amp;amp;lt;scriptbreaker src=&amp;amp;amp;quot;','[]','awdLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&amp;amp;amp;#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.some details&amp;amp;amp;lt;img src=&amp;amp;amp;quot;','0000-00-00 00:00:00'),(2,3,1,'','','[]','','[]','','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `medical_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1513,7 +1568,7 @@ CREATE TABLE `patients` (
   `identifications` longtext NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_patient`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1713,4 +1768,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-14 11:42:53
+-- Dump completed on 2015-08-14 17:56:57
