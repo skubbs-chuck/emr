@@ -228,6 +228,9 @@ $(document).on('change', 'select[name="pathologist"]', function() {
 $(document).on('change', 'select[name="radiologist"]', function() {
     ($(this).val() == 0) ? $('input[name="radiologist_other"]').show() : $('input[name="radiologist_other"]').hide();
 });
+$(document).on('change', 'select[name="doctor"]', function() {
+    ($(this).val() == 0) ? $('input[name="doctor_other"]').show() : $('input[name="doctor_other"]').hide();
+});
 $(document).on('change', '.skubbs-mc2-di', function() {
     if ($(this).val() == 1) {
         $('input[name="inclusive_on"]').show();

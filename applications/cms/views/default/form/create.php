@@ -23,6 +23,9 @@
                     <?php if ($item['fa']): ?> 
                     <div class="input-group-addon"><i class="fa <?php echo $item['fa'] ?>"></i></div>
                     <?php endif ?>
+                    <?php if ($item['ph']): ?> 
+                    <div class="input-group-addon"><i><?php echo $item['ph'] ?></i></div>
+                    <?php endif ?>
                 </div>
             </div>
             <?php elseif ($item['incl']): ?>
