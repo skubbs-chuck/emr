@@ -38,6 +38,62 @@ class Model_Form extends Base_Model {
     }
 
     // Notes > Diagnostic Study
+    public function form_cx() {
+        $this->data['ar']['wrapper'] = 'notes_diagnostic_study';
+        $this->data['this_form']['title'] = 'Chest X-ray';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'        => $this->data['ar']['id_patient'],
+                'id_clinic'         => $this->data['post']['id_clinic'],
+                'id_user'           => $this->session->userdata('user')->id_user,
+                'specimen_no'       => html_escape($this->data['post']['specimen_no']),
+                'examination'       => html_escape($this->data['post']['examination']),
+                'history'           => html_escape($this->data['post']['history']),
+                'comparison'        => html_escape($this->data['post']['comparison']),
+                'technique'         => html_escape($this->data['post']['technique']),
+                'findings'          => html_escape($this->data['post']['findings']),
+                'impression'        => html_escape($this->data['post']['lymphocytes']),
+                'radiologist'       => html_escape($this->data['post']['radiologist']),
+                'radiologist_other' => html_escape($this->data['post']['radiologist_other']),
+                'creation_date'     => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->db->select('id_user, first_name, middle_name, last_name');
+        $this->db->where('super_user', 0);
+        $query = $this->db->get('users');
+        $this->data['v']['radiologist'] = $query->result();
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Specimen No.', 'specimen_no', array('class' => 'form-control')), 
+            $this->form_items('Examination', 'examination', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('History', 'history', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Comparison', 'comparison', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Technique', 'technique', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Findings', 'findings', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Impression', 'impression', array('class' => 'form-control'), array('input' => 'textarea')), 
+            array('incl' => 'cx_radiologist', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+        );
+    }
+
     public function form_cbcf() {
         $this->data['ar']['wrapper'] = 'notes_diagnostic_study';
         $this->data['this_form']['title'] = 'CBC Form';
