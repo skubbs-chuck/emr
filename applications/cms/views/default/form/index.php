@@ -27,12 +27,8 @@
                     <?php endif ?>
                 </div>
             </div>
-            <?php elseif ($item['ndp']): ?>
-                <?php include_once __DIR__ . DS . 'item_ndp.php'; ?>
-            <?php elseif ($item['cbc']): ?>
-                <?php include_once __DIR__ . DS . 'item_cbc.php'; ?>
-            <?php elseif ($item['mc2_di']): ?>
-                <?php include_once __DIR__ . DS . 'item_mc2_di.php'; ?>
+            <?php elseif ($item['incl']): ?>
+                <?php include_once __DIR__ . DS . 'item/' . $item['incl'] . '.php'; ?>
             <?php else: ?>
             <div><label><?php echo $item['label'] ?></label></div>
             <div><span class="skubbs_output"><?php echo $item['output'] ?></span></div>

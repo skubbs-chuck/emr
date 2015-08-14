@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.25a, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.16, for Win32 (x86)
 --
 -- Host: localhost    Database: psadmin_skubbs_emr
 -- ------------------------------------------------------
--- Server version	5.5.25a
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -145,7 +145,7 @@ CREATE TABLE `form_atn` (
   `order_note` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_atn`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,6 +154,7 @@ CREATE TABLE `form_atn` (
 
 LOCK TABLES `form_atn` WRITE;
 /*!40000 ALTER TABLE `form_atn` DISABLE KEYS */;
+INSERT INTO `form_atn` VALUES (20,3,9,1,'2015-08-13','16:02:00','order note','2015-08-13 16:02:18');
 /*!40000 ALTER TABLE `form_atn` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +213,7 @@ CREATE TABLE `form_cbc` (
   `monocytes` varchar(255) NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_cbc`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +222,7 @@ CREATE TABLE `form_cbc` (
 
 LOCK TABLES `form_cbc` WRITE;
 /*!40000 ALTER TABLE `form_cbc` DISABLE KEYS */;
+INSERT INTO `form_cbc` VALUES (10,2,9,1,'2015-08-13','13:58:00','','1','','','1','','1','','1','','1','','121','','2015-08-13 13:58:12'),(11,3,9,1,'2015-08-13','16:07:00','Hemoglobin','Hematocrit','RBC Count','WBC Count','Platelet Count','MCV','MCH','MCHC','RDW','Eosinophils','Basophils','Neutrophils','Lymphocytes','Monocytes','2015-08-13 16:08:28');
 /*!40000 ALTER TABLE `form_cbc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,22 +238,25 @@ CREATE TABLE `form_cbcf` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `hemoglobin` int(255) NOT NULL,
-  `hematocrit` int(255) NOT NULL,
-  `rbc` varchar(255) NOT NULL,
-  `wbc` varchar(255) NOT NULL,
-  `neutrophils` varchar(255) NOT NULL,
-  `lymphocytes` varchar(255) NOT NULL,
-  `eosinophils` varchar(255) NOT NULL,
-  `monocytes` varchar(255) NOT NULL,
-  `platelet` varchar(255) NOT NULL,
-  `mcv` varchar(255) NOT NULL,
-  `mch` varchar(255) NOT NULL,
-  `mchc` varchar(255) NOT NULL,
-  `medical_technologist` varchar(255) NOT NULL,
+  `specimen_no` varchar(255) DEFAULT NULL,
+  `hemoglobin` varchar(255) DEFAULT NULL,
+  `hematocrit` varchar(255) DEFAULT NULL,
+  `rbc` varchar(255) DEFAULT NULL,
+  `wbc` varchar(255) DEFAULT NULL,
+  `neutrophils` varchar(255) DEFAULT NULL,
+  `lymphocytes` varchar(255) DEFAULT NULL,
+  `eosinophils` varchar(255) DEFAULT NULL,
+  `monocytes` varchar(255) DEFAULT NULL,
+  `platelet` varchar(255) DEFAULT NULL,
+  `mcv` varchar(255) DEFAULT NULL,
+  `mch` varchar(255) DEFAULT NULL,
+  `mchc` varchar(255) DEFAULT NULL,
+  `pathologist` int(11) NOT NULL DEFAULT '0',
+  `pathologist_other` varchar(255) DEFAULT NULL,
+  `technologist` varchar(255) DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_cbcf`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,46 +265,8 @@ CREATE TABLE `form_cbcf` (
 
 LOCK TABLES `form_cbcf` WRITE;
 /*!40000 ALTER TABLE `form_cbcf` DISABLE KEYS */;
+INSERT INTO `form_cbcf` VALUES (1,2,9,1,'1','1','1','1','1','1','1','1','1','1','1','1','1',4,'','1','2015-08-14 11:04:26'),(2,2,9,1,'','','','','','','','','','','','','',0,'awd','','2015-08-14 11:33:41');
 /*!40000 ALTER TABLE `form_cbcf` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `form_cmof`
---
-
-DROP TABLE IF EXISTS `form_cmof`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `form_cmof` (
-  `id_form_cmof` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `id_patient` int(11) NOT NULL,
-  `id_clinic` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `to` varchar(255) NOT NULL,
-  `date_examined` date NOT NULL,
-  `diagnosis` text NOT NULL,
-  `rest_day_no` int(11) NOT NULL,
-  `good_health` int(11) NOT NULL,
-  `cleared_date` date NOT NULL,
-  `cleared_limitation_date` date NOT NULL,
-  `no_lifting` tinyint(4) NOT NULL,
-  `no_bending` tinyint(4) NOT NULL,
-  `no_prolonged` tinyint(4) NOT NULL,
-  `limit_equipment` tinyint(4) NOT NULL,
-  `other` text NOT NULL,
-  `unable_to_work` text NOT NULL,
-  `creation_date` datetime NOT NULL,
-  PRIMARY KEY (`id_form_cmof`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `form_cmof`
---
-
-LOCK TABLES `form_cmof` WRITE;
-/*!40000 ALTER TABLE `form_cmof` DISABLE KEYS */;
-/*!40000 ALTER TABLE `form_cmof` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -310,7 +277,7 @@ DROP TABLE IF EXISTS `form_comf`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `form_comf` (
-  `id_form_cmof` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_form_comf` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -328,7 +295,7 @@ CREATE TABLE `form_comf` (
   `other` text NOT NULL,
   `unable_to_work` text NOT NULL,
   `creation_date` datetime NOT NULL,
-  PRIMARY KEY (`id_form_cmof`)
+  PRIMARY KEY (`id_form_comf`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -584,7 +551,7 @@ CREATE TABLE `form_gnv` (
   `evaluation` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_gnv`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -593,6 +560,7 @@ CREATE TABLE `form_gnv` (
 
 LOCK TABLES `form_gnv` WRITE;
 /*!40000 ALTER TABLE `form_gnv` DISABLE KEYS */;
+INSERT INTO `form_gnv` VALUES (15,2,9,1,'1','[[\"3\",\"3\"]]','1','12','2015-08-13 11:52:54'),(16,3,9,1,'nurse assessment','[[\"nursing diagnosis\",\"plan\"]]','implementation','evaluation','2015-08-13 16:02:58');
 /*!40000 ALTER TABLE `form_gnv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -613,7 +581,7 @@ CREATE TABLE `form_gsf1` (
   `plan` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_gsf1`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -622,6 +590,7 @@ CREATE TABLE `form_gsf1` (
 
 LOCK TABLES `form_gsf1` WRITE;
 /*!40000 ALTER TABLE `form_gsf1` DISABLE KEYS */;
+INSERT INTO `form_gsf1` VALUES (4,2,9,1,'121','13','1','2015-08-13 14:56:26'),(5,2,9,1,'1','1','1','2015-08-13 14:56:32'),(6,3,9,1,'soap img','subjective','plan','2015-08-13 16:01:58');
 /*!40000 ALTER TABLE `form_gsf1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -767,9 +736,19 @@ CREATE TABLE `form_mc2` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `assessed_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `purpose` varchar(100) NOT NULL,
+  `inclusive` tinyint(4) NOT NULL DEFAULT '0',
+  `inclusive_on` date NOT NULL,
+  `inclusive_range_from` date NOT NULL,
+  `inclusive_range_to` date NOT NULL,
+  `diagnosis` text NOT NULL,
+  `comments` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_mc2`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -778,6 +757,7 @@ CREATE TABLE `form_mc2` (
 
 LOCK TABLES `form_mc2` WRITE;
 /*!40000 ALTER TABLE `form_mc2` DISABLE KEYS */;
+INSERT INTO `form_mc2` VALUES (1,3,9,1,'2015-08-13','17:30:00','1','Work',0,'0000-00-00','0000-00-00','0000-00-00','1','1','2015-08-13 17:30:48'),(2,3,9,1,'2015-08-13','19:12:00','1','School',2,'2015-08-05','2015-07-23','2015-11-25','1','1','2015-08-13 19:13:13');
 /*!40000 ALTER TABLE `form_mc2` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1087,7 +1067,7 @@ CREATE TABLE `form_pwnn` (
   `recommendation` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_pwnn`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1096,6 +1076,7 @@ CREATE TABLE `form_pwnn` (
 
 LOCK TABLES `form_pwnn` WRITE;
 /*!40000 ALTER TABLE `form_pwnn` DISABLE KEYS */;
+INSERT INTO `form_pwnn` VALUES (2,2,9,1,'2015-08-13','12:25:00','','','','wadasasas','2015-08-13 12:08:17'),(3,3,9,1,'2015-08-21','18:22:00','focus','data','action','recommendation','2015-08-13 18:22:33');
 /*!40000 ALTER TABLE `form_pwnn` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1148,7 +1129,7 @@ CREATE TABLE `form_tyl` (
   `recommendation` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_tyl`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1157,6 +1138,7 @@ CREATE TABLE `form_tyl` (
 
 LOCK TABLES `form_tyl` WRITE;
 /*!40000 ALTER TABLE `form_tyl` DISABLE KEYS */;
+INSERT INTO `form_tyl` VALUES (2,2,9,1,'2015-08-13','14:18:00','123','144','1','1','1','1','1','2015-08-13 14:18:10'),(3,2,10,1,'2015-08-13','14:18:00','2341','1','1','1','1','11','1','2015-08-13 14:18:49'),(4,2,9,1,'2015-08-27','14:19:00','','','','1','','','','2015-08-13 14:19:44'),(5,3,9,1,'2015-08-13','17:29:00','1','1','1','1','1','1','1','2015-08-13 17:29:58');
 /*!40000 ALTER TABLE `form_tyl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1234,7 +1216,7 @@ CREATE TABLE `forms` (
 
 LOCK TABLES `forms` WRITE;
 /*!40000 ALTER TABLE `forms` DISABLE KEYS */;
-INSERT INTO `forms` VALUES (1,0,4,'CBC','form_cbc'),(2,0,4,'CBC Form','form_cbcf'),(3,0,2,'Certificate of Medical Fitness','form_cmof'),(4,0,4,'Chest X-ray','form_cx'),(5,0,1,'Gen SOAP Follow Up','form_gsf1'),(6,0,2,'Medical Certificate 1','form_mc1'),(7,0,2,'Medical Certificate 2','form_mc2'),(8,0,2,'Medical Certificate 3','form_mc3'),(9,0,4,'Ob First Trimester Ultrasound','form_oftu'),(11,0,2,'Thank You Letter','form_tyl'),(12,0,1,'Wound Assessment','form_wa'),(13,3,1,'[Derma] Consult','form_dc'),(14,3,1,'[Derma] Follow-Up','form_df'),(15,0,1,'[ENT] Consult 1','form_ec1'),(16,0,1,'[ENT] Consult 2','form_ec2'),(17,0,1,'[Gen] SOAP Follow-up','form_gsf2'),(18,0,1,'[Gen] SOAP Note','form_gsn'),(19,0,1,'[Gen] SOAP w/ Notes Template','form_gswnt'),(20,0,4,'[LABMERGE] Urinalysis','form_lu'),(21,0,1,'[Ob/Gyn] Gynecology Consult','form_oggc'),(22,0,1,'[Ob/Gyn] Prenatal Consult','form_ogpc'),(23,0,1,'[Ob/Gyn] Prenatal Flowsheet','form_ogpf'),(24,6,1,'[Ophtha] Consult 1','form_oc1'),(25,6,1,'[Ophtha] Consult 2','form_oc2'),(26,6,1,'[Ophtha] Consult 3','form_oc3'),(27,0,1,'[Pedia] Consult','form_pediac'),(28,0,1,'[Pulmo] Consult','form_pulmoc'),(29,0,1,'[Surgery] Consult','form_sc'),(30,0,7,'[Aesthetics] Therapist\'s Notes','form_atn'),(31,0,7,'[Gen] Nurse Visit','form_gnv'),(32,0,7,'[Preventive Wellness] Nurse\'s Notes','form_pwnn');
+INSERT INTO `forms` VALUES (1,0,4,'CBC','form_cbc'),(2,0,4,'CBC Form','form_cbcf'),(3,0,2,'Certificate of Medical Fitness','form_comf'),(4,0,4,'Chest X-ray','form_cx'),(5,0,1,'Gen SOAP Follow Up','form_gsf1'),(6,0,2,'Medical Certificate 1','form_mc1'),(7,0,2,'Medical Certificate 2','form_mc2'),(8,0,2,'Medical Certificate 3','form_mc3'),(9,0,4,'Ob First Trimester Ultrasound','form_oftu'),(11,0,2,'Thank You Letter','form_tyl'),(12,0,1,'Wound Assessment','form_wa'),(13,3,1,'[Derma] Consult','form_dc'),(14,3,1,'[Derma] Follow-Up','form_df'),(15,0,1,'[ENT] Consult 1','form_ec1'),(16,0,1,'[ENT] Consult 2','form_ec2'),(17,0,1,'[Gen] SOAP Follow-up','form_gsf2'),(18,0,1,'[Gen] SOAP Note','form_gsn'),(19,0,1,'[Gen] SOAP w/ Notes Template','form_gswnt'),(20,0,4,'[LABMERGE] Urinalysis','form_lu'),(21,0,1,'[Ob/Gyn] Gynecology Consult','form_oggc'),(22,0,1,'[Ob/Gyn] Prenatal Consult','form_ogpc'),(23,0,1,'[Ob/Gyn] Prenatal Flowsheet','form_ogpf'),(24,6,1,'[Ophtha] Consult 1','form_oc1'),(25,6,1,'[Ophtha] Consult 2','form_oc2'),(26,6,1,'[Ophtha] Consult 3','form_oc3'),(27,0,1,'[Pedia] Consult','form_pediac'),(28,0,1,'[Pulmo] Consult','form_pulmoc'),(29,0,1,'[Surgery] Consult','form_sc'),(30,0,7,'[Aesthetics] Therapist\'s Notes','form_atn'),(31,0,7,'[Gen] Nurse Visit','form_gnv'),(32,0,7,'[Preventive Wellness] Nurse\'s Notes','form_pwnn');
 /*!40000 ALTER TABLE `forms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1396,7 +1378,7 @@ CREATE TABLE `medical_history` (
 
 LOCK TABLES `medical_history` WRITE;
 /*!40000 ALTER TABLE `medical_history` DISABLE KEYS */;
-INSERT INTO `medical_history` VALUES (1,2,1,'A-','Immunization here dude!1a','[[\"date year here 2&lt;a href=&quot;\",\"details here 2\"],[\"1wq\",\"1\"],[\"2some details&lt;img src=&quot;\",\"\"],[\"\",\"a\"],[\"a\",\"a\"]]','past personal and social history&lt;scriptbreaker src=&quot;','[[\"asasa\",\"\"]]','awdLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.some details&lt;img src=&quot;','0000-00-00 00:00:00'),(2,3,1,'B-','awd','[[\"awd\",\"awd\"]]','','[[\"a\",\"\"],[\"\",\"asq\"]]','wdafag','0000-00-00 00:00:00');
+INSERT INTO `medical_history` VALUES (1,2,1,'A-','Immunization here dude!1a','[]','past personal and social history&amp;amp;lt;scriptbreaker src=&amp;amp;quot;','[]','awdLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&amp;amp;#039;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.some details&amp;amp;lt;img src=&amp;amp;quot;','0000-00-00 00:00:00'),(2,3,1,'','','[]','','[]','','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `medical_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1597,7 +1579,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('55291ac3bb07257afbb3eddb37375cf2ee0cedfe',1),('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('aec63681c9a20e66c9b950ce6a480a20726188bf',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('bf616dcff27a3e7b64b5aef60e5d3a605376b742',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1),('e5315851be98132492d2d3e40af2daef06a95fc1',1);
+INSERT INTO `sessions` VALUES ('1fe49b53fee37c44e00db2c8d38960a93f5f2a50',1),('325bb9698072f3b83578503ba271998ff40a6fa7',1),('55291ac3bb07257afbb3eddb37375cf2ee0cedfe',1),('6ac7c52b474da4f650004850f1196848657128ee',1),('851344a22523533640546e60c5575e07a702bd86',1),('92ca8ddc7778b13fd0eba121984ee7e9f3de5023',1),('aec63681c9a20e66c9b950ce6a480a20726188bf',1),('b97640ba82d3cefac0dbd661d7747ff481cf1b70',1),('be70939a38954cf760d8cab5ea1ca4f5db7176b5',1),('bf616dcff27a3e7b64b5aef60e5d3a605376b742',1),('df6c7b7d1861af6b2b8a387525516acfc0ceadf1',1),('e5315851be98132492d2d3e40af2daef06a95fc1',1);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1731,4 +1713,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-11 11:06:16
+-- Dump completed on 2015-08-14 11:42:53

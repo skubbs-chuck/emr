@@ -222,7 +222,12 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
         return (results != null && results[1] != '') ? results[1] : 0;
     };
 })(jQuery);
-
+$(document).on('change', 'select[name="pathologist"]', function() {
+    ($(this).val() == 0) ? $('input[name="pathologist_other"]').show() : $('input[name="pathologist_other"]').hide();
+});
+$(document).on('change', 'select[name="radiologist"]', function() {
+    ($(this).val() == 0) ? $('input[name="radiologist_other"]').show() : $('input[name="radiologist_other"]').hide();
+});
 $(document).on('change', '.skubbs-mc2-di', function() {
     if ($(this).val() == 1) {
         $('input[name="inclusive_on"]').show();

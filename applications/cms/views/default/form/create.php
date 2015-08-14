@@ -25,12 +25,8 @@
                     <?php endif ?>
                 </div>
             </div>
-            <?php elseif ($item['ndp']): ?>
-                <?php include_once __DIR__ . DS . 'item_ndp_create.php'; ?>
-            <?php elseif ($item['cbc']): ?>
-                <?php include_once __DIR__ . DS . 'item_cbc_create.php'; ?>
-            <?php elseif ($item['mc2_di']): ?>
-                <?php include_once __DIR__ . DS . 'item_mc2_di_create.php'; ?>
+            <?php elseif ($item['incl']): ?>
+                <?php include_once __DIR__ . DS . 'item/' . $item['incl'] . '_create.php'; ?>
             <?php else: ?>
             <div><label><?php echo $item['label'] ?></label></div>
             <?php echo $item['input'] ?>

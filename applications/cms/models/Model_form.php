@@ -37,6 +37,122 @@ class Model_Form extends Base_Model {
         return $item;
     }
 
+    // Notes > Diagnostic Study
+    public function form_cbcf() {
+        $this->data['ar']['wrapper'] = 'notes_diagnostic_study';
+        $this->data['this_form']['title'] = 'CBC Form';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'        => $this->data['ar']['id_patient'],
+                'id_clinic'         => $this->data['post']['id_clinic'],
+                'id_user'           => $this->session->userdata('user')->id_user,
+                'specimen_no'       => html_escape($this->data['post']['specimen_no']),
+                'hemoglobin'        => html_escape($this->data['post']['hemoglobin']),
+                'hematocrit'        => html_escape($this->data['post']['hematocrit']),
+                'rbc'               => html_escape($this->data['post']['rbc']),
+                'wbc'               => html_escape($this->data['post']['wbc']),
+                'neutrophils'       => html_escape($this->data['post']['neutrophils']),
+                'lymphocytes'       => html_escape($this->data['post']['lymphocytes']),
+                'eosinophils'       => html_escape($this->data['post']['eosinophils']),
+                'monocytes'         => html_escape($this->data['post']['monocytes']),
+                'platelet'          => html_escape($this->data['post']['platelet']),
+                'mcv'               => html_escape($this->data['post']['mcv']),
+                'mch'               => html_escape($this->data['post']['mch']),
+                'mchc'              => html_escape($this->data['post']['mchc']),
+                'pathologist'       => html_escape($this->data['post']['pathologist']),
+                'pathologist_other' => html_escape($this->data['post']['pathologist_other']),
+                'technologist'      => html_escape($this->data['post']['technologist']),
+                'creation_date'     => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->db->select('id_user, first_name, middle_name, last_name');
+        $this->db->where('super_user', 0);
+        $query = $this->db->get('users');
+        $this->data['v']['pathologist'] = $query->result();
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Specimen No.', 'specimen_no', array('class' => 'form-control')), 
+            array('incl' => 'cbcf_tc', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+            array('incl' => 'cbcf_dc', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+            array('incl' => 'cbcf_pathologist', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+            $this->form_items('Medical Technologist', 'technologist', array('class' => 'form-control')), 
+        );
+    }
+
+    public function form_cbc() {
+        $this->data['ar']['wrapper'] = 'notes_diagnostic_study';
+        $this->data['this_form']['title'] = 'CBC';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'     => $this->data['ar']['id_patient'], 
+                'id_clinic'      => $this->data['post']['id_clinic'], 
+                'id_user'        => $this->session->userdata('user')->id_user, 
+                'visit_date'     => date($this->format['sql_date'], strtotime($this->data['post']['visit_date'])), 
+                'start_time'     => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])), 
+                'hemoglobin'     => html_escape($this->data['post']['hemoglobin']), 
+                'hematocrit'     => html_escape($this->data['post']['hematocrit']), 
+                'rbc'            => html_escape($this->data['post']['rbc']), 
+                'wbc'            => html_escape($this->data['post']['wbc']), 
+                'platelet'       => html_escape($this->data['post']['platelet']), 
+                'mcv'            => html_escape($this->data['post']['mcv']), 
+                'mch'            => html_escape($this->data['post']['mch']), 
+                'mchc'           => html_escape($this->data['post']['mchc']), 
+                'rdw'            => html_escape($this->data['post']['rdw']), 
+                'eosinophils'    => html_escape($this->data['post']['eosinophils']), 
+                'basophils'      => html_escape($this->data['post']['basophils']), 
+                'neutrophils'    => html_escape($this->data['post']['neutrophils']), 
+                'lymphocytes'    => html_escape($this->data['post']['lymphocytes']), 
+                'monocytes'      => html_escape($this->data['post']['monocytes']), 
+                'creation_date'  => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Clinic', 'id_clinic', $this->data['current_clinics'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['current_id_clinic'])), 
+            $this->form_items('Visit Date', 'visit_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
+            array('incl' => 'cbc', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+            // $this->form_items('Order/Note', 'order_note', array('class' => 'form-control'), array('input' => 'textarea')), 
+        );
+    }
+
     // Notes > Other
     public function form_mc2() {
         $this->data['ar']['wrapper'] = 'notes_other';
@@ -86,7 +202,7 @@ class Model_Form extends Base_Model {
             $this->form_items('To Title', 'to', array('class' => 'form-control')), 
             $this->form_items('Purpose', 'purpose', $this->data['v']['purpose'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->purpose)), 
             // $this->form_items('Date inclusive', 'date', array('class' => 'form-control')), 
-            array('mc2_di' => true, 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
+            array('incl' => 'mc2_di', 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
             $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
             $this->form_items('Comments', 'comments', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
@@ -141,62 +257,6 @@ class Model_Form extends Base_Model {
             $this->form_items('Clinic Contact No.', 'clinic_contact', array('class' => 'form-control')), 
             $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
             $this->form_items('Recommendation', 'recommendation', array('class' => 'form-control'), array('input' => 'textarea')), 
-        );
-    }
-
-    // Notes > Diagnostic Study
-    public function form_cbc() {
-        $this->data['ar']['wrapper'] = 'notes_diagnostic_study';
-        $this->data['this_form']['title'] = 'CBC';
-        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
-        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
-        if ($this->data['post']) {
-            $sql = array(
-                'id_patient'     => $this->data['ar']['id_patient'], 
-                'id_clinic'      => $this->data['post']['id_clinic'], 
-                'id_user'        => $this->session->userdata('user')->id_user, 
-                'visit_date'     => date($this->format['sql_date'], strtotime($this->data['post']['visit_date'])), 
-                'start_time'     => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])), 
-                'hemoglobin'     => html_escape($this->data['post']['hemoglobin']), 
-                'hematocrit'     => html_escape($this->data['post']['hematocrit']), 
-                'rbc'            => html_escape($this->data['post']['rbc']), 
-                'wbc'            => html_escape($this->data['post']['wbc']), 
-                'platelet'       => html_escape($this->data['post']['platelet']), 
-                'mcv'            => html_escape($this->data['post']['mcv']), 
-                'mch'            => html_escape($this->data['post']['mch']), 
-                'mchc'           => html_escape($this->data['post']['mchc']), 
-                'rdw'            => html_escape($this->data['post']['rdw']), 
-                'eosinophils'    => html_escape($this->data['post']['eosinophils']), 
-                'basophils'      => html_escape($this->data['post']['basophils']), 
-                'neutrophils'    => html_escape($this->data['post']['neutrophils']), 
-                'lymphocytes'    => html_escape($this->data['post']['lymphocytes']), 
-                'monocytes'      => html_escape($this->data['post']['monocytes']), 
-                'creation_date'  => date($this->format['sql_datetime']));
-
-            if ($this->data['ar']['action'] == 'index') {
-                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-                $this->db->update($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_updated;
-            } else if ($this->data['ar']['action'] == 'create') {
-                $this->db->insert($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_created;
-            }
-        }
-
-        if ($this->data['ar']['action'] == 'index') {
-            $this->db->select($this->data['ar']['request'] . '.*');
-            $this->db->where('id_patient', $this->data['ar']['id_patient']);
-            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-            $query = $this->db->get($this->data['ar']['request']);
-            $this->data['result'] = $query->row();
-        }
-
-        $this->data['this_form']['items'] = array(
-            $this->form_items('Clinic', 'id_clinic', $this->data['current_clinics'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['current_id_clinic'])), 
-            $this->form_items('Visit Date', 'visit_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
-            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
-            array('cbc' => true, 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
-            // $this->form_items('Order/Note', 'order_note', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
     }
 
@@ -291,7 +351,7 @@ class Model_Form extends Base_Model {
         $this->data['this_form']['items'] = array(
             $this->form_items('Nursing Assessment', 'nursing_assessment', array('class' => 'form-control'), array('input' => 'textarea')), 
             $this->form_items('Implementation', 'implementation', array('class' => 'form-control'), array('input' => 'textarea')), 
-            array('ndp' => true, 'data' => json_decode($this->data['result']->ndp, true), 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+            array('incl' => 'gnv_ndp', 'data' => json_decode($this->data['result']->ndp, true), 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
             $this->form_items('Evaluation', 'evaluation', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
     }
