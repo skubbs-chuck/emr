@@ -31,7 +31,8 @@
                 <?php include_once __DIR__ . DS . 'item/' . $item['incl'] . '.php'; ?>
             <?php else: ?>
             <div><label><?php echo $item['label'] ?></label></div>
-            <div><span class="skubbs_output"><?php echo $item['output'] ?></span></div>
+            <div><span class="skubbs_output">
+            <?php echo ($v[$item['db_name']][$item['output']] && $item['output'] != 0) ? $v[$item['db_name']][$item['output']] : (($item['output'] == 0) ? 'Not Set' : $item['output']) ?></span></div>
             <span class="skubbs_input"><?php echo $item['input'] ?></span>
             <?php endif ?>
         </li>

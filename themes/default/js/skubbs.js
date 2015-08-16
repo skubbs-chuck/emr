@@ -147,6 +147,18 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
             $('#assessment_' + o.id).append(inp);
             $('#assessment_' + o.id + '>div.skubbs_input').show();
         },
+        app_inp_doc: function(o) {
+            inp = '<tr class="skubbs_input" style="display: table-row;">' +
+                '<td>' +
+                    '<div class="input-group" style="margin-bottom: 5px">' +
+                    '<input type="text" name="mc1_' + o.id + '[]" class="form-control">' +
+                    '<a class="input-group-addon skubbs_btn-remove btn btn-danger"><i class="fa fa-remove "></i></a>' +
+                    '</div>' +
+                '</td>' +
+            '</tr>';
+            $('#mc1_' + o.id).append(inp);
+            $('#mc1_' + o.id + '>div.skubbs_input').show();
+        },
         btn_add: function(o) {
             o = $.extend(o, moo.skubbs_attr($(this)));
             switch(o.id) {
@@ -160,6 +172,9 @@ var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456
                 break;
                 case 'ndp': // Assessment [Nursing Diagnosis, Plan]
                     moo.app_inp_ndp(o);
+                break;
+                case 'doc': // Defects or Conditions
+                    moo.app_inp_doc(o);
                 break;
             }
         }, 

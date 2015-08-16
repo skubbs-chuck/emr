@@ -3,8 +3,18 @@
 class Model_Form extends Base_Model {
     public $sql = array();
 
+    public function init($data) {
+        $this->data = $data;
+        $this->data['post'] = $this->input->post(NULL, TRUE);
+        if (method_exists($this, $this->data['ar']['request_type'])) 
+            $this->{$this->data['ar']['request_type']}();
+        
+        return $this->data;
+    }
+
     protected function form_items($label, $name, $opts = array(), $i_opts = array()) {
         $item['label'] = $label;
+        $item['db_name'] = $name;
         $item['output'] = $this->data['result']->$name;
         $js  = ($i_opts['js']  && !empty($i_opts['js']))  ? $i_opts['js']  : '';
         $val = ($i_opts['val'] && !empty($i_opts['val'])) ? $i_opts['val'] : $item['output'];
@@ -29,35 +39,21 @@ class Model_Form extends Base_Model {
         return $item;
     }
 
-    // Notes > Other
-    public function form_comf() {
-        $this->data['ar']['wrapper'] = 'notes_other';
-        $this->data['this_form']['title'] = 'Certificate of Medical Fitness';
+    // Notes > Consultation
+    public function form_gsf1() {
+        $this->data['ar']['wrapper'] = 'notes_consultation';
+        $this->data['this_form']['title'] = 'Gen SOAP Follow Up';
         $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
         $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
         if ($this->data['post']) {
             $sql = array(
-                'id_patient'       => $this->data['ar']['id_patient'],
-                'id_clinic'        => $this->data['post']['id_clinic'],
-                'id_user'          => $this->session->userdata('user')->id_user,
-                'to'               => html_escape($this->data['post']['to']),
-                'examined_date'    => date($this->format['sql_date'], strtotime($this->data['post']['examined_date'])),
-                'diagnosis'        => html_escape($this->data['post']['diagnosis']),
-                'rest_day_no'      => (int) $this->data['post']['rest_day_no'],
-                // ''
-                // pn
-                // pn_on_date1
-                // pn_on_date2
-                // pn_no_lifting
-                // pn_no_bending
-                // pn_no_prolonged
-                // pn_equip_limit
-                // pn_other (default: 0)
-                // pn_other_val
-                // pn_unable
-                'recommended_rest' => html_escape($this->data['post']['recommended_rest']),
-                'recommendation'   => html_escape($this->data['post']['recommendation']),
-                'creation_date'    => date($this->format['sql_datetime']));
+                'id_patient'     => $this->data['ar']['id_patient'], 
+                'id_clinic'      => $this->data['post']['id_clinic'], 
+                'id_user'        => $this->session->userdata('user')->id_user, 
+                'soap_img'       => html_escape($this->data['post']['soap_img']), 
+                'subjective'     => html_escape($this->data['post']['subjective']), 
+                'plan'           => html_escape($this->data['post']['plan']), 
+                'creation_date'  => date($this->format['sql_datetime']));
 
             if ($this->data['ar']['action'] == 'index') {
                 $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
@@ -78,118 +74,16 @@ class Model_Form extends Base_Model {
         }
 
         $this->data['this_form']['items'] = array(
-            $this->form_items('To', 'to', array('class' => 'form-control')), 
-            $this->form_items('This is to certify that I have seen and examined ' . $this->data['patient']->first_name . ', ' . $this->data['patient']->middle_name . ' ' . $this->data['patient']->last_name . ' on', 'examined_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
-            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('# of Rest Day', 'rest_day_no', array('type' => 'number', 'class' => 'form-control')),
-            array('incl' => 'comf_efpn', 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
+            $this->form_items('soap_img', 'soap_img', array('class' => 'form-control')), 
+            $this->form_items('Subjective', 'subjective', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Plan', 'plan', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
     }
 
-    public function form_mc3() {
-        $this->data['ar']['wrapper'] = 'notes_other';
-        $this->data['this_form']['title'] = 'Medical Certificate 3';
-        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
-        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
-        if ($this->data['post']) {
-            $sql = array(
-                'id_patient'       => $this->data['ar']['id_patient'],
-                'id_clinic'        => $this->data['post']['id_clinic'],
-                'id_user'          => $this->session->userdata('user')->id_user,
-                'assessed_date'    => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])),
-                'start_time'       => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
-                'to'               => html_escape($this->data['post']['to']),
-                'institution'      => html_escape($this->data['post']['institution']),
-                'diagnosis'        => html_escape($this->data['post']['diagnosis']),
-                'recommended_rest' => html_escape($this->data['post']['recommended_rest']),
-                'recommendation'   => html_escape($this->data['post']['recommendation']),
-                'creation_date'    => date($this->format['sql_datetime']));
-
-            if ($this->data['ar']['action'] == 'index') {
-                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-                $this->db->update($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_updated;
-            } else if ($this->data['ar']['action'] == 'create') {
-                $this->db->insert($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_created;
-            }
-        }
-
-        if ($this->data['ar']['action'] == 'index') {
-            $this->db->select($this->data['ar']['request'] . '.*');
-            $this->db->where('id_patient', $this->data['ar']['id_patient']);
-            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-            $query = $this->db->get($this->data['ar']['request']);
-            $this->data['result'] = $query->row();
-        }
-
-        $this->data['this_form']['items'] = array(
-            $this->form_items('Date', 'assessed_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
-            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
-            $this->form_items('To', 'to', array('class' => 'form-control')), 
-            $this->form_items('Institution', 'institution', array('class' => 'form-control')),
-            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Recommended Rest', 'recommended_rest', array('class' => 'form-control')), 
-            $this->form_items('Recommendation', 'recommendation', array('class' => 'form-control'), array('input' => 'textarea')), 
-        );
-    }
-
-    public function form_mc2() {
-        $this->data['ar']['wrapper'] = 'notes_other';
-        $this->data['this_form']['title'] = 'Medical Certificate 2';
-        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
-        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
-        if ($this->data['post']) {
-            $sql = array(
-                'id_patient'           => $this->data['ar']['id_patient'],
-                'id_clinic'            => $this->data['post']['id_clinic'],
-                'id_user'              => $this->session->userdata('user')->id_user,
-                'assessed_date'        => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])), 
-                'start_time'           => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
-                'to'                   => html_escape($this->data['post']['to']),
-                'purpose'              => html_escape($this->data['post']['purpose']),
-                'inclusive'            => (int) $this->data['post']['inclusive'],  // 1 = on, 2 = range
-                'inclusive_on'         => date($this->format['sql_date'], strtotime($this->data['post']['inclusive_on'])), 
-                'inclusive_range_from' => date($this->format['sql_date'], strtotime($this->data['post']['inclusive_range_from'])), 
-                'inclusive_range_to'   => date($this->format['sql_date'], strtotime($this->data['post']['inclusive_range_to'])), 
-                'diagnosis'            => html_escape($this->data['post']['diagnosis']),
-                'comments'             => html_escape($this->data['post']['comments']),
-                'creation_date'        => date($this->format['sql_datetime']));
-
-            if ($this->data['ar']['action'] == 'index') {
-                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-                $this->db->update($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_updated;
-            } else if ($this->data['ar']['action'] == 'create') {
-                $this->db->insert($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_created;
-            }
-        }
-
-        if ($this->data['ar']['action'] == 'index') {
-            $this->db->select($this->data['ar']['request'] . '.*');
-            $this->db->where('id_patient', $this->data['ar']['id_patient']);
-            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-            $query = $this->db->get($this->data['ar']['request']);
-            $this->data['result'] = $query->row();
-        }
-
-        $this->data['v']['purpose']  = array('' => '-- Select --', 'Work' => 'Work', 'School' => 'School', 'Travel' => 'Travel', );
-
-        $this->data['this_form']['items'] = array(
-            $this->form_items('Date Assessed', 'assessed_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
-            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
-            $this->form_items('To Title', 'to', array('class' => 'form-control')), 
-            $this->form_items('Purpose', 'purpose', $this->data['v']['purpose'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->purpose)), 
-            array('incl' => 'mc2_di', 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
-            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Comments', 'comments', array('class' => 'form-control'), array('input' => 'textarea')), 
-        );
-    }
-
-    public function form_tyl() {
-        $this->data['ar']['wrapper'] = 'notes_other';
-        $this->data['this_form']['title'] = 'Thank You Letter';
+    // Notes > Nurse Visit
+    public function form_atn() {
+        $this->data['ar']['wrapper'] = 'notes_nurse_visit';
+        $this->data['this_form']['title'] = '[Aesthetics] Therapist\'s Notes';
         $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
         $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
         if ($this->data['post']) {
@@ -199,12 +93,104 @@ class Model_Form extends Base_Model {
                 'id_user'        => $this->session->userdata('user')->id_user, 
                 'visit_date'     => date($this->format['sql_date'], strtotime($this->data['post']['visit_date'])), 
                 'start_time'     => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])), 
-                'to'             => html_escape($this->data['post']['to']), 
-                'specialty'      => html_escape($this->data['post']['specialty']), 
-                'clinic_name'    => html_escape($this->data['post']['clinic_name']), 
-                'clinic_address' => html_escape($this->data['post']['clinic_address']), 
-                'clinic_contact' => html_escape($this->data['post']['clinic_contact']), 
-                'diagnosis'      => html_escape($this->data['post']['diagnosis']), 
+                'order_note'     => html_escape($this->data['post']['order_note']), 
+                'creation_date'  => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Clinic', 'id_clinic', $this->data['current_clinics'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['current_id_clinic'])), 
+            $this->form_items('Visit Date', 'visit_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
+            $this->form_items('Order/Note', 'order_note', array('class' => 'form-control'), array('input' => 'textarea')), 
+        );
+    }
+
+    public function form_gnv() {
+        $this->data['ar']['wrapper'] = 'notes_nurse_visit';
+        $this->data['this_form']['title'] = '[Gen] Nurse Visit';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $diagnosis = $this->input->post('ndp_diagnosis');
+            $plan = $this->input->post('ndp_plan');
+            $ndp = array();
+            if ($diagnosis && $plan) {
+                $ndp_diagnosis = array_values($diagnosis);
+                $ndp_plan      = array_values($plan);
+                
+                for ($i=0; $i < count($ndp_diagnosis); $i++) 
+                    if (!empty($ndp_diagnosis[$i]) || !empty($ndp_plan[$i])) 
+                        $ndp[] = array(html_escape($ndp_diagnosis[$i]), html_escape($ndp_plan[$i]));
+            }
+
+            $sql = array(
+                'id_patient'     => $this->data['ar']['id_patient'], 
+                'id_clinic'      => $this->data['post']['id_clinic'], 
+                'id_user'        => $this->session->userdata('user')->id_user, 
+                'nursing_assessment' => html_escape($this->data['post']['nursing_assessment']), 
+                'ndp'                => json_encode($ndp), 
+                'implementation'     => html_escape($this->data['post']['implementation']), 
+                'evaluation'         => html_escape($this->data['post']['evaluation']), 
+                'creation_date'  => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Nursing Assessment', 'nursing_assessment', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Implementation', 'implementation', array('class' => 'form-control'), array('input' => 'textarea')), 
+            array('incl' => 'gnv_ndp', 'data' => json_decode($this->data['result']->ndp, true), 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+            $this->form_items('Evaluation', 'evaluation', array('class' => 'form-control'), array('input' => 'textarea')), 
+        );
+    }
+
+    public function form_pwnn() {
+        $this->data['ar']['wrapper'] = 'notes_nurse_visit';
+        $this->data['this_form']['title'] = '[Preventive Wellness] Nurse\'s Notes';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'     => $this->data['ar']['id_patient'], 
+                'id_clinic'      => $this->data['post']['id_clinic'], 
+                'id_user'        => $this->session->userdata('user')->id_user, 
+                'visit_date'     => date($this->format['sql_date'], strtotime($this->data['post']['visit_date'])), 
+                'start_time'     => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])), 
+                'focus'          => html_escape($this->data['post']['focus']), 
+                'data'           => html_escape($this->data['post']['data']), 
+                'action'         => html_escape($this->data['post']['action']), 
                 'recommendation' => html_escape($this->data['post']['recommendation']), 
                 'creation_date'  => date($this->format['sql_datetime']));
 
@@ -227,14 +213,12 @@ class Model_Form extends Base_Model {
         }
 
         $this->data['this_form']['items'] = array(
+            $this->form_items('Clinic', 'id_clinic', $this->data['current_clinics'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['current_id_clinic'])), 
             $this->form_items('Visit Date', 'visit_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
             $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
-            $this->form_items('To', 'to', array('class' => 'form-control')), 
-            $this->form_items('Specialty', 'specialty', array('class' => 'form-control')), 
-            $this->form_items('Clinic Name', 'clinic_name', array('class' => 'form-control')), 
-            $this->form_items('Clinic Address', 'clinic_address', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Clinic Contact No.', 'clinic_contact', array('class' => 'form-control')), 
-            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Focus', 'focus', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Data', 'data', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Action', 'action', array('class' => 'form-control'), array('input' => 'textarea')), 
             $this->form_items('Recommendation', 'recommendation', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
     }
@@ -554,21 +538,32 @@ class Model_Form extends Base_Model {
         );
     }
 
-    // Notes > Nurse Visit
-    public function form_atn() {
-        $this->data['ar']['wrapper'] = 'notes_nurse_visit';
-        $this->data['this_form']['title'] = '[Aesthetics] Therapist\'s Notes';
+    // Notes > Other
+    public function form_comf() {
+        $this->data['ar']['wrapper'] = 'notes_other';
+        $this->data['this_form']['title'] = 'Certificate of Medical Fitness';
         $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
         $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
         if ($this->data['post']) {
             $sql = array(
-                'id_patient'     => $this->data['ar']['id_patient'], 
-                'id_clinic'      => $this->data['post']['id_clinic'], 
-                'id_user'        => $this->session->userdata('user')->id_user, 
-                'visit_date'     => date($this->format['sql_date'], strtotime($this->data['post']['visit_date'])), 
-                'start_time'     => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])), 
-                'order_note'     => html_escape($this->data['post']['order_note']), 
-                'creation_date'  => date($this->format['sql_datetime']));
+                'id_patient'      => $this->data['ar']['id_patient'],
+                'id_clinic'       => $this->data['post']['id_clinic'],
+                'id_user'         => $this->session->userdata('user')->id_user,
+                'to'              => html_escape($this->data['post']['to']),
+                'examined_date'   => date($this->format['sql_date'], strtotime($this->data['post']['examined_date'])),
+                'diagnosis'       => html_escape($this->data['post']['diagnosis']),
+                'rest_day_no'     => (int) $this->data['post']['rest_day_no'],
+                'pn'              => $this->data['post']['pn'],
+                'pn_on_date1'     => $this->data['post']['pn_on_date1'],
+                'pn_on_date2'     => $this->data['post']['pn_on_date2'],
+                'pn_no_lifting'   => (int) $this->data['post']['pn_no_lifting'],
+                'pn_no_bending'   => (int) $this->data['post']['pn_no_bending'],
+                'pn_no_prolonged' => (int) $this->data['post']['pn_no_prolonged'],
+                'pn_equip_limit'  => (int) $this->data['post']['pn_equip_limit'],
+                'pn_other'        => (int) $this->data['post']['pn_other'],
+                'pn_other_val'    => $this->data['post']['pn_other_val'],
+                'pn_unable2work'  => $this->data['post']['pn_unable2work'],
+                'creation_date'   => date($this->format['sql_datetime']));
 
             if ($this->data['ar']['action'] == 'index') {
                 $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
@@ -589,40 +584,151 @@ class Model_Form extends Base_Model {
         }
 
         $this->data['this_form']['items'] = array(
-            $this->form_items('Clinic', 'id_clinic', $this->data['current_clinics'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['current_id_clinic'])), 
-            $this->form_items('Visit Date', 'visit_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('To', 'to', array('class' => 'form-control')), 
+            $this->form_items('This is to certify that I have seen and examined ' . $this->data['patient']->first_name . ', ' . $this->data['patient']->middle_name . ' ' . $this->data['patient']->last_name . ' on', 'examined_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('# of Rest Day', 'rest_day_no', array('type' => 'number', 'class' => 'form-control')),
+            array('incl' => 'comf_efpn', 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
+        );
+    }
+
+    public function form_mc1() {
+        $this->data['ar']['wrapper'] = 'notes_other';
+        $this->data['this_form']['title'] = 'Medical Certificate 1';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $doc = array();
+            $mc1_doc = $this->input->post('mc1_doc');
+            if ($mc1_doc) {
+                $mc1_doc = array_values($mc1_doc);
+                foreach ($mc1_doc as $_doc) 
+                    $doc[] = html_escape($_doc);
+            }
+
+            $sql = array(
+                'id_patient'    => $this->data['ar']['id_patient'],
+                'id_clinic'     => $this->data['post']['id_clinic'],
+                'id_user'       => $this->session->userdata('user')->id_user,
+                'assessed_date' => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])),
+                'start_time'    => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
+                'title'         => html_escape($this->data['post']['title']),
+                'purpose'       => (int) $this->data['post']['purpose'], 
+                'health'        => (int) $this->data['post']['health'], 
+                'pm_defects'    => (int) $this->data['post']['pm_defects'], 
+                'doc'           => json_encode($doc), 
+                'fitness'       => (int) $this->data['post']['fitness'], 
+                'restrictions'  => (int) $this->data['post']['restrictions'], 
+                'creation_date' => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['v']['purpose']  = array('-- Select --', 'Work', 'School', 'Travel');
+        $this->data['v']['health']  = array('-- Select --', 'Good', 'Fair', 'Poor');
+        $this->data['v']['pm_defects']  = array('-- Select --', 'No Defects', 'With Monir Defects', 'With Major Defects');
+        $this->data['v']['fitness']  = array('-- Select --', 'Fit', 'Unfit');
+        $this->data['v']['restrictions']  = array('-- Select --', 'with no physical activity restrictions', 'restricted to light activity only', 'restricted to moderate activity only');
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Date Assessed', 'assessed_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
             $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
-            $this->form_items('Order/Note', 'order_note', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Patient\'s Title', 'title', array('class' => 'form-control')), 
+            $this->form_items('Purpose', 'purpose', $this->data['v']['purpose'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->purpose)), 
+            $this->form_items('Health Status', 'health', $this->data['v']['health'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->health)), 
+            $this->form_items('Physical or Mental Defects', 'pm_defects', $this->data['v']['pm_defects'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->pm_defects)), 
+            array('incl' => 'mc1_doc', 'data' => json_decode($this->data['result']->doc, true), 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
+            $this->form_items('Fitness Status', 'fitness', $this->data['v']['fitness'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->fitness)), 
+            $this->form_items('Restrictions', 'restrictions', $this->data['v']['restrictions'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->restrictions)), 
         );
     }
 
-    public function form_gnv() {
-        $this->data['ar']['wrapper'] = 'notes_nurse_visit';
-        $this->data['this_form']['title'] = '[Gen] Nurse Visit';
+    public function form_mc2() {
+        $this->data['ar']['wrapper'] = 'notes_other';
+        $this->data['this_form']['title'] = 'Medical Certificate 2';
         $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
         $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
         if ($this->data['post']) {
-            $diagnosis = $this->input->post('ndp_diagnosis');
-            $plan = $this->input->post('ndp_plan');
-            $ndp = array();
-            if ($diagnosis && $plan) {
-                $ndp_diagnosis = array_values($diagnosis);
-                $ndp_plan      = array_values($plan);
-                
-                for ($i=0; $i < count($ndp_diagnosis); $i++) 
-                    if (!empty($ndp_diagnosis[$i]) || !empty($ndp_plan[$i])) 
-                        $ndp[] = array(html_escape($ndp_diagnosis[$i]), html_escape($ndp_plan[$i]));
-            }
-
             $sql = array(
-                'id_patient'     => $this->data['ar']['id_patient'], 
-                'id_clinic'      => $this->data['post']['id_clinic'], 
-                'id_user'        => $this->session->userdata('user')->id_user, 
-                'nursing_assessment' => html_escape($this->data['post']['nursing_assessment']), 
-                'ndp'                => json_encode($ndp), 
-                'implementation'     => html_escape($this->data['post']['implementation']), 
-                'evaluation'         => html_escape($this->data['post']['evaluation']), 
-                'creation_date'  => date($this->format['sql_datetime']));
+                'id_patient'           => $this->data['ar']['id_patient'],
+                'id_clinic'            => $this->data['post']['id_clinic'],
+                'id_user'              => $this->session->userdata('user')->id_user,
+                'assessed_date'        => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])), 
+                'start_time'           => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
+                'to'                   => html_escape($this->data['post']['to']),
+                'purpose'              => html_escape($this->data['post']['purpose']),
+                'inclusive'            => (int) $this->data['post']['inclusive'],  // 1 = on, 2 = range
+                'inclusive_on'         => date($this->format['sql_date'], strtotime($this->data['post']['inclusive_on'])), 
+                'inclusive_range_from' => date($this->format['sql_date'], strtotime($this->data['post']['inclusive_range_from'])), 
+                'inclusive_range_to'   => date($this->format['sql_date'], strtotime($this->data['post']['inclusive_range_to'])), 
+                'diagnosis'            => html_escape($this->data['post']['diagnosis']),
+                'comments'             => html_escape($this->data['post']['comments']),
+                'creation_date'        => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+        $this->data['v']['purpose']  = array('' => '-- Select --', 'Work' => 'Work', 'School' => 'School', 'Travel' => 'Travel', );
+
+        $this->data['this_form']['items'] = array(
+            $this->form_items('Date Assessed', 'assessed_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
+            $this->form_items('To Title', 'to', array('class' => 'form-control')), 
+            $this->form_items('Purpose', 'purpose', $this->data['v']['purpose'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['result']->purpose)), 
+            array('incl' => 'mc2_di', 'create' => ($this->data['ar']['action'] == 'create') ? true : false), 
+            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Comments', 'comments', array('class' => 'form-control'), array('input' => 'textarea')), 
+        );
+    }
+
+    public function form_mc3() {
+        $this->data['ar']['wrapper'] = 'notes_other';
+        $this->data['this_form']['title'] = 'Medical Certificate 3';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'       => $this->data['ar']['id_patient'],
+                'id_clinic'        => $this->data['post']['id_clinic'],
+                'id_user'          => $this->session->userdata('user')->id_user,
+                'assessed_date'    => date($this->format['sql_date'], strtotime($this->data['post']['assessed_date'])),
+                'start_time'       => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])),
+                'to'               => html_escape($this->data['post']['to']),
+                'institution'      => html_escape($this->data['post']['institution']),
+                'diagnosis'        => html_escape($this->data['post']['diagnosis']),
+                'recommended_rest' => html_escape($this->data['post']['recommended_rest']),
+                'recommendation'   => html_escape($this->data['post']['recommendation']),
+                'creation_date'    => date($this->format['sql_datetime']));
 
             if ($this->data['ar']['action'] == 'index') {
                 $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
@@ -643,16 +749,19 @@ class Model_Form extends Base_Model {
         }
 
         $this->data['this_form']['items'] = array(
-            $this->form_items('Nursing Assessment', 'nursing_assessment', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Implementation', 'implementation', array('class' => 'form-control'), array('input' => 'textarea')), 
-            array('incl' => 'gnv_ndp', 'data' => json_decode($this->data['result']->ndp, true), 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
-            $this->form_items('Evaluation', 'evaluation', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Date', 'assessed_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
+            $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
+            $this->form_items('To', 'to', array('class' => 'form-control')), 
+            $this->form_items('Institution', 'institution', array('class' => 'form-control')),
+            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Recommended Rest', 'recommended_rest', array('class' => 'form-control')), 
+            $this->form_items('Recommendation', 'recommendation', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
     }
 
-    public function form_pwnn() {
-        $this->data['ar']['wrapper'] = 'notes_nurse_visit';
-        $this->data['this_form']['title'] = '[Preventive Wellness] Nurse\'s Notes';
+    public function form_tyl() {
+        $this->data['ar']['wrapper'] = 'notes_other';
+        $this->data['this_form']['title'] = 'Thank You Letter';
         $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
         $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
         if ($this->data['post']) {
@@ -662,9 +771,12 @@ class Model_Form extends Base_Model {
                 'id_user'        => $this->session->userdata('user')->id_user, 
                 'visit_date'     => date($this->format['sql_date'], strtotime($this->data['post']['visit_date'])), 
                 'start_time'     => date($this->format['sql_time'], strtotime($this->data['post']['start_time'])), 
-                'focus'          => html_escape($this->data['post']['focus']), 
-                'data'           => html_escape($this->data['post']['data']), 
-                'action'         => html_escape($this->data['post']['action']), 
+                'to'             => html_escape($this->data['post']['to']), 
+                'specialty'      => html_escape($this->data['post']['specialty']), 
+                'clinic_name'    => html_escape($this->data['post']['clinic_name']), 
+                'clinic_address' => html_escape($this->data['post']['clinic_address']), 
+                'clinic_contact' => html_escape($this->data['post']['clinic_contact']), 
+                'diagnosis'      => html_escape($this->data['post']['diagnosis']), 
                 'recommendation' => html_escape($this->data['post']['recommendation']), 
                 'creation_date'  => date($this->format['sql_datetime']));
 
@@ -687,64 +799,16 @@ class Model_Form extends Base_Model {
         }
 
         $this->data['this_form']['items'] = array(
-            $this->form_items('Clinic', 'id_clinic', $this->data['current_clinics'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['current_id_clinic'])), 
             $this->form_items('Visit Date', 'visit_date', array('class' => 'form-control skubbs_datepicker', 'data-inputmask' => "'alias': 'dd/mm/yyyy'"), array('group' => true, 'fa' => 'fa-calendar', 'val' => date($this->format['date']))), 
             $this->form_items('Start Time', 'start_time', array('class' => 'form-control skubbs_timepicker'), array('class' => 'bootstrap-timepicker', 'fa' => 'fa-clock-o', 'group' => true, 'val' => date($this->format['time']))), 
-            $this->form_items('Focus', 'focus', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Data', 'data', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Action', 'action', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('To', 'to', array('class' => 'form-control')), 
+            $this->form_items('Specialty', 'specialty', array('class' => 'form-control')), 
+            $this->form_items('Clinic Name', 'clinic_name', array('class' => 'form-control')), 
+            $this->form_items('Clinic Address', 'clinic_address', array('class' => 'form-control'), array('input' => 'textarea')), 
+            $this->form_items('Clinic Contact No.', 'clinic_contact', array('class' => 'form-control')), 
+            $this->form_items('Diagnosis', 'diagnosis', array('class' => 'form-control'), array('input' => 'textarea')), 
             $this->form_items('Recommendation', 'recommendation', array('class' => 'form-control'), array('input' => 'textarea')), 
         );
-    }
-
-    // Notes > Consultation
-    public function form_gsf1() {
-        $this->data['ar']['wrapper'] = 'notes_consultation';
-        $this->data['this_form']['title'] = 'Gen SOAP Follow Up';
-        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
-        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
-        if ($this->data['post']) {
-            $sql = array(
-                'id_patient'     => $this->data['ar']['id_patient'], 
-                'id_clinic'      => $this->data['post']['id_clinic'], 
-                'id_user'        => $this->session->userdata('user')->id_user, 
-                'soap_img'       => html_escape($this->data['post']['soap_img']), 
-                'subjective'     => html_escape($this->data['post']['subjective']), 
-                'plan'           => html_escape($this->data['post']['plan']), 
-                'creation_date'  => date($this->format['sql_datetime']));
-
-            if ($this->data['ar']['action'] == 'index') {
-                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-                $this->db->update($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_updated;
-            } else if ($this->data['ar']['action'] == 'create') {
-                $this->db->insert($this->data['ar']['request'], $sql);
-                $this->data['this_form']['alert'] = $alert_created;
-            }
-        }
-
-        if ($this->data['ar']['action'] == 'index') {
-            $this->db->select($this->data['ar']['request'] . '.*');
-            $this->db->where('id_patient', $this->data['ar']['id_patient']);
-            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
-            $query = $this->db->get($this->data['ar']['request']);
-            $this->data['result'] = $query->row();
-        }
-
-        $this->data['this_form']['items'] = array(
-            $this->form_items('soap_img', 'soap_img', array('class' => 'form-control')), 
-            $this->form_items('Subjective', 'subjective', array('class' => 'form-control'), array('input' => 'textarea')), 
-            $this->form_items('Plan', 'plan', array('class' => 'form-control'), array('input' => 'textarea')), 
-        );
-    }
-
-    public function init($data) {
-        $this->data = $data;
-        $this->data['post'] = $this->input->post(NULL, TRUE);
-        if (method_exists($this, $this->data['ar']['request_type'])) 
-            $this->{$this->data['ar']['request_type']}();
-        
-        return $this->data;
     }
 
     public function form() {
