@@ -1,1 +1,0 @@
-[Derma] Consult <?php echo $dc['id_form'] ?>

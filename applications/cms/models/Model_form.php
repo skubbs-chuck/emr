@@ -40,6 +40,77 @@ class Model_Form extends Base_Model {
     }
 
     // Notes > Consultation
+    public function form_ph() {
+        $thumb = array('width' => 150, 'height' => 150);
+        $canvas = array('width' => 570, 'height' => 350);
+        $this->data['ar']['wrapper'] = 'notes_consultation';
+        $this->data['this_form']['title'] = 'Patient History';
+        $alert_created = array('type' => 'success', 'message' => 'successfully created ' . $this->data['this_form']['title']);
+        $alert_updated = array('type' => 'success', 'message' => 'successfully updated ' . $this->data['this_form']['title']);
+        if ($this->data['post']) {
+            $sql = array(
+                'id_patient'     => $this->data['ar']['id_patient'], 
+                'id_clinic'      => $this->data['post']['id_clinic'], 
+                'id_user'        => $this->session->userdata('user')->id_user, 
+                // 'soap_img'       => html_escape($this->data['post']['soap_img']), 
+                // 'subjective'     => html_escape($this->data['post']['subjective']), 
+                // 'plan'           => html_escape($this->data['post']['plan']), 
+                'creation_date'  => date($this->format['sql_datetime']));
+
+            if ($this->data['ar']['action'] == 'index') {
+                $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+                $this->db->update($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_updated;
+            } else if ($this->data['ar']['action'] == 'create') {
+                $this->db->insert($this->data['ar']['request'], $sql);
+                $this->data['this_form']['alert'] = $alert_created;
+            }
+        }
+
+        if ($this->data['ar']['action'] == 'index') {
+            $this->db->select($this->data['ar']['request'] . '.*');
+            $this->db->where('id_patient', $this->data['ar']['id_patient']);
+            $this->db->where('id_' . $this->data['ar']['request'], $this->data['ar']['id_form']);
+            $query = $this->db->get($this->data['ar']['request']);
+            $this->data['result'] = $query->row();
+        }
+
+
+
+        $this->load->model('model_image');
+        $this->db->where('id_patient', $this->data['ar']['id_patient']);
+        $this->db->where('form', 'form_ph');
+        if ($this->data['ar']['id_form'] > 0) 
+            $this->db->where('id_form', $this->data['ar']['id_form']);
+        
+        $query = $this->db->get('images');
+        $this->data['diagrams'] = array();
+
+        $this->data['diagrams'][] = array(
+            'base64' => array(
+                $this->model_image->base64('show.png', $thumb['width'], $thumb['height']), 
+                $this->model_image->base64('show.png', $canvas['width'], $canvas['height'])), 
+        );
+
+        if ($query->num_rows()) {
+            $images = $query->result_array();
+            foreach ($images as $image) {
+                $img = $image;
+                $img['base64'] = array(
+                    $this->model_image->base64($img['name'], $thumb['width'], $thumb['height']), 
+                    $this->model_image->base64($img['name'], $canvas['width'], $canvas['height']));
+                $this->data['diagrams'][] = $img;
+            }
+        }
+
+        $this->data['this_form']['items'] = array(
+            // $this->form_items('soap_img', 'soap_img', array('class' => 'form-control')), 
+            // $this->form_items('Subjective', 'subjective', array('class' => 'form-control'), array('input' => 'textarea')), 
+            // $this->form_items('Plan', 'plan', array('class' => 'form-control'), array('input' => 'textarea')), 
+            array('incl' => 'ph_diagram', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
+        );
+    }
+
     public function form_gsf1() {
         $this->data['ar']['wrapper'] = 'notes_consultation';
         $this->data['this_form']['title'] = 'Gen SOAP Follow Up';

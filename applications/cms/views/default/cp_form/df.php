@@ -1,1 +1,0 @@
-[Derma] Follow-Up

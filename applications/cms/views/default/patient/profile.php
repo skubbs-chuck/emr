@@ -22,8 +22,8 @@
         <div class="box-body no-padding no-margin">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="medical_history" data-toggle="tab">Medical History</a></li>
-                <!-- <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="notes" s-onload="notes_consultation" data-toggle="tab">Notes</a></li> -->
-                <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="notes" s-onload="notes_nurse_visit" data-toggle="tab">Notes</a></li>
+                <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="notes" s-onload="notes_consultation" data-toggle="tab">Notes</a></li>
+                <!-- <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="notes" s-onload="notes_nurse_visit" data-toggle="tab">Notes</a></li> -->
                 <li><a href="#" class="skubbs_ajax" s-wrap="forms" s-request="medications" data-toggle="tab">Medications</a></li>
             </ul>
         </div>

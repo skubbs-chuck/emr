@@ -1,6 +1,12 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Test extends Base_Controller {
+    public function image() {
+        $this->load->model('model_image');
+        $a = $this->model_image->base64('show.png', 500, 500);
+        echo '<img src="' . $a . '" />';
+    }
+
     public function testdude() {
         $server_url =   "http://joyonto.net/envato_validation/index.php?xmlrpc_server";
         $this->load->library('xmlrpc');
