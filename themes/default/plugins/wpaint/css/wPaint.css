@@ -4,7 +4,7 @@
 /*** menu ***/
 .wPaint-menu {
     /*position: absolute !important;*/
-    
+    display: inline-block;
     line-height: 0px;
     z-index: 99;
 }

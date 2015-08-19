@@ -30,7 +30,7 @@
     <div class="thumbnail">
         <div class="caption">
             <div style="height: 60px"></div>
-            <a href="#" data-toggle="modal" data-target="#modal_diagram" data-img-counter="<?php echo $counter ?>" class="label label-default modal-luncher" rel="tooltip" title="Edit">&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;</a>
+            <a href="#" data-target="#modal_diagram" data-img-counter="<?php echo $counter ?>" class="label label-default modal-luncher" rel="tooltip" title="Edit">&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;</a>
             &nbsp;&nbsp;
             <a href="#" class="label label-danger" rel="tooltip" title="Remove">REMOVE</a>
         </div>
@@ -39,16 +39,55 @@
     <?php $counter++; ?>
     <?php endforeach ?>
 </div>
+<style>
+/*#cPaintMenuWrapper {
+    height: 70px;
+}*/
+</style>
 <script>
+function cPaintSaveImg(img) {
+    console.log(img);
+    console.log('Image has been saved');
+}
+
+function cPaint(diagram) {
+    $('#cPaintCanvasWrapper').html('<div id="cPaintCanvas"></div>');
+    $('#cPaintCanvasWrapper').parent().css({
+        '-webkit-box-align':'center',
+        '-webkit-box-pack':'center',
+        'display':'-webkit-box',
+    });
+    $('#cPaintCanvasWrapper').css({ 'position' : 'relative', 'width' : '570px', 'height' : '450px' });
+    $('#cPaintCanvasWrapper>#cPaintCanvas').empty();
+    $('#cPaintCanvasWrapper>#cPaintCanvas').css({ 'width' : '568px', 'height' : '370px', 'border' : '1px dashed #fff' });
+
+    var cpaint = $('#cPaintCanvasWrapper>#cPaintCanvas').wPaint({
+        bg: diagram.base64[1],
+        saveImg: cPaintSaveImg,
+    });
+
+    $('#cPaintMenuWrapper').css({
+        // 'position' : 'absolute',
+        // 'clear' : 'both'
+    });
+    // $('#cPaintCanvasWrapper>#cPaintCanvas').wPaint('setMode', 'line');
+    return false;
+}
+
 $("[rel='tooltip']").tooltip();    
 $('.thumbnail').hover(
     function() { $(this).find('.caption').slideDown(250);  },
     function() { $(this).find('.caption').slideUp(250); }
 ); 
+// $(document).on('click', '')
 $('.modal-luncher').click(function() {
+    $($(this).data('target')).modal({backdrop: 'static', keyboard: false});
     var counter_id = $(this).data('img-counter');
     var diagram = diagrams[counter_id];
-    $('#modal_diagram_img').attr('src', diagram.base64[1]);
+    diagram.counter_id = counter_id;
+    cPaint(diagram);
+
+    return false;
 });
 </script>
 
@@ -59,9 +98,9 @@ $('.modal-luncher').click(function() {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Skubbs Paint</h4>
             </div>
-            <div class="modal-body">
-                <p>Paint Menu Here</p>
-                <p><img src="" alt="" id="modal_diagram_img"></p>
+            <div class="modal-body cPaintWrapper">
+                <div id="cPaintCanvasWrapper"></div>
+                <div id="cPaintMenuWrapper"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline">Save</button>
