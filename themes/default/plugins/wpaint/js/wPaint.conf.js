@@ -40,8 +40,8 @@ thisSrc = thisSrc.replace(/js\/wPaint.conf.js$/, '');
                 _this['$' + canvasName] = $(_this[canvasName]);
                 _this['$' + canvasName].attr('class', 'wPaint-canvas' + (name ? '-' + name : '')).attr('width', _this.width + 'px').attr('height', _this.height + 'px').css({
                     position: 'absolute',
-                    left: 1,
-                    top: 1
+                    left: 0,
+                    top: 0
                 });
                 _this.$el.append(_this['$' + canvasName]);
                 return _this['$' + canvasName]

@@ -9,6 +9,29 @@ class Model_Image extends Base_Model {
         $this->dir_img = PATH_ROOT . 'uploads' . DS . 'images' . DS;
     }
 
+    public function merge($bg, $image) {
+        $result = '';
+        $bg64 = explode(',', $bg);
+        $img64 = explode(',', $image);
+
+        ob_start();
+        $bg = imagecreatefromstring(base64_decode($bg64[1]));
+        $image = imagecreatefromstring(base64_decode($img64[1]));
+
+        imagecopy($bg, $image, 0, 0, 0, 0, imagesx($bg), imagesy($bg));
+
+        
+        
+        header('Content-type: image/png');
+        imagepng($bg);
+        $result = ob_get_contents();
+        imagedestroy($bg);
+        // exit;
+        ob_end_clean();
+        $result = 'data:image/png;base64,' . base64_encode($result);
+        return $result;
+    }
+
     // public function base64ById($id)
     
 
