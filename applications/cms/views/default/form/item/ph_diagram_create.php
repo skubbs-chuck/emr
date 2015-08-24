@@ -34,12 +34,11 @@
         <div class="caption">
             <div style="height: 60px"></div>
             <a href="#" data-target="#modal_paint" data-index="<?php echo $diagram['index'] ?>" class="label label-default cPaint_modal" rel="tooltip" title="Edit">&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;</a>
-            &nbsp;&nbsp;<a href="#" class="label label-danger" rel="tooltip" title="Remove">REMOVE</a>
+            &nbsp;&nbsp;<a href="#" class="label label-danger diagram_remove" data-index="<?php echo $diagram['index'] ?>" rel="tooltip" title="Remove">REMOVE</a>
         </div>
-        <?php
-        $thumbnail = $this->model_image->base64Resize($diagram['bg'], 170, 170);
-        ?>
-        <img src="<?php echo $thumbnail ?>" alt="" width="170" height="170">
+        <img src="<?php echo $this->model_image->base64Resize($diagram['bg'], 170, 170) ?>" alt="" width="170" height="170">
+        <input type="hidden" name="bg[<?php echo $diagram['index'] ?>]" value="<?php echo $diagram['bg'] ?>">
+        <input type="hidden" name="canvas[<?php echo $diagram['index'] ?>]" value="">
     </div>
     <?php endforeach ?>
     
@@ -116,6 +115,14 @@ var _cPaint = {
     },
 };
 
+$(document).on('click', 'a.diagram_remove', function() {
+    var index = $(this).data('index');
+    delete diagrams[index];
+    $(this).closest('#diagram_' + index).remove();
+    console.log(diagrams[index]);
+    return false;
+});
+
 function cPaint(c_opts) {
     // canvas
     _cPaint.selector.modal_wrapper = '#' + _cPaint.id.modal_wrapper;
@@ -155,8 +162,7 @@ $('.cPaint_save').click(function() {
     var index = $(this).data('index');
     var data2save = diagrams[index];
     data2save.canvas = $(_cPaint.selector.canvas).wPaint('image');
-    // console.log(data2save.bg);
-    // console.log(data2save.canvas);
+    $('#diagram_' + index + '>input[name="canvas[' + index + ']"]').val(data2save.canvas);
     $.ajax({
         url: base_url + 'ajax/merge_img_resize',
         method: 'post',
@@ -177,12 +183,12 @@ $('.cPaint_save').click(function() {
 });
 
 $('#fileupload').click(function() {
+    $('#fileupload_file').val('');
     $('#fileupload_modal').modal();
     return false;
 });
 function uploadFiles() {
     var fileupload_file = $('#fileupload_file')[0].files[0];
-    // console.log(fileupload_file);
     if (typeof fileupload_file == 'undefined') 
         return false;
 
@@ -215,9 +221,11 @@ function uploadFiles() {
                 '<div class="caption">'+
                     '<div style="height: 60px"></div>'+
                     '<a href="#" data-target="#modal_paint" data-index="' + d_index + '" class="label label-default cPaint_modal" rel="tooltip" title="Edit">&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;</a>'+
-                    '&nbsp;&nbsp;<a href="#" class="label label-danger" rel="tooltip" title="Remove">REMOVE</a>'+
+                    '&nbsp;&nbsp;<a href="#" class="label label-danger diagram_remove" data-index="' + d_index + '" rel="tooltip" title="Remove">REMOVE</a>'+
                 '</div>'+
                 '<img src="' + res.thumb + '" alt="" width="170" height="170">'+
+                '<input type="hidden" name="bg[' + d_index + ']" value="' + res.bg + '">'+
+                '<input type="hidden" name="canvas[' + d_index + ']" value="">'+
             '</div>');
             $('#fileupload_modal').modal('toggle');
         }

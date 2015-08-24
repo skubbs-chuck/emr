@@ -62,6 +62,17 @@ class Model_Form extends Base_Model {
                 $this->db->insert($this->data['ar']['request'], $sql);
                 $this->data['this_form']['alert'] = $alert_created;
             }
+
+            if ($this->data['post']['bg'] && $this->data['post']['canvas']) {
+                foreach ($this->data['post']['bg'] as $key => $value) {
+                    $this->data['post']['bg'][$key] = str_replace('[removed]', 'data:image/png;base64,', $value);
+                }
+                foreach ($this->data['post']['canvas'] as $key => $value) {
+                    $this->data['post']['canvas'][$key] = str_replace('[removed]', 'data:image/png;base64,', $value);
+                }
+            }
+
+            // $this->data['test'] = array($this->data['post']['bg'], $this->data['post']['canvas']);
         }
 
         $this->data['diagrams'] = array();
