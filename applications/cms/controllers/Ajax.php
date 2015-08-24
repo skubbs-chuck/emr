@@ -2,6 +2,39 @@
 
 class Ajax extends Base_Controller {
 
+    public function upload_img() {
+        if (isset($_FILES['image'])) {
+            $tmp = $_FILES['image']['tmp_name'];
+            $this->load->model('model_image');
+            $bg = $this->model_image->img2base64($tmp, 570, 370);
+            $thumb = $this->model_image->img2base64($tmp, 170, 170);
+            unlink($tmp);
+
+            echo json_encode(array(
+                'bg' => $bg, 
+                'thumb' => $thumb, 
+            ));
+        }
+    }
+
+    public function merge_img() {
+        if ($this->input->post('bg') && $this->input->post('canvas')) {
+            $this->load->model('model_image');
+            echo json_encode(array('thumb' => $this->model_image->merge($this->input->post('bg'), $this->input->post('canvas'))));
+        }
+    }
+
+    public function merge_img_resize() {
+        if ($this->input->post('bg') && $this->input->post('canvas')) {
+            $width = ((int) $this->input->post('width') <= 0) ? 170 : (int) $this->input->post('width');
+            $height = ((int) $this->input->post('height') <= 0) ? 170 : (int) $this->input->post('height');
+            $this->load->model('model_image');
+            $merged = $this->model_image->merge($this->input->post('bg'), $this->input->post('canvas'));
+            $thumb = $this->model_image->base64Resize($merged, $width, $height);
+            echo json_encode(array('thumb' => $thumb));
+        }
+    }
+
     public function patient() {
         if (!$this->model_session->is_logged_in()) 
             redirect('user/login');

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.25a, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.16, for Win32 (x86)
 --
 -- Host: localhost    Database: psadmin_skubbs_emr
 -- ------------------------------------------------------
--- Server version	5.5.25a
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1062,6 +1062,11 @@ CREATE TABLE `form_ph` (
   `id_patient` int(11) NOT NULL,
   `id_clinic` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `complaint` varchar(255) DEFAULT NULL,
+  `severity` varchar(3) DEFAULT NULL,
+  `percentage` varchar(3) DEFAULT NULL,
+  `how_long` varchar(255) DEFAULT NULL,
+  `id_images` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_form_ph`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1368,11 +1373,9 @@ CREATE TABLE `images` (
   `form` varchar(255) DEFAULT NULL,
   `id_form` int(11) NOT NULL DEFAULT '0',
   `id_user` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `description` text NOT NULL,
-  `width` int(11) NOT NULL DEFAULT '0',
-  `height` int(11) NOT NULL DEFAULT '0',
+  `image` longtext,
+  `canvas` longtext,
+  `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_image`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1383,7 +1386,7 @@ CREATE TABLE `images` (
 
 LOCK TABLES `images` WRITE;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` VALUES (1,2,'form_ph',0,1,'tyjfgiufagfaagaagiagilwifl.png','png','wtf',0,0);
+INSERT INTO `images` VALUES (1,2,'form_ph',0,1,'tyjfgiufagfaagaagiagilwifl.png','wtf','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1774,4 +1777,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-24  2:02:13
+-- Dump completed on 2015-08-24 18:44:19
