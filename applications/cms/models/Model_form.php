@@ -61,14 +61,29 @@ class Model_Form extends Base_Model {
             } else if ($this->data['ar']['action'] == 'create') {
                 $this->db->insert($this->data['ar']['request'], $sql);
                 $this->data['this_form']['alert'] = $alert_created;
+                $this->data['ar']['id_form'] = $this->db->insert_id();
             }
 
             if ($this->data['post']['bg'] && $this->data['post']['canvas']) {
                 foreach ($this->data['post']['bg'] as $key => $value) {
                     $this->data['post']['bg'][$key] = str_replace('[removed]', 'data:image/png;base64,', $value);
-                }
-                foreach ($this->data['post']['canvas'] as $key => $value) {
-                    $this->data['post']['canvas'][$key] = str_replace('[removed]', 'data:image/png;base64,', $value);
+                    $this->data['post']['canvas'][$key] = str_replace('[removed]', 'data:image/png;base64,', $this->data['post']['canvas'][$key]);
+                    $image = array(
+                        'id_patient' => $this->data['ar']['id_patient'], 
+                        'id_form' => $this->data['ar']['id_form'], 
+                        'form' => $this->data['ar']['request'], 
+                        'id_user' => $this->session->userdata('user')->id_user, 
+                        'image' => $this->data['post']['bg'][$key],
+                        'canvas' => $this->data['post']['canvas'][$key], 
+                        'creation_date' => date($this->format['sql_datetime'])
+                    );
+
+                    if ($this->data['post']['id_image'][$key] > 0) {
+                        $this->db->where('id_image', $this->data['post']['id_image'][$key]);
+                        $this->db->update('images', $image);
+                    } else {
+                        $this->db->insert('images', $image);
+                    }
                 }
             }
 
@@ -94,6 +109,12 @@ class Model_Form extends Base_Model {
                 foreach ($query->result_array() as $db_image) {
                     $db_image['bg'] = $this->model_image->base64Resize($db_image['image'], 570, 370);
                     $db_image['index'] = $index;
+                    if (!empty($db_image['canvas'])) {
+                        $thumb = $this->model_image->merge($db_image['bg'], $db_image['canvas']);
+                        $db_image['thumb'] = $this->model_image->base64Resize($thumb, 170, 170);
+                    } else {
+                        $db_image['thumb'] = $this->model_image->base64Resize($db_image['bg'], 170, 170);
+                    }
                     $this->data['diagrams'][] = $db_image;
                     $index++;
                 }

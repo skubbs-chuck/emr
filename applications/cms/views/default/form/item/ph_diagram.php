@@ -36,9 +36,10 @@
             <a href="#" data-target="#modal_paint" data-index="<?php echo $diagram['index'] ?>" class="label label-default cPaint_modal" rel="tooltip" title="Edit">&nbsp;&nbsp;&nbsp;EDIT&nbsp;&nbsp;&nbsp;</a>
             &nbsp;&nbsp;<a href="#" class="label label-danger diagram_remove" data-index="<?php echo $diagram['index'] ?>" rel="tooltip" title="Remove">REMOVE</a>
         </div>
-        <img src="<?php echo $this->model_image->base64Resize($diagram['bg'], 170, 170) ?>" alt="" width="170" height="170">
+        <img src="<?php echo $diagram['thumb'] ?>" alt="" width="170" height="170">
+        <input type="hidden" name="id_image[<?php echo $diagram['index'] ?>]" value="<?php echo ($diagram['id_image']) ? $diagram['id_image'] : 0 ?>">
         <input type="hidden" name="bg[<?php echo $diagram['index'] ?>]" value="<?php echo $diagram['bg'] ?>">
-        <input type="hidden" name="canvas[<?php echo $diagram['index'] ?>]" value="">
+        <input type="hidden" name="canvas[<?php echo $diagram['index'] ?>]" value="<?php echo $diagram['canvas'] ?>">
     </div>
     <?php endforeach ?>
     
@@ -162,7 +163,6 @@ $('.cPaint_save').click(function() {
     var index = $(this).data('index');
     var data2save = diagrams[index];
     data2save.canvas = $(_cPaint.selector.canvas).wPaint('image');
-    console.log(data2save.canvas);
     $('#diagram_' + index + '>input[name="canvas[' + index + ']"]').val(data2save.canvas);
     $.ajax({
         url: base_url + 'ajax/merge_img_resize',
