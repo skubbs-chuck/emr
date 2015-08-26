@@ -56,7 +56,7 @@ class Base_Controller Extends MY_Controller {
              ->addCss($this->tplUrl . 'css/AdminLTE.min.css')
              ->addCss($this->tplUrl . 'css/skubbs.css');
 
-        $this->addJs($this->tplUrl . 'plugins/jQuery/jQuery-2.1.4.min.js')
+        $this->addJs($this->tplUrl . 'plugins/jQuery/jQuery-2.1.4.min.js', false)
              ->addJs($this->tplUrl . 'js/bootstrap.min.js');   
     }
 

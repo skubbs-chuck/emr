@@ -52,6 +52,84 @@ class Patient extends Base_Controller {
         $this->display();
     }
 
+    public function edit($id_patient = 0) {
+        if (!$id_patient || (int) $id_patient <= 0) 
+            redirect('patient/management');
+
+        if (!$this->model_session->is_logged_in()) 
+            redirect('user/login');
+
+        // echo $id_patient; exit();
+
+        $this->data['post'] = $this->input->post(NULL);
+        
+
+        if ($this->data['post']) {
+            $identifications = array();
+            if (isset($this->data['post']['contacts_type']) && isset($this->data['post']['contacts_number'])) {
+                $contacts = array();
+                $this->data['post']['contacts_type'] = array_values($this->data['post']['contacts_type']);
+                $this->data['post']['contacts_number'] = array_values($this->data['post']['contacts_number']);
+                for ($i=0; $i < count($this->data['post']['contacts_type']); $i++) 
+                    $contacts[] = array(html_escape($this->data['post']['contacts_type'][$i]), html_escape($this->data['post']['contacts_number'][$i]));
+                unset($this->data['post']['contacts_type'], $this->data['post']['contacts_number']);
+            }
+
+            if (isset($this->data['post']['identifications_type']) && isset($this->data['post']['identifications_number'])) {
+                $identifications = array();
+                $this->data['post']['identifications_type'] = array_values($this->data['post']['identifications_type']);
+                $this->data['post']['identifications_number'] = array_values($this->data['post']['identifications_number']);
+                for ($i=0; $i < count($this->data['post']['identifications_type']); $i++) 
+                    $identifications[] = array(html_escape($this->data['post']['identifications_type'][$i]), html_escape($this->data['post']['identifications_number'][$i]));
+                unset($this->data['post']['identifications_type'], $this->data['post']['identifications_number']);
+            }
+
+            $data = array(
+                'first_name' => $this->data['post']['first_name'], 
+                'middle_name' => $this->data['post']['middle_name'], 
+                'last_name' => $this->data['post']['last_name'], 
+                'alias' => $this->data['post']['alias'], 
+                'birth_date' => $this->data['post']['birth_date'], 
+                'birth_place' => $this->data['post']['birth_place'], 
+                'gender' => $this->data['post']['gender'], 
+                'civil_status' => $this->data['post']['civil_status'], 
+                'nationality' => $this->data['post']['nationality'], 
+                'occupation' => $this->data['post']['occupation'], 
+                'religion' => $this->data['post']['religion'], 
+                'address' => $this->data['post']['address'], 
+                'city' => $this->data['post']['city'], 
+                'zip_code' => $this->data['post']['zip_code'], 
+                'province' => $this->data['post']['province'], 
+                'country' => $this->data['post']['country'], 
+                'address2' => $this->data['post']['address2'], 
+                'city2' => $this->data['post']['city2'], 
+                'zip_code2' => $this->data['post']['zip_code2'], 
+                'province2' => $this->data['post']['province2'], 
+                'country2' => $this->data['post']['country2'], 
+                'email' => $this->data['post']['email'], 
+                'account_type' => $this->data['post']['account_type'], 
+                'reffered_by' => $this->data['post']['reffered_by'], 
+                'client_source' => $this->data['post']['client_source'], 
+                'father_name' => $this->data['post']['father_name'], 
+                'mother_name' => $this->data['post']['mother_name'], 
+                'contacts' => json_encode($contacts), 
+                'identifications' => json_encode($identifications), 
+            );
+
+            $this->db->update('patients', $data, array('id_patient' => $id_patient));
+        }
+
+        $query = $this->db->get_where('patients', array('id_patient' => $id_patient));
+        if (!$query->num_rows()) 
+            redirect('patient/management');
+
+        $this->data['patient'] = $query->row();
+        $this->data['patient']->contacts = json_decode($this->data['patient']->contacts, true);
+        $this->data['patient']->identifications = json_decode($this->data['patient']->identifications, true);
+
+        $this->display();
+    }
+
     public function add() {
         
 

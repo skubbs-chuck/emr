@@ -52,6 +52,10 @@ class Model_Form extends Base_Model {
                 'id_patient'     => $this->data['ar']['id_patient'], 
                 'id_clinic'      => $this->data['post']['id_clinic'], 
                 'id_user'        => $this->session->userdata('user')->id_user, 
+                'complaint'      => $this->data['post']['complaint'], 
+                'severity'      => $this->data['post']['severity'], 
+                'percentage'      => $this->data['post']['percentage'], 
+                'how_long'      => $this->data['post']['how_long'], 
                 'creation_date'  => date($this->format['sql_datetime']));
 
             if ($this->data['ar']['action'] == 'index') {
@@ -123,7 +127,22 @@ class Model_Form extends Base_Model {
         if (!$this->data['diagrams'])
             $this->data['diagrams'][] = array('index' => 0, 'bg' => $this->model_image->img2base64('consultation_1.png', 570, 370));
 
+        $this->data['v']['blood_type']  = array(
+            '' => '-- Select --', 
+            'A+' => 'A+', 'A-' => 'A-', 
+            'B+' => 'B+', 'B-' => 'B-', 
+            'AB+' => 'AB+', 'AB-' => 'AB-', 
+            'O+' => 'O+', 'O-' => 'O-'
+        );
+
+        $this->data['v']['severity']  = array('-- Select --', '0 ', 1,2,3,4,5,6,7,8,9,10);
+        $this->data['v']['percentage']  = array('-- Select --', '0 ',10,20,30,40,50,60,70,80,90,100);
+
         $this->data['this_form']['items'] = array(
+            $this->form_items('What is your main complaint?', 'complaint', array('class' => 'form-control')), 
+            $this->form_items('On the scale below, please circle the severity of your main complaint', 'severity', $this->data['v']['severity'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['post']['severity'])), 
+            $this->form_items('On the scale below, please cirlce the percentage of time you experience our main complaint', 'percentage', $this->data['v']['percentage'], array('input' => 'dropdown', 'js' => 'class="form-control"', 'val' => $this->data['post']['percentage'])), 
+            $this->form_items('How long have you been experiencing your main complaint?', 'how_long', array('class' => 'form-control')), 
             array('incl' => 'ph_diagram', 'create' => ($this->data['ar']['action'] == 'create') ? true : false),
         );
     }

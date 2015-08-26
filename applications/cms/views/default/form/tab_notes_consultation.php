@@ -7,9 +7,10 @@
             </button>
             <ul class="dropdown-menu scrollable-menu" data-toggle="dropdown" role="menu">
                 <?php foreach ($consultation['form_list'] as $form): ?>
-                    <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_consultation" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li>
+                    <!-- <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_consultation" s-request="<?php echo $form->table_name ?>" s-action="create"><?php echo $form->name ?></a></li> -->
                 <?php endforeach ?>
-                <!-- <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_consultation" s-request="form_gsf1" s-action="create">Gen SOAP Follow Up</a></li> -->
+                <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_consultation" s-request="form_gsf1" s-action="create">Gen SOAP Follow Up</a></li>
+                <li><a href="#" class="skubbs_ajax skubbs_btn-create" s-wrap="notes_consultation" s-request="form_ph" s-action="create">Patient History</a></li>
             </ul>
         </div>
     </div>

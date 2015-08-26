@@ -252,14 +252,21 @@ class Module extends Base_Model {
                 $this->_modules[$module]->$method();
 
         $data = $this->config->item('data');
-        
+        $data['css'] = array_unique($data['css']);
+        $data['jsTop'] = array_unique($data['jsTop']);
+        $data['jsBottom'] = array_unique($data['jsBottom']);
+
         if (isset($data['css'])) 
             foreach ($data['css'] as $css) 
                 $html_head .= '<link rel="stylesheet" type="text/css" href="' . $css . '">' . "\r\n";
 
         if (isset($data['jsTop'])) 
             foreach ($data['jsTop'] as $jsTop) 
-                $html_head .= '<script type="javascript" src="' . $jsTop . '"></script>' . "\r\n";
+                $html_head .= '<script type="text/javascript" src="' . $jsTop . '"></script>' . "\r\n";
+            
+        // if (isset($data['jsBottom'])) 
+        //     foreach ($data['jsBottom'] as $jsBottom) 
+        //         $html_head .= '<script type="javascript" src="' . $jsBottom . '"></script>' . "\r\n";
 
         $data[$var] = $html_head;
         return $data;
