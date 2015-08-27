@@ -17,6 +17,23 @@ class Ajax extends Base_Controller {
         }
     }
 
+    public function dbci($id_clinic = 0) {
+        $this->db->where('super_user', 0);
+        $query = $this->db->get('users');
+        $users = $query->result();
+
+        $doctors = array();
+
+        foreach ($users as $user) {
+            $clinics = json_decode($user->clinics);
+            if (in_array($id_clinic, $clinics)) {
+                $doctors[] $user;
+            }
+        }
+
+        echo json_encode($doctors);
+    }
+
     public function merge_img() {
         if ($this->input->post('bg') && $this->input->post('canvas')) {
             $this->load->model('model_image');

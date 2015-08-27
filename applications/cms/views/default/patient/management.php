@@ -116,10 +116,26 @@
     </div>
 </div>
 <script>
+    var db_clinics = <?php echo json_encode($db_clinics) ?>;
+    function ajaxGetDoctorsByClinicId(cl_id) {
+        console.log(base_url + 'ajax/dbci/' + cl_id);
+        return false;
+        $.ajax({
+            url: base_url + 'ajax/dbci/' + cl_id, 
+            dataType: 'json',
+            success: function(res) {
+                return res;
+            }
+        });
+        return false;
+    }
+
     $(document).on('click', '.modal_set_appointment', function() {
         var name_patient = $(this).data('patient');
         var id_patient = $(this).data('id');
         $('#modal_set_appointment').find('.modal-header>h4>span.patient-name').html('<i>' + name_patient + '</i>');
+        var docts = ajaxGetDoctorsByClinicId(db_clinics[0].id_clinic);
+        console.log(docts);
         $('#modal_set_appointment').modal();
     });
 </script>

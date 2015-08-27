@@ -30,6 +30,8 @@ class Patient extends Base_Controller {
     }
 
     public function management() {
+        $this->db->select('id_clinic,name');
+        $this->db->order_by('id_clinic', 'asc');
         $query = $this->db->get('clinics');
         $this->data['db_clinics'] = $query->result();
         // $query = $this->db->query("SELECT common_schema.extract_json_value(@json, '//clinics') AS test FROM users");
