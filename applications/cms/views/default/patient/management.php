@@ -1,4 +1,7 @@
-<?php include_once $inc_header; ?>
+<?php
+// echo '<pre>' . print_r($this->data['sqltest'], true) . '</pre>';
+// exit;
+?><?php include_once $inc_header; ?>
 <div class="content-wrapper">
     <section class="content-header">
         <h1>Patients</h1> 
@@ -21,30 +24,35 @@
                     <thead>
                         <tr>
                             <th>Patient</th>
-                            <th>Last Visit</th>
-                            <th>Action</th>
+                            <!-- <th>Last Visit</th> -->
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (isset($patient_list) && $patient_list): ?>
                             <?php foreach ($patient_list as $patient): ?>
                             <tr>
-                                <td><a href="<?php echo base_url() . 'patient/profile/' . $patient->id_patient ?>"><?php echo $patient->last_name . ', ' . $patient->first_name . ' ' . $patient->middle_name ?></a></td>
-                                <td>UNDER DEV</td>
-                                <td>Actions Here</td>
+                                <td>
+                                    <a href="<?php echo base_url() . 'patient/profile/' . $patient->id_patient ?>"><?php echo $patient->last_name . ', ' . $patient->first_name . ' ' . $patient->middle_name ?></a>
+                                    <div class="pull-right">
+                                        <a href="#" class="modal_set_appointment" data-id="<?php echo $patient->id_patient ?>" data-patient="<?php echo $patient->last_name . ', ' . $patient->first_name . ' ' . $patient->middle_name ?>"><small>Set Appointment</small></a>
+                                    </div>
+                                </td>
+                                <!-- <td>UNDER DEV</td> -->
+                                <!-- <td>Actions Here</td> -->
                             </tr>
                             <?php endforeach ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" class="text-center">No records found.</td>
+                                <td class="text-center">No records found.</td>
                             </tr>
                         <?php endif ?>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Patient Name</th>
-                            <th>Last Visit</th>
-                            <th>Action</th>
+                            <!-- <th>Last Visit</th> -->
+                            <!-- <th>Action</th> -->
                         </tr>
                     </tfoot>
                   </table>
@@ -58,4 +66,61 @@
         </div>
     </section>
 </div>
+
+<div class="modal fade modal-info" id="modal_set_appointment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Set Appointment to <span class="patient-name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="set_appointment">
+                    <label>Type:</label>
+                    <select name="appointment_type" class="form-control"><option value="Consultation">Consultation</option></select>
+                    <label>Clinic:</label>
+                    <select name="id_clinic" class="form-control">
+                        <?php foreach ($db_clinics as $clinic): ?>
+                            <option value="<?php echo $clinic->id_clinic ?>"><?php echo $clinic->name ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <label>Doctor:</label>
+                    <select name="id_user" class="form-control">
+                        
+                    </select>
+                    <label>Date:</label>
+                        <div class="form-group skubbs_input" style="display: block;">
+                            <div class="input-group">
+                                <input type="text" name="visit_date" value="2015-08-27" class="form-control skubbs_datepicker" data-inputmask="'alias': 'dd/mm/yyyy'">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    <div class="bootstrap-timepicker">
+                        <label>Time:</label>
+                        <div class="form-group skubbs_input" style="display: block;">
+                            <div class="input-group">
+                                <input type="text" name="start_time" value="12:03 PM" class="form-control skubbs_timepicker skubbs_on_modal">
+                                <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <label>Reason for Visit:</label> 
+                    <textarea name="reason" rows="3" class="form-control"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('click', '.modal_set_appointment', function() {
+        var name_patient = $(this).data('patient');
+        var id_patient = $(this).data('id');
+        $('#modal_set_appointment').find('.modal-header>h4>span.patient-name').html('<i>' + name_patient + '</i>');
+        $('#modal_set_appointment').modal();
+    });
+</script>
 <?php include_once $inc_footer; ?>

@@ -270,12 +270,30 @@ $(document).on('focus', '.skubbs_datepicker', function() {
         todayHighlight: true, 
         toggleActive: true
     });
+    $('div.datepicker').css({'z-index' : '9999!important'});
 });
 $(document).on('focus', '.skubbs_timepicker', function() {
-    $(this).timepicker({
-        minuteStep: 5,
-        showInputs: false
-    });
+    // console.log('timepicker triggered!');
+    var timepicker_opts = {};
+    if ($(this).hasClass('skubbs_on_modal')) {
+        timepicker_opts = {
+            minuteStep: 5,
+            showInputs: false,
+            // template: 'modal',
+        };
+        $(this).timepicker(timepicker_opts);
+        $('.bootstrap-timepicker-widget table td span').css({'color' : '#000'});
+    } else {
+        timepicker_opts = {
+            minuteStep: 5,
+            showInputs: false
+        };
+        $(this).timepicker(timepicker_opts);
+    };
+
+    
+    
+    
 });
 $(document).on('change', '.patient_now', function() {
     $('div[id^="patient_now_"]').hide();

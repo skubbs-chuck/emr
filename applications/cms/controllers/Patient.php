@@ -12,23 +12,28 @@ class Patient extends Base_Controller {
             redirect('user/login');
 
         $this->addCss($this->tplUrl . 'plugins/datepicker/datepicker3.css')
-             ->addJs($this->tplUrl . 'plugins/datepicker/bootstrap-datepicker.js')
              ->addCss($this->tplUrl . 'plugins/timepicker/bootstrap-timepicker.min.css')
-             ->addJs($this->tplUrl . 'plugins/timepicker/bootstrap-timepicker.min.js')
              ->addCss($this->tplUrl . 'css/patient.css')
-             ->addJs($this->tplUrl . 'js/skubbs.js')
              ->addCss($this->tplUrl . 'plugins/wpaint/css/wColorPicker.min.css')
              ->addCss($this->tplUrl . 'plugins/wpaint/css/wPaint.css')
+
              ->addJs($this->tplUrl . 'plugins/wpaint/js/jquery.ui.core.1.10.3.min.js')
              ->addJs($this->tplUrl . 'plugins/wpaint/js/jquery.ui.widget.1.10.3.min.js')
              ->addJs($this->tplUrl . 'plugins/wpaint/js/jquery.ui.mouse.1.10.3.min.js')
              ->addJs($this->tplUrl . 'plugins/wpaint/js/jquery.ui.draggable.1.10.3.min.js')
+             ->addJs($this->tplUrl . 'plugins/datepicker/bootstrap-datepicker.js')
+             ->addJs($this->tplUrl . 'plugins/timepicker/bootstrap-timepicker.js')
              ->addJs($this->tplUrl . 'plugins/wpaint/js/wColorPicker.min.js')
              ->addJs($this->tplUrl . 'plugins/wpaint/js/wPaint.conf.js')
+             ->addJs($this->tplUrl . 'js/skubbs.js')
              ;
     }
 
     public function management() {
+        $query = $this->db->get('clinics');
+        $this->data['db_clinics'] = $query->result();
+        // $query = $this->db->query("SELECT common_schema.extract_json_value(@json, '//clinics') AS test FROM users");
+        // $this->data['test'] = $query->result();
         $pagination = $this->_pagination(array('total_rows' => $this->model_patient->patientsCount()));
         $this->pagination->initialize($pagination);
         $this->data['patient_list'] = $this->model_patient->fetchPatients($pagination['per_page'], $pagination['page']);
