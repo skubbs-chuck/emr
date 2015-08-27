@@ -79,15 +79,13 @@
                     <label>Type:</label>
                     <select name="appointment_type" class="form-control"><option value="Consultation">Consultation</option></select>
                     <label>Clinic:</label>
-                    <select name="id_clinic" class="form-control">
+                    <select name="id_clinic" class="form-control" id="id_clinics">
                         <?php foreach ($db_clinics as $clinic): ?>
                             <option value="<?php echo $clinic->id_clinic ?>"><?php echo $clinic->name ?></option>
                         <?php endforeach ?>
                     </select>
                     <label>Doctor:</label>
-                    <select name="id_user" class="form-control">
-                        
-                    </select>
+                    <select name="id_user" class="form-control" id="opt_doctors"></select>
                     <label>Date:</label>
                         <div class="form-group skubbs_input" style="display: block;">
                             <div class="input-group">
@@ -118,13 +116,14 @@
 <script>
     var db_clinics = <?php echo json_encode($db_clinics) ?>;
     function ajaxGetDoctorsByClinicId(cl_id) {
-        console.log(base_url + 'ajax/dbci/' + cl_id);
-        return false;
         $.ajax({
             url: base_url + 'ajax/dbci/' + cl_id, 
             dataType: 'json',
             success: function(res) {
-                return res;
+                $('#opt_doctors').html('');
+                $.each(res, function(i,doc) {
+                    $('#opt_doctors').append('<option value="' + doc.id_user + '">' + doc.last_name + ', ' + doc.first_name + ' ' + doc.middle_name + '</option>');
+                });
             }
         });
         return false;
@@ -134,9 +133,12 @@
         var name_patient = $(this).data('patient');
         var id_patient = $(this).data('id');
         $('#modal_set_appointment').find('.modal-header>h4>span.patient-name').html('<i>' + name_patient + '</i>');
-        var docts = ajaxGetDoctorsByClinicId(db_clinics[0].id_clinic);
-        console.log(docts);
+        ajaxGetDoctorsByClinicId(db_clinics[0].id_clinic);
         $('#modal_set_appointment').modal();
+    });
+
+    $(document).on('change', '#id_clinics', function() {
+        ajaxGetDoctorsByClinicId($(this).val());
     });
 </script>
 <?php include_once $inc_footer; ?>

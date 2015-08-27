@@ -18,20 +18,28 @@ class Ajax extends Base_Controller {
     }
 
     public function dbci($id_clinic = 0) {
+        $this->db->select('id_user, first_name, middle_name, last_name, clinics');
         $this->db->where('super_user', 0);
         $query = $this->db->get('users');
         $users = $query->result();
 
         $doctors = array();
+        // $doctors = $users;
 
         foreach ($users as $user) {
             $clinics = json_decode($user->clinics);
-            if (in_array($id_clinic, $clinics)) {
-                $doctors[] $user;
+            foreach ($clinics as $key => $value) {
+                if ($id_clinic == (int) $value) {
+                    $doctor = $user;
+                    // $doctor->clinics = $clinics;
+                    unset($doctor->clinics);
+                    $doctors[] = $doctor;
+                }
             }
+            
         }
 
-        echo json_encode($doctors);
+        echo json_encode($doctors, JSON_PRETTY_PRINT);
     }
 
     public function merge_img() {
