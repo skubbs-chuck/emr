@@ -90,7 +90,7 @@
                 <label>Date:</label>
                     <div class="form-group skubbs_input" style="display: block;">
                         <div class="input-group">
-                            <input type="text" name="appointment_date" value="2015-08-27" class="form-control skubbs_datepicker" data-inputmask="'alias': 'dd/mm/yyyy'">
+                            <input type="text" name="appointment_date" value="<?php echo date('Y-m-d') ?>" class="form-control skubbs_datepicker" data-inputmask="'alias': 'dd/mm/yyyy'">
                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                     <label>Time:</label>
                     <div class="form-group skubbs_input" style="display: block;">
                         <div class="input-group">
-                            <input type="text" name="appointment_time" value="12:03 PM" class="form-control skubbs_timepicker skubbs_on_modal">
+                            <input type="text" name="appointment_time" value="<?php echo date('h:i A') ?>" class="form-control skubbs_timepicker skubbs_on_modal">
                             <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
                         </div>
                     </div>
@@ -117,6 +117,7 @@
 <script>
     var db_clinics = <?php echo json_encode($db_clinics) ?>;
     function ajaxGetDoctorsByClinicId(cl_id) {
+        $('#opt_doctors').prop('disabled', 'disabled');
         $.ajax({
             url: base_url + 'ajax/dbci/' + cl_id, 
             dataType: 'json',
@@ -124,12 +125,13 @@
                 $('#opt_doctors').html('');
                 if (res.length <= 0) {
                     $('#opt_doctors').append('<option value="0">No Doctors Available for specified clinic</option>');
-                    return false;
+                } else {
+                    $.each(res, function(i,doc) {
+                        $('#opt_doctors').append('<option value="' + doc.id_user + '">' + doc.last_name + ', ' + doc.first_name + ' ' + doc.middle_name + '</option>');
+                    });
                 };
 
-                $.each(res, function(i,doc) {
-                    $('#opt_doctors').append('<option value="' + doc.id_user + '">' + doc.last_name + ', ' + doc.first_name + ' ' + doc.middle_name + '</option>');
-                });
+                $('#opt_doctors').prop('disabled', false);
             }
         });
         return false;
@@ -140,7 +142,11 @@
         var id_patient = $(this).data('id');
         $('#set_appointment input[name="id_patient"]').val(id_patient);
         $('#modal_set_appointment').find('.modal-header>h4>span.patient-name').html('<i>' + name_patient + '</i>');
-        ajaxGetDoctorsByClinicId(db_clinics[0].id_clinic);
+        
+        if ($('#opt_doctors>option').length <= 0) {
+            ajaxGetDoctorsByClinicId(db_clinics[0].id_clinic);
+        };
+
         $('#modal_set_appointment').modal();
     });
 
