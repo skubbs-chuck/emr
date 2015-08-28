@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `appointments`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `appointments` (
   `id_appointment` int(11) NOT NULL AUTO_INCREMENT,
+  `id_patient` int(11) NOT NULL DEFAULT '0',
   `id_clinic` int(11) NOT NULL DEFAULT '0',
   `id_user` int(11) NOT NULL DEFAULT '0',
   `appointment_type` varchar(255) DEFAULT NULL,
@@ -32,7 +33,7 @@ CREATE TABLE `appointments` (
   `reason` text NOT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_appointment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +42,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (2,2,9,2,'Consultation','2015-08-27','12:03:00','awdawd','2015-08-28 14:49:05');
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1757,7 +1759,7 @@ CREATE TABLE `users` (
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1766,7 +1768,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'chuck','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',1,'ustdoz@gmail.com','Chuck','Osmeña','Lagumbay','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Web Developer','','','','[\"9\",\"10\"]','1',1,'2015-06-23 18:15:28'),(2,'skubbs','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs@gmail.com','Skubbs','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','[\"9\"]','1',1,'2015-06-23 18:15:28'),(10,'psadmin','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs@gmail.com','Psadmin','','Preskubbs','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','[\"10\"]','1',1,'2015-06-23 18:15:28'),(11,'kuyadoc','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'ustdoz@gmail.com','John','Osmeña','Doe','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Web Developer','','','','[\"9\",\"10\"]','1',1,'2015-06-23 18:15:28');
+INSERT INTO `users` VALUES (1,'chuck','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',1,'ustdoz@gmail.com','Chuck','Osmeña','Lagumbay','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Web Developer','','','','[\"9\",\"10\"]','1',1,'2015-06-23 18:15:28'),(2,'skubbs','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs@gmail.com','Skubbs','','Company','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','[\"9\"]','1',1,'2015-06-23 18:15:28'),(10,'psadmin','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'skubbs@gmail.com','Psadmin','','Preskubbs','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Guest Admin','','','','[\"10\"]','1',1,'2015-06-23 18:15:28'),(11,'kuyadoc','26c69d6a6ab08a23ce21a86005014364','CVoj#rt#',0,'ustdoz@gmail.com','John','Osmeña','Doe','7517935','205 Blk. 7 Mabolo Street West Rembo Makati City','Philippines','Makati City',1215,'2015-07-07','Male','Web Developer','','','','[\"9\",\"10\"]','1',1,'2015-06-23 18:15:28'),(12,'alantancs1','ade3722d17d719b387dca88bccc7299e','kU*vTQSp',0,'email@email.email','alantancs','','skubbs','','','','',0,'0000-00-00','','Doctor','','','','[\"9\"]','1',1,'2015-08-28 00:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1807,4 +1809,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-28 14:23:17
+-- Dump completed on 2015-08-28 15:06:06
