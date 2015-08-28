@@ -17,6 +17,43 @@ class Ajax extends Base_Controller {
         }
     }
 
+    public function add_appointment() {
+        $status = array('code' => 0, 'message' => '');
+        $post = $this->input->post(NULL);
+        $result = array();
+
+        $data = array(
+            'appointment_type' => $post['appointment_type'], 
+            'appointment_date' => date('Y-m-d', strtotime($post['appointment_date'])), 
+            'appointment_time' => date('H:i:s', strtotime($post['appointment_time'])), 
+            'reason' => $post['reason'], 
+            'id_patient' => (int) $post['id_patient'], 
+            'id_clinic' => (int) $post['id_clinic'], 
+            'id_user' => (int) $post['id_user'], 
+            'creation_date' => date('Y-m-d H:i:s'), 
+        );
+
+        if ((int) $post['id_clinic'] <= 0) 
+            $status['message'] = 'clinic doesnt exist';
+        elseif ((int) $post['id_user'] <= 0)
+            $status['message'] = 'doctor doesnt exist';
+        elseif ((int) $post['id_patient'] <= 0)
+            $status['message'] = 'unknown patient';
+        else {
+            $this->db->insert('appointments', $data);
+            $status['code'] = 200;
+            $status['message'] = 'successfully added appointment.';
+        }
+
+        $result = $data;
+
+        echo json_encode(array(
+            'status' => $status, 
+            'post' => $post, 
+            'result' => $result
+        ));
+    }
+
     public function dbci($id_clinic = 0) {
         $this->db->select('id_user, first_name, middle_name, last_name, clinics');
         $this->db->where('super_user', 0);
