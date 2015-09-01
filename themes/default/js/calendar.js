@@ -1,5 +1,10 @@
 $(document).ready(function() {
     $('#calendar').fullCalendar({
+        header: {
+            left: 'today prev,next',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,basicWeek,basicMonth'
+        },
         events: [
         {
             title  : 'event1',
@@ -16,4 +21,16 @@ $(document).ready(function() {
         },
         ],
     });
+
+    $('#goToDate').datepicker({
+        inline: true, 
+        format: 'mm-dd-yyyy'
+    }).on('changeDate', function(e) {
+        var fcDate = new Date($('#calendar').fullCalendar('getDate')._d);
+        var dpDate = new Date(e.date);
+
+        console.log(fcDate.getMonth() == dpDate.getMonth());
+        // $('#calendar').fullCalendar('gotoDate', ev.format());
+    });
+
 });
