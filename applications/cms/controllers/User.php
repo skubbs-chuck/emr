@@ -45,8 +45,8 @@ class User extends Base_Controller {
         $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[20]|is_unique[users.username]', array('is_unique' => 'Username already taken.'));
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]', array('is_unique' => 'Email already taken.'));
-        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required|min_length[4]');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required|min_length[5]');
+        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
         $this->form_validation->set_rules('specialty', 'Specialization', 'trim|required');
         $this->form_validation->set_rules('clinics[]', 'Clinics', 'required');
         if ($this->form_validation->run()) {
