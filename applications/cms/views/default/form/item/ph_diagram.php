@@ -26,7 +26,7 @@
     background-color: #fff;
 }
 </style>
-<div class="box-header label-primary">Complete Blood Count</div>
+<div class="box-header label-primary">On the diagram below</div>
 <div class="box-body" id="diagram_wrapper">
     <div><a href="#" class="btn btn-primary btn-xs" id="fileupload">Upload</a></div>
     <?php foreach ($diagrams as $diagram): ?>
