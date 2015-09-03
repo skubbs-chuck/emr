@@ -18,7 +18,7 @@
             <li<?php if ($current_page == 'calendar/index') echo ' class="active"'; ?>><a href="<?php echo base_url() . 'calendar' ?>"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
             
             <li class="header">Billing</li>
-            <li<?php if ($current_page == 'billing/list') echo ' class="active"'; ?>><a href="<?php echo base_url() . 'billing/list' ?>"><i class="fa fa-list-alt"></i> Billing List</a></li>
+            <li<?php if ($current_page == 'billing/management') echo ' class="active"'; ?>><a href="<?php echo base_url() . 'billing/management' ?>"><i class="fa fa-list-alt"></i> Billing List</a></li>
             <li<?php if ($current_page == 'billing/accreceivable') echo ' class="active"'; ?>><a href="<?php echo base_url() . 'billing/accreceivable' ?>"><i class="fa fa-money"></i> Accounts Receivable</a></li>
             
             <li class="header">Administrations</li>

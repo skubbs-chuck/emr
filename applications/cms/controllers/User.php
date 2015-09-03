@@ -7,6 +7,11 @@ class User extends Base_Controller {
         $this->load->model('model_user');
     }
 
+    public function groups() {
+        $this->_homeAssets();
+        $this->display('comming_soon');
+    }
+
     public function profile($username_or_id = NULL) {
         $this->data['uinfo'] = array();
         $this->data['username_or_id'] = $username_or_id;
